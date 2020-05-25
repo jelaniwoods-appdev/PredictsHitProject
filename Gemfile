@@ -16,7 +16,7 @@ gem 'webpacker', '~> 4.0'
 gem 'faker'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
-gem 'devise', '~> 4.7', '>= 4.7.1'
+gem 'devise'
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'

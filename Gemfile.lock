@@ -386,7 +386,7 @@ DEPENDENCIES
   bootstrap (~> 4.3.1)
   byebug
   capybara
-  devise (~> 4.7, >= 4.7.1)
+  devise
   dotenv-rails
   draft_generators!
   factory_bot_rails
