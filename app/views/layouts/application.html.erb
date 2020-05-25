@@ -14,11 +14,13 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
 
-    <!-- Connect to Bootstrap -->
-    <!-- <link rel="stylesheet" href="/bootstrap.css"> -->
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'home_templates/navbar' %>
+    <br>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
