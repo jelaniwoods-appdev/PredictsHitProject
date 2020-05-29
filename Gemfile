@@ -19,6 +19,7 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'execjs'
 gem 'therubyracer', :platforms => :ruby
+gem 'sendgrid'
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
