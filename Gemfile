@@ -5,6 +5,7 @@ ruby '2.6.6'
 
 gem 'bcrypt'
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'devise'
 gem 'http'
 gem 'jbuilder', '~> 2.7'
 gem "puma", ">= 3.12.3"
@@ -16,7 +17,8 @@ gem 'webpacker', '~> 4.0'
 gem 'faker'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
-gem 'devise'
+gem 'execjs'
+gem 'therubyracer', :platforms => :ruby
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
