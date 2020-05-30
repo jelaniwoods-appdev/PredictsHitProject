@@ -38,9 +38,6 @@
       </li>
       <% if user_signed_in? %>
         <li class="nav-item">
-          <a class="nav-link" href="/users/edit">Edit Profile</a>
-        </li>
-        <li class="nav-item">
           <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link" %> <!-- <a class="nav-link" href="/users/sign_out">Log Out</a> -->
         </li>
         <% else %>
@@ -51,6 +48,16 @@
           <a class="nav-link" href="/users/sign_in">Login</a>
         </li>
       <% end %>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Test Links
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/test_page">Mailgun Test</a>
+            <a class="dropdown-item" href="/">Test 2 tbd</a>
+            <a class="dropdown-item" href="/">Test 3 tbd</a>
+          </div>
+        </li>
     </ul>
   </div>
 </nav>

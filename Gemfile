@@ -20,6 +20,7 @@ gem 'jquery-rails'
 gem 'execjs'
 gem 'therubyracer', :platforms => :ruby
 gem 'sendgrid'
+gem "mailgun-ruby"
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
