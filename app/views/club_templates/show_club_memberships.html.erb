@@ -1,0 +1,35 @@
+<h1>My Clubs</h1>
+
+
+<table border="1">
+  <tr>
+    <th>
+      Club Title
+    </th>
+
+    <th>
+      Club Description
+    </th>
+
+    <th></th>
+  </tr>
+
+  <!-- There's likely a better way to do this -->
+  <!-- Fix formatting to make it tile based instead of table based -->
+  <% @membership_rows.each do |member| %>
+  <tr>
+    <td>
+      <%= Club.where({ :id => member.clubs_id }).at(0).title %>
+    </td>
+
+    <td>
+      <%= Club.where({ :id => member.clubs_id }).at(0).description %>
+    </td>
+
+    <td>
+      <a href="/clubs/<%= member.clubs_id %>">Go to Club</a>
+    </td>
+  </tr>
+  
+  <% end %>
+</table>
