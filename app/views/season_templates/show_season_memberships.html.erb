@@ -22,11 +22,6 @@
   <!-- Fix formatting to make it tile based instead of table based -->
   <% @membership_rows.each do |member| %>
   <tr>
-    <!--
-    <td>
-      <%= Season.where({ :id => member.seasons_id }).at(0).club.title %>
-    </td>
-    -->
     <td>
       <%= Season.where({ :id => member.seasons_id }).at(0).club.title %>
     </td>

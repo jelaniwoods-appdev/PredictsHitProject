@@ -6,7 +6,10 @@ class ClubController < ApplicationController
   end
 
   def view_club
-
+    club_id = params.fetch("club_id")
+    @club_row = Club.where({ :id => club_id }).at(0)
+    @season_rows = Season.where({ :club_id => club_id})
+    @membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
     render({ :template => "club_templates/club_details.html.erb" })
   end
   

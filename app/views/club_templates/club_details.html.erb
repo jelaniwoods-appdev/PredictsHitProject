@@ -1,1 +1,74 @@
-<h1>Club X</h1>
+<h1><%= @club_row.title %></h1>
+<br>
+<div>
+  <%= @club_row.description %>
+</div>
+<br>
+Seasons available in <%= @club_row.title %>:
+<table border="1">
+  <tr>
+    <th>
+      Season Title
+    </th>
+
+    <th>
+      Season Description
+    </th>
+
+    <th></th>
+  </tr>
+
+  <!-- There's likely a better way to do this -->
+  <!-- Fix formatting to make it tile based instead of table based -->
+  <!-- Put users table on the left and the tile based seasons in the middle/right -->
+  <% @season_rows.each do |season| %>
+  <tr>
+    <td>
+      <%= season.title %>
+    </td>
+
+    <td>
+      <%= season.description %>
+    </td>
+
+    <td>
+      <a href="/seasons/<%= season.club.id.to_s + '/' + season.id.to_s %>">Go to Season</a>
+    </td>
+  </tr>
+  
+  <% end %>
+</table>
+<br>
+
+Users currently in <%= @club_row.title %>:
+<table border="1">
+  <tr>
+    <th>
+      Username
+    </th>
+
+    <th>
+      Role
+    </th>
+
+    <th>
+    View Profile
+    </th>
+  </tr>
+
+   <% @membership_rows.each do |member| %>
+  <tr>
+    <td>
+      <%= User.where({ :id => member.users_id}).at(0).email %>
+    </td>
+    <td>
+      <%= member.category %>
+    </td>
+      
+    <td>
+      Go to User Profile
+    </td>
+  </tr>
+  
+  <% end %>
+</table>
