@@ -21,6 +21,8 @@ gem 'execjs'
 gem 'therubyracer', :platforms => :ruby
 gem 'sendgrid'
 gem "mailgun-ruby"
+gem 'carrierwave', '~> 2.1'
+
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'

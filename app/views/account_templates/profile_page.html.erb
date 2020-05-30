@@ -1,0 +1,39 @@
+<div class="col-md-6 offset-md-3">
+  <div class="jumbotron">
+    <h1>My Profile</h1>
+    <br>
+    <!-- Will later update this to automatically create a basic account (username and default profile pic) when signing up through devise. So this will only exist for editing account purposes. -->
+    <% if @account_info.exists? %>
+      <div>Would you like to edit your profile information?</div>
+      <br>
+        <form action="/edit_account/<%= @account_info.at(0).id %>" method="post">
+          <label for="edit_username">Username:</label>
+          <input id="edit_username" type="text" name="edited_username" placeholder="Enter a new username..." value="<%= @account_info.at(0).username %>" class="form-control">
+          <br>
+          <br>
+          Current Profile Picture:
+          <br>
+          <img src="<%= @account_info.at(0).prof_pic %>" height = 200>
+          <!-- Update to use amazon services with file upload options -->
+          <label for="edit_prof_pic">New Profile Picture URL:</label>
+          <br>
+          <input id="edit_prof_pic" type="text" name="edited_prof_pic" class="form-control">
+          <br>
+          <br>
+          <br>
+          <button class="btn btn-secondary">Update Profile</button>
+        </form>
+    <% else %>
+      <div>It looks like you signed up your email but still need to set up an account. Please choose a username.</div>
+      <br>
+      <div class="form-group">
+        <form action="/create_new_account/<%= current_user.id %>" method="post">
+          <label for="create_username">Username</label>
+          <input id="create_username" type="text" name="new_username" placeholder="Enter a username...">
+          
+          <button>Create Account</button>
+        </form>
+      </div>
+    <% end %>
+  </div>
+</div>
