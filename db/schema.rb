@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_30_185259) do
+ActiveRecord::Schema.define(version: 2020_05_30_220528) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "username"
@@ -36,10 +36,24 @@ ActiveRecord::Schema.define(version: 2020_05_30_185259) do
     t.string "category"
     t.integer "users_id"
     t.integer "clubs_id"
+    t.integer "seasons_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["clubs_id"], name: "index_memberships_on_clubs_id"
+    t.index ["seasons_id"], name: "index_memberships_on_seasons_id"
     t.index ["users_id"], name: "index_memberships_on_users_id"
+  end
+
+  create_table "seasons", force: :cascade do |t|
+    t.string "status"
+    t.string "title"
+    t.text "description"
+    t.string "picture"
+    t.string "password"
+    t.integer "club_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["club_id"], name: "index_seasons_on_club_id"
   end
 
   create_table "users", force: :cascade do |t|

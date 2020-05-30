@@ -25,4 +25,5 @@ class User < ApplicationRecord
   
   has_many :memberships
   has_many :clubs, :through => :memberships
+  has_many :seasons, :through => :memberships
 end

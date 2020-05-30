@@ -5,6 +5,7 @@ class CreateMemberships < ActiveRecord::Migration[6.0]
       t.string :category
       t.belongs_to :users
       t.belongs_to :clubs
+      t.belongs_to :seasons
 
       t.timestamps
     end

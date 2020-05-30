@@ -1,0 +1,23 @@
+<div class="col-md-6 offset-md-3">
+  <div class="jumbotron">
+    <h1>Create a New Season</h1>
+      <form action="/create_new_season" method="post">
+        <!-- Change this to a dropdown of available clubs instead of text entry -->
+        <!-- If user does not have a club they can add season for then put msg that they need to create a club first and -->
+        <!-- Include some form of permission functionality where only members of each club who are designated owner or admin under category column can create season -->
+        <label for="create_season_club_connection">Which club would you like to create a season for?</label>
+        <input id="create_season_club_connection" type="text" name="associated_club_id" placeholder="Enter the club ID...">
+
+        <label for="create_season_title">What is the title of your season?</label>
+        <input id="create_season_title" type="text" name="season_title" placeholder="Enter a title...">
+
+        <label for="create_season_description">What is the description of your season?</label>
+        <input id="create_season_description" type="text" name="season_description" placeholder="Enter a description...">
+
+        <!-- Add picture and a password fields in the future -->
+              
+        <button>Create Season</button>
+      </form>
+  </div>
+</div>
+        

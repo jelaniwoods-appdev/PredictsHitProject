@@ -1,0 +1,48 @@
+<h1>My Seasons</h1>
+
+
+<table border="1">
+  <tr>
+    <th>
+      Club Title
+    </th>
+
+    <th>
+      Season Title
+    </th>
+
+    <th>
+      Season Description
+    </th>
+
+    <th></th>
+  </tr>
+
+  <!-- There's likely a better way to do this -->
+  <!-- Fix formatting to make it tile based instead of table based -->
+  <% @membership_rows.each do |member| %>
+  <tr>
+    <!--
+    <td>
+      <%= Season.where({ :id => member.seasons_id }).at(0).club.title %>
+    </td>
+    -->
+    <td>
+      <%= Season.where({ :id => member.seasons_id }).at(0).club.title %>
+    </td>
+
+    <td>
+      <%= Season.where({ :id => member.seasons_id }).at(0).title %>
+    </td>
+
+    <td>
+      <%= Season.where({ :id => member.seasons_id }).at(0).description %>
+    </td>
+
+    <td>
+      <a href="/seasons/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s %>">Go to Season</a>
+    </td>
+  </tr>
+  
+  <% end %>
+</table>

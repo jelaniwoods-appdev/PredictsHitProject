@@ -21,5 +21,9 @@ Rails.application.routes.draw do
   get("/my_clubs", { :controller => "club", :action => "show_clubs" })
   get("/clubs/:club_id", { :controller => "club", :action => "view_club" })
 
-
+  #season routes
+  get("/new_season", { :controller => "season", :action => "season_create_form" })
+  post("/create_new_season", { :controller => "season", :action => "create_season" })
+  get("/my_seasons", { :controller => "season", :action => "show_seasons" })
+  get("/seasons/:club_id/:season_id", { :controller => "season", :action => "view_season" })
 end
