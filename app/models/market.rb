@@ -1,25 +1,27 @@
 # == Schema Information
 #
-# Table name: seasons
+# Table name: markets
 #
 #  id          :integer          not null, primary key
 #  description :text
 #  password    :string
 #  picture     :string
+#  price       :decimal(, )
+#  quantity    :decimal(, )
 #  status      :string
 #  title       :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  club_id     :integer
+#  season_id   :integer
 #
 # Indexes
 #
-#  index_seasons_on_club_id  (club_id)
+#  index_markets_on_season_id  (season_id)
 #
 
-class Season < ApplicationRecord
-  belongs_to :club
-  has_many :markets
-  has_many :memberships
-  has_many :users, :through => :memberships
+class Market < ApplicationRecord
+
+  belongs_to :season
+  has_many :contracts
+
 end

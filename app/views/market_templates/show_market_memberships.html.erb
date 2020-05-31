@@ -1,0 +1,52 @@
+<h1>My Markets</h1>
+
+<table border="1">
+  <tr>
+    <th>
+      Club Title
+    </th>
+
+    <th>
+      Season Title
+    </th>
+
+    <th>
+      Market Title
+    </th>
+
+    <th>
+      Market Description
+    </th>
+
+    <th><%= @relevant_markets %></th>
+  </tr>
+
+  <!-- There's likely a better way to do this -->
+  <!-- Fix formatting to make it tile based instead of table based -->
+  <!-- This might technically be a bug. Make sure it's okay that there is no explicit exclusion of seasons that have no markets. -->
+  <% @membership_rows.each do |member| %>
+    <% Season.where({ :id => member.seasons_id }).at(0).markets.each do |associated_market|%>
+  <tr>
+    <td>
+      <%= Season.where({ :id => member.seasons_id }).at(0).club.title %>
+    </td>
+
+    <td>
+      <%= Season.where({ :id => member.seasons_id }).at(0).title %>
+    </td>
+
+    <td>
+      <%= associated_market.title %>
+    </td>
+
+    <td>
+      <%= associated_market.description %>
+    </td>
+
+    <td>
+      <a href="/markets/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s + "/" + associated_market.id.to_s %>">Go to Market</a>
+    </td>
+  </tr>
+    <% end %>
+  <% end %>
+</table>

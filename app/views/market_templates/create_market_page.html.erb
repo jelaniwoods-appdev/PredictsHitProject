@@ -1,0 +1,28 @@
+<div class="col-md-6 offset-md-3">
+  <div class="jumbotron">
+    <h1>Create a New Market</h1>
+      <form action="/create_new_market" method="post">
+        <!-- Change this to a dropdown of available clubs & seasons instead of text entry -->
+        <!-- If user does not have a club and season they can add a market for then put msg that they need to create a club/season first and -->
+        <!-- Include some form of permission functionality where only members of each season who are designated owner or admin under category column can create market -->
+        <label for="create_market_season_connection">Which season would you like to create a market for?</label>
+        <input id="create_market_season_connection" type="text" name="associated_season_id" placeholder="Enter the season ID...">
+
+        <label for="create_market_title">What is the title of your market?</label>
+        <input id="create_market_title" type="text" name="market_title" placeholder="Enter a title...">
+
+        <label for="create_market_description">What is the description of your market?</label>
+        <input id="create_market_description" type="text" name="market_description" placeholder="Enter a description...">
+
+        <label for="create_market_price">How much money do you want your market participants to start with?</label>
+        $<input id="create_market_price" type="text" name="market_price" placeholder="Enter a dollar amount...">
+
+        <label for="create_market_quantity">For each contract in your market, how many assets do you want your market participants to start with?</label>
+        <input id="create_market_quantity" type="text" name="market_quantity" placeholder="Enter a quantity...">
+
+        <!-- Add picture and a password fields in the future -->
+              
+        <button>Create Market</button>
+      </form>
+  </div>
+</div>

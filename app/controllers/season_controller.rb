@@ -20,8 +20,9 @@ class SeasonController < ApplicationController
     @new_season.club_id = params.fetch("associated_club_id")
     @new_season.title = params.fetch("season_title")
     @new_season.description = params.fetch("season_description")
+    @new_season.status = "active"
     @new_season.save
-    #Create a new membership to this club and assign the creator of the club to be the 'owner'
+    #Create a new membership to this season and assign the creator of the season to be the 'owner'
     @new_membership = Membership.new
     @new_membership.users_id = current_user.id
     @new_membership.seasons_id = @new_season.id

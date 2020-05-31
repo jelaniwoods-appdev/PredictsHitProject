@@ -26,4 +26,12 @@ Rails.application.routes.draw do
   post("/create_new_season", { :controller => "season", :action => "create_season" })
   get("/my_seasons", { :controller => "season", :action => "show_seasons" })
   get("/seasons/:club_id/:season_id", { :controller => "season", :action => "view_season" })
+
+  #market routes
+  get("/new_market", { :controller => "market", :action => "market_create_form" })
+  post("/create_new_market", { :controller => "market", :action => "create_market" })
+  get("/my_markets", { :controller => "market", :action => "show_markets" })
+  get("/markets/:club_id/:market_id/:market_id", { :controller => "market", :action => "view_market" })
+
+
 end
