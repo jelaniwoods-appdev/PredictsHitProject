@@ -23,6 +23,8 @@
           <br>
           <button class="btn btn-secondary">Update Profile</button>
         </form>
+      <br>
+      <a href="/view_profile/<%= @account_info.at(0).id %>" class="btn btn-secondary">View your profile</a>
     <% else %>
       <div>It looks like you signed up your email but still need to set up an account. Please choose a username.</div>
       <br>

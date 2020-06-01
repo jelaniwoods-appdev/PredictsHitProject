@@ -1,7 +1,7 @@
 class MarketController < ApplicationController
 
   def show_markets
-    @membership_rows = Membership.where({ :users_id => current_user.id, :goes_to => "seasons_table" })
+    @membership_rows = Membership.where({ :users_id => current_user.id, :goes_to => "seasons_table" }).order({ :clubs_id => :asc, :seasons_id => :asc })
     render({ :template => "market_templates/show_market_memberships.html.erb" })
   end
 

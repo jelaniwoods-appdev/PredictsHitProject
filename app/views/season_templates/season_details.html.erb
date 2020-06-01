@@ -1,23 +1,26 @@
 <h1><%= @season_row.title %></h1>
 <div><%= @season_row.description %></div>
+<br>
 <div>
-  <a href="/clubs/<%= @club_row.id %>">Go to associated Club page. (<%= @club_row.title %>)</a>
+  <a class="btn btn-secondary" href="/clubs/<%= @club_row.id %>">Go to Season's Club page. (<%= @club_row.title %>)</a>
 </div>
 <br>
 <% if @market_rows.present? %>
-Markets available in <%= @season_row.title %>:
-<table border="1">
-  <tr>
-    <th>
-      Market Title
-    </th>
+<h2>Markets available in <%= @season_row.title %></h2>
+<table class="table table-hover table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Market Title
+      </th>
 
-    <th>
-      Market Description
-    </th>
+      <th>
+        Market Description
+      </th>
 
-    <th></th>
-  </tr>
+      <th></th>
+    </tr>
+  </thead>
 
   <!-- Fix formatting to make it tile based instead of table based -->
   <!-- Put users table on the left and the tile based seasons in the middle/right -->
@@ -33,32 +36,34 @@ Markets available in <%= @season_row.title %>:
     </td>
 
     <td>
-      <a href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a>
+      <a class="btn btn-secondary" href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a>
     </td>
   </tr>
   
   <% end %>
 </table>
 <% else %>
-There do not appear to be any markets active in this Season.
+<h2>There do not appear to be any markets active in this Season.</h2>
 <% end %>
 <br>
 
-Users currently in <%= @season_row.title %>:
-<table border="1">
-  <tr>
-    <th>
-      Username
-    </th>
+<h2>Users currently in <%= @season_row.title %></h2>
+<table class="table table-hover table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Username
+      </th>
 
-    <th>
-      Role
-    </th>
+      <th>
+        Role
+      </th>
 
-    <th>
-      View Profile
-    </th>
-  </tr>
+      <th>
+        View Profile
+      </th>
+    </tr>
+  </thead>
 
    <% @membership_rows.each do |member| %>
   <tr>
@@ -70,7 +75,7 @@ Users currently in <%= @season_row.title %>:
     </td>
       
     <td>
-      <a class="nav-link" href="/profile/<%= member.users_id %>">User Profile</a>
+      <a class="btn btn-secondary" class="nav-link" href="/view_profile/<%= member.users_id %>">User Profile</a>
     </td>
   </tr>
   

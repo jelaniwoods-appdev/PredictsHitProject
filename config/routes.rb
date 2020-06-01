@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   post("/edit_account/:account_id", { :controller => "account", :action => "edit_account" })
 
+  get("/view_profile/:user_id", { :controller => "account", :action => "view_user_profile" })
+
   #club routes
   get("/new_club", { :controller => "club", :action => "club_create_form" })
   post("/create_new_club", { :controller => "club", :action => "create_club" })

@@ -1,22 +1,24 @@
 <h1>My Seasons</h1>
+<br>
 
+<table class="table table-hover table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Club Title
+      </th>
 
-<table border="1">
-  <tr>
-    <th>
-      Club Title
-    </th>
+      <th>
+        Season Title
+      </th>
 
-    <th>
-      Season Title
-    </th>
+      <th>
+        Season Description
+      </th>
 
-    <th>
-      Season Description
-    </th>
-
-    <th></th>
-  </tr>
+      <th></th>
+    </tr>
+  </thead>
 
   <!-- There's likely a better way to do this -->
   <!-- Fix formatting to make it tile based instead of table based -->
@@ -35,7 +37,7 @@
     </td>
 
     <td>
-      <a href="/seasons/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s %>">Go to Season</a>
+      <a class="btn btn-secondary" href="/seasons/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s %>">Go to Season</a>
     </td>
   </tr>
   

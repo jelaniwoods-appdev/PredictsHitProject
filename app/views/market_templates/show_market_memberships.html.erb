@@ -1,25 +1,29 @@
 <h1>My Markets</h1>
+<br>
 
-<table border="1">
-  <tr>
-    <th>
-      Club Title
-    </th>
+<table class="table table-hover table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Club Title
+      </th>
 
-    <th>
-      Season Title
-    </th>
+      <th>
+        Season Title
+      </th>
 
-    <th>
-      Market Title
-    </th>
+      <th>
+        Market Title
+      </th>
 
-    <th>
-      Market Description
-    </th>
+      <th>
+        Market Description
+      </th>
+    
 
-    <th><%= @relevant_markets %></th>
-  </tr>
+      <th><%= @relevant_markets %></th>
+    </tr>
+  </thead>
 
   <!-- There's likely a better way to do this -->
   <!-- Fix formatting to make it tile based instead of table based -->
@@ -44,7 +48,7 @@
     </td>
 
     <td>
-      <a href="/markets/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s + "/" + associated_market.id.to_s %>">Go to Market</a>
+      <a class="btn btn-secondary" href="/markets/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s + "/" + associated_market.id.to_s %>">Go to Market</a>
     </td>
   </tr>
     <% end %>

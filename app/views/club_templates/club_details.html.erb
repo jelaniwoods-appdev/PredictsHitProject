@@ -5,23 +5,25 @@
 </div>
 <% if @owner_user_id == current_user.id %>
   <br>
-    <a href="/clubs/manage/<%= @club_row.id %>">Manage Club</a>
+    <a class="btn btn-secondary" href="/clubs/manage/<%= @club_row.id %>">Manage Club</a>
   <br>
 <% end %>
 <br>
-Seasons available in <%= @club_row.title %>:
-<table border="1">
-  <tr>
-    <th>
-      Season Title
-    </th>
+<h2>Seasons available in <%= @club_row.title %></h2>
+<table class="table table-hover table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Season Title
+      </th>
 
-    <th>
-      Season Description
-    </th>
+      <th>
+        Season Description
+      </th>
 
-    <th></th>
-  </tr>
+      <th></th>
+    </tr>
+  </thead>
 
   <!-- There's likely a better way to do this -->
   <!-- Fix formatting to make it tile based instead of table based -->
@@ -37,7 +39,7 @@ Seasons available in <%= @club_row.title %>:
     </td>
 
     <td>
-      <a href="/seasons/<%= season.club.id.to_s + '/' + season.id.to_s %>">Go to Season</a>
+      <a class="btn btn-secondary" href="/seasons/<%= season.club.id.to_s + '/' + season.id.to_s %>">Go to Season</a>
     </td>
   </tr>
   
@@ -45,21 +47,23 @@ Seasons available in <%= @club_row.title %>:
 </table>
 <br>
 
-Users currently in <%= @club_row.title %>:
-<table border="1">
-  <tr>
-    <th>
-      Username
-    </th>
+<h2>Users currently in <%= @club_row.title %></h2>
+<table class="table table-hover table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Username
+      </th>
 
-    <th>
-      Role
-    </th>
+      <th>
+        Role
+      </th>
 
-    <th>
-      View Profile
-    </th>
-  </tr>
+      <th>
+        View Profile
+      </th>
+    </tr>
+  </thead>
 
    <% @membership_rows.each do |member| %>
   <tr>
@@ -71,7 +75,7 @@ Users currently in <%= @club_row.title %>:
     </td>
       
     <td>
-      <a class="nav-link" href="/profile/<%= member.users_id %>">User Profile</a>
+      <a class="btn btn-secondary" class="nav-link" href="/view_profile/<%= member.users_id %>">User Profile</a>
     </td>
   </tr>
   

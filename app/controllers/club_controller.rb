@@ -1,7 +1,7 @@
 class ClubController < ApplicationController
   
   def show_clubs
-    @membership_rows = Membership.where({ :users_id => current_user.id, :goes_to => "clubs_table" })
+    @membership_rows = Membership.where({ :users_id => current_user.id, :goes_to => "clubs_table" }).order({ :id => :desc })
     render({ :template => "club_templates/show_club_memberships.html.erb" })
   end
 
@@ -31,7 +31,7 @@ class ClubController < ApplicationController
   def view_club
     club_id = params.fetch("club_id")
     @club_row = Club.where({ :id => club_id }).at(0)
-    @season_rows = Season.where({ :club_id => club_id})
+    @season_rows = Season.where({ :club_id => club_id}).order({ :id => :desc })
     @membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
 
     #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.

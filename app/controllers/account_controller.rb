@@ -21,14 +21,20 @@ class AccountController < ApplicationController
 
     updated_account.save
 
-    
+    flash[:notice] = "Your profile was successfully updated!"
 
-    redirect_to("/profile")
+    redirect_to("/profile/" + @account_id)
   end
 
   def show_account
     @account_info = Account.where({ :user_id => current_user.id })
     render({ :template => "account_templates/profile_page.html.erb" })
+  end
+
+  def view_user_profile
+    @user_profile_id = params.fetch("user_id")
+    @account_info = User.where({ :id => @user_profile_id }).at(0)
+    render({ :template => "account_templates/view_user_profile.html.erb" })
   end
 
 
