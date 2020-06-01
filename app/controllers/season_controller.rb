@@ -6,7 +6,12 @@ class SeasonController < ApplicationController
   end
 
   def view_season
-
+    club_id = params.fetch("club_id")
+    season_id = params.fetch("season_id")
+    @club_row = Club.where({ :id => club_id }).at(0)
+    @season_row = Season.where({ :id => season_id}).at(0)
+    @market_rows = @season_row.markets
+    @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
     render({ :template => "season_templates/season_details.html.erb" })
   end
   

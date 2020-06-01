@@ -1,1 +1,78 @@
-<h1>Season X</h1>
+<h1><%= @season_row.title %></h1>
+<div><%= @season_row.description %></div>
+<div>
+  <a href="/clubs/<%= @club_row.id %>">Go to associated Club page. (<%= @club_row.title %>)</a>
+</div>
+<br>
+<% if @market_rows.present? %>
+Markets available in <%= @season_row.title %>:
+<table border="1">
+  <tr>
+    <th>
+      Market Title
+    </th>
+
+    <th>
+      Market Description
+    </th>
+
+    <th></th>
+  </tr>
+
+  <!-- Fix formatting to make it tile based instead of table based -->
+  <!-- Put users table on the left and the tile based seasons in the middle/right -->
+  <!-- add conditional to show 'there are no markets here' -->
+  <% @market_rows.each do |market| %>
+  <tr>
+    <td>
+      <%= market.title %>
+    </td>
+
+    <td>
+      <%= market.description %>
+    </td>
+
+    <td>
+      <a href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a>
+    </td>
+  </tr>
+  
+  <% end %>
+</table>
+<% else %>
+There do not appear to be any markets active in this Season.
+<% end %>
+<br>
+
+Users currently in <%= @season_row.title %>:
+<table border="1">
+  <tr>
+    <th>
+      Username
+    </th>
+
+    <th>
+      Role
+    </th>
+
+    <th>
+      View Profile
+    </th>
+  </tr>
+
+   <% @membership_rows.each do |member| %>
+  <tr>
+    <td>
+      <%= User.where({ :id => member.users_id}).at(0).email %>
+    </td>
+    <td>
+      <%= member.category %>
+    </td>
+      
+    <td>
+      <a class="nav-link" href="/profile/<%= member.users_id %>">User Profile</a>
+    </td>
+  </tr>
+  
+  <% end %>
+</table>

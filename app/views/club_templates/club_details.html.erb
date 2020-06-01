@@ -3,6 +3,11 @@
 <div>
   <%= @club_row.description %>
 </div>
+<% if @owner_user_id == current_user.id %>
+  <br>
+    <a href="/clubs/manage/<%= @club_row.id %>">Manage Club</a>
+  <br>
+<% end %>
 <br>
 Seasons available in <%= @club_row.title %>:
 <table border="1">
@@ -52,7 +57,7 @@ Users currently in <%= @club_row.title %>:
     </th>
 
     <th>
-    View Profile
+      View Profile
     </th>
   </tr>
 
@@ -66,7 +71,7 @@ Users currently in <%= @club_row.title %>:
     </td>
       
     <td>
-      Go to User Profile
+      <a class="nav-link" href="/profile/<%= member.users_id %>">User Profile</a>
     </td>
   </tr>
   

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get("/test_page", { :controller => "test", :action => "test_mailgun" })
 
   #account routes
-  get("/profile", { :controller => "account", :action => "show_account" })
+  get("/profile/:user_id", { :controller => "account", :action => "show_account" })
 
   post("/create_new_account/:user_id", { :controller => "account", :action => "create_account" })
 
@@ -20,6 +20,9 @@ Rails.application.routes.draw do
   post("/create_new_club", { :controller => "club", :action => "create_club" })
   get("/my_clubs", { :controller => "club", :action => "show_clubs" })
   get("/clubs/:club_id", { :controller => "club", :action => "view_club" })
+  get("/clubs/manage/:club_id", { :controller => "club", :action => "manage_club" })
+  patch("/update_club_details/:club_id", { :controller => "club", :action => "update_club_details"})
+
 
   #season routes
   get("/new_season", { :controller => "season", :action => "season_create_form" })
@@ -33,5 +36,8 @@ Rails.application.routes.draw do
   get("/my_markets", { :controller => "market", :action => "show_markets" })
   get("/markets/:club_id/:market_id/:market_id", { :controller => "market", :action => "view_market" })
 
+  # Membership routes
+    #club memberships
+    post("/add_club_memberships/:club_id", { :controller => "membership", :action => "add_club_member"})
 
 end
