@@ -5,6 +5,30 @@ class SeasonController < ApplicationController
     render({ :template => "season_templates/show_season_memberships.html.erb" })
   end
 
+  def manage_season
+    club_id = params.fetch("club_id")
+    season_id = params.fetch("season_id")
+    @club_row = Club.where({ :id => club_id }).at(0)
+    @season_row = Season.where({ :id => season_id }).at(0)
+    @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+    render({ :template => "season_templates/manage_season_page.html.erb" })
+  end
+
+  def update_season_details
+    @club_id = params.fetch("club_id")
+    @season_id = params.fetch("season_id")
+    @updated_title = params.fetch("updated_season_title")
+    @updated_description = params.fetch("updated_season_description")
+  
+    updated_season_details = Season.where({ :id => @season_id }).at(0)
+    updated_season_details.title = @updated_title
+    updated_season_details.description = @updated_description
+    updated_season_details.save
+
+    flash[:notice] = "Season Details were successfully updated!"
+    redirect_to("/seasons/manage/" + @club_id.to_s + "/"+ @season_id.to_s)
+  end
+
   def view_season
     club_id = params.fetch("club_id")
     season_id = params.fetch("season_id")
@@ -12,6 +36,9 @@ class SeasonController < ApplicationController
     @season_row = Season.where({ :id => season_id}).at(0)
     @market_rows = @season_row.markets
     @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+
+    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
+    @owner_user_id = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
     render({ :template => "season_templates/season_details.html.erb" })
   end
   

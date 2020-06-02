@@ -1,31 +1,31 @@
-<h1>Manage Club</h1>
+<h1>Manage Season</h1>
 
 <div class="col-md-6 offset-md-3">
   <div class="jumbotron">
-    <h2>Manage Club Details</h2>
+    <h2>Manage Season Details</h2>
       <br>
-      <form action="/update_club_details/<%= @club_row.id %>" method="post">
+      <form action="/update_season_details/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
         
         <input type="hidden" name="_method" value="patch">
-        <label for="update_club_title">What is the new title of your club?</label>
-        <input id="update_club_title" type="text" name="updated_club_title" placeholder="Enter a title..." value="<%= @club_row.title %>">
+        <label for="update_season_title">What is the new title of your season?</label>
+        <input id="update_season_title" type="text" name="updated_season_title" placeholder="Enter a title..." value="<%= @season_row.title %>">
 
-        <label for="update_club_description">What is the description of your club?</label>
-        <input id="update_club_description" type="text" name="updated_club_description" placeholder="Enter a description..." value="<%= @club_row.description %>">
+        <label for="update_season_description">What is the description of your season?</label>
+        <input id="update_season_description" type="text" name="updated_season_description" placeholder="Enter a description..." value="<%= @season_row.description %>">
 
         <!-- Add picture and a password fields in the future -->
         <br>
         <br>
-        <button>Update Club Details</button>
+        <button>Update Season Details</button>
       </form>
   </div>
 </div>
 <br>
 <div class="col-md-6 offset-md-3">
   <div class="jumbotron">
-    <h2>Add Club Member</h2>
+    <h2>Add Season Member</h2>
     <br>
-      <form action="/add_club_memberships/<%= @club_row.id %>" method="post">
+      <form action="/add_season_memberships/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
         
         <!-- Update to involve search -->
         <label for="Add_member_id">What is the id of the member you would like to add?</label>
@@ -43,7 +43,7 @@
 <br>
 <div class="col-md-6 offset-md-3">
   <div class="jumbotron">
-    Users currently in <%= @club_row.title %>:
+    Users currently in <%= @season_row.title %>:
     <table class="table table-hover table-striped">
       <thead class="thead-dark">
         <tr>

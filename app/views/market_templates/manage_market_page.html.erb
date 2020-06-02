@@ -1,0 +1,82 @@
+<h1>Manage Market</h1>
+
+<div class="col-md-6 offset-md-3">
+  <div class="jumbotron">
+    <h2>Manage Market Details</h2>
+      <br>
+      <form action="/update_market_details/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+        
+        <input type="hidden" name="_method" value="patch">
+        <label for="update_market_title">What is the new title of your market?</label>
+        <input id="update_market_title" type="text" name="updated_market_title" placeholder="Enter a title..." value="<%= @market_row.title %>">
+
+        <label for="update_market_description">What is the description of your market?</label>
+        <input id="update_market_description" type="text" name="updated_market_description" placeholder="Enter a description..." value="<%= @market_row.description %>">
+
+        <!-- Add picture and a password fields in the future -->
+        <br>
+        <br>
+        <button>Update Market Details</button>
+      </form>
+  </div>
+</div>
+<br>
+<div class="col-md-6 offset-md-3">
+  <div class="jumbotron">
+    <h2>Add Market Contract</h2>
+    <br>
+      <form action="/add_market_contract/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+        
+        <label for="new_contract_title">What is the title of the contract you would like to add?</label>
+        <input id="new_contract_title" type="text" name="contract_title" placeholder="Enter a title...">
+
+        <label for="new_contract_description">What is the description of the contract you would like to add?</label>
+        <input id="new_contract_description" type="text" name="contract_description" placeholder="Enter a description...">
+
+        <label for="new_contract_starting_price">What price would you like to set the contract at initially? Must be a number between $0.00 and $1.00</label>
+        $<input id="new_contract_starting_price" type="text" name="contract_starting_price" placeholder="Enter a price between $0.00 and $1.00...">
+
+        <br>
+        <button>Add Contract</button>
+      </form>
+  </div>
+</div>
+<br>
+<div class="col-md-6 offset-md-3">
+  <div class="jumbotron">
+    Users currently in <%= @market_row.title %>:
+    <table class="table table-hover table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>
+            Username
+          </th>
+
+          <th>
+            Role
+          </th>
+
+          <th>
+            View Profile
+          </th>
+        </tr>
+      </thead>
+
+      <% @membership_rows.each do |member| %>
+      <tr>
+        <td>
+          <%= User.where({ :id => member.users_id}).at(0).email %>
+        </td>
+        <td>
+          <%= member.category %>
+        </td>
+          
+        <td>
+          <a class="nav-link btn btn-secondary" href="/profile/<%= member.users_id %>">User Profile</a>
+        </td>
+      </tr>
+      
+      <% end %>
+    </table>
+  </div>
+</div>

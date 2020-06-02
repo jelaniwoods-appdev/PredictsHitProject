@@ -5,6 +5,12 @@
   <a class="btn btn-secondary" href="/clubs/<%= @club_row.id %>">Go to Season's Club page. (<%= @club_row.title %>)</a>
 </div>
 <br>
+<% if @owner_user_id == current_user.id %>
+  <br>
+    <a class="btn btn-secondary" href="/seasons/manage/<%= @club_row.id %>/<%= @season_row.id %>">Manage Season</a>
+  <br>
+<% end %>
+<br>
 <% if @market_rows.present? %>
 <h2>Markets available in <%= @season_row.title %></h2>
 <table class="table table-hover table-striped">

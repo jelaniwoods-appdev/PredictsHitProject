@@ -1,1 +1,9 @@
-<h1>Specific Market Page</h1>
+<h1><%= @market_row.title %></h1>
+<br>
+<div><%= @market_row.description %></div>
+<% if @owner_user_id == current_user.id %>
+  <br>
+    <a class="btn btn-secondary" href="/markets/manage/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>">Manage Market</a>
+  <br>
+<% end %>
+<br>
