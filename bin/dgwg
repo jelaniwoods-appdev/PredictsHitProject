@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+# wget  -O bin/dgwg "https://tinyurl.com/dgwg" && chmod 777 bin/dgwg && bin/dgwg
+require "open-uri"
+
+file_path = "Gemfile"
+
+gemfile = File.open(file_path, File::RDWR)
+
+contents = gemfile.read
+new_contents = contents.gsub(", branch: 'spring2020'", "")
+
+File.open(file_path, 'w') { |file| file.write(new_contents) }
+
+configru_contents = "require_relative 'config/environment'\n\nrun Rails.application"
+config_file = File.open("config.ru", File::RDWR)
+
+File.open(config_file, 'w') { |file| file.write(configru_contents) }
+
+system "bundle install"

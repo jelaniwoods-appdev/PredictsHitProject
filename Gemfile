@@ -18,7 +18,7 @@ gem 'faker'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'execjs'
-gem 'therubyracer', :platforms => :ruby
+gem 'mini_racer'
 gem 'sendgrid'
 gem "mailgun-ruby"
 gem 'carrierwave', '~> 2.1'
@@ -39,7 +39,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'sqlite3', '~> 1.4.1'
   gem 'table_print'
-  gem 'web_git', github: 'firstdraft/web_git', branch: 'spring2020'
+  gem 'web_git', github: 'firstdraft/web_git'
 end
 
 group :development do
