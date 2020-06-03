@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  
+  skip_before_action :authenticate_user!
   def show_homepage
     render({ :template => "home_templates/index.html.erb" })
   end

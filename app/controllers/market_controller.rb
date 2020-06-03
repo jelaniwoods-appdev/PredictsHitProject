@@ -13,6 +13,7 @@ class MarketController < ApplicationController
     @club_row = Club.where({ :id => club_id }).at(0)
     @season_row = Season.where({ :id => season_id }).at(0)
     @market_row = Market.where({ :id => market_id }).at(0)
+    @contract_rows = @market_row.contracts
     @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
 
     render({ :template => "market_templates/manage_market_page.html.erb" })
@@ -42,6 +43,7 @@ class MarketController < ApplicationController
     @club_row = Club.where({ :id => @club_id }).at(0)
     @season_row = Season.where({ :id => @season_id}).at(0)
     @market_row = Market.where({ :id => @market_id}).at(0)
+    @contract_rows = @market_row.contracts
     @membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
     #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets.

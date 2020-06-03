@@ -7,3 +7,109 @@
   <br>
 <% end %>
 <br>
+
+
+<% if @contract_rows.present? %>
+<h2>Contracts available in <%= @market_row.title %></h2>
+<table class="table table-hover table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Contract Title
+      </th>
+
+      <th>
+        Price
+      </th>
+
+      <th>
+        Buy Yes
+      </th>
+
+      <th>
+        Buy No
+      </th>
+
+      <th>
+        Sell Yes
+      </th>
+
+      <th>
+        Sell No
+      </th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <% @contract_rows.each do |contract| %>
+  <tr>
+    <td>
+      <%= contract.title %>
+    </td>
+
+    <td>
+      <%= number_to_currency(contract.price) %>
+    </td>
+
+    <td>
+      
+    </td>
+
+    <td>
+      
+    </td>
+
+    <td>
+      
+    </td>
+
+    <td>
+      
+    </td>
+
+    <td>
+      <a class="btn btn-secondary" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>">Go to Contract</a>
+    </td>
+  </tr>
+  
+  <% end %>
+</table>
+<% else %>
+<h2>There are no active contracts in this Market.</h2>
+<% end %>
+<br>
+
+<h2>Users currently in <%= @season_row.title %></h2>
+<table class="table table-hover table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>
+        Username
+      </th>
+
+      <th>
+        Role
+      </th>
+
+      <th>
+        View Profile
+      </th>
+    </tr>
+  </thead>
+
+   <% @membership_rows.each do |member| %>
+  <tr>
+    <td>
+      <%= User.where({ :id => member.users_id}).at(0).email %>
+    </td>
+    <td>
+      <%= member.category %>
+    </td>
+      
+    <td>
+      <a class="btn btn-secondary" class="nav-link" href="/view_profile/<%= member.users_id %>">User Profile</a>
+    </td>
+  </tr>
+  
+  <% end %>
+</table>

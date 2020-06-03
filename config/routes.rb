@@ -44,6 +44,9 @@ Rails.application.routes.draw do
   
   #contract routes
   post("/add_market_contract/:club_id/:season_id/:market_id", { :controller => "contract", :action => "add_contract" })
+  get("/contracts/:club_id/:season_id/:market_id/:contract_id", { :controller => "contract", :action => "view_contract" })
+  get("/contracts/manage/:club_id/:season_id/:market_id/:contract_id", { :controller => "contract", :action => "manage_contract" })
+  patch("/update_contract_details/:club_id/:season_id/:market_id/:contract_id", { :controller => "contract", :action => "update_contract_details"})
 
   # Membership routes
     #club memberships
