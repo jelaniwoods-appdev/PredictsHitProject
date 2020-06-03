@@ -21,10 +21,10 @@
           <br>
           <br>
           <br>
-          <button class="btn btn-secondary">Update Profile</button>
+          <button class="btn btn-secondary btn-block">Update Profile</button>
         </form>
       <br>
-      <a href="/view_profile/<%= @account_info.at(0).id %>" class="btn btn-secondary">View your profile</a>
+      <a class="btn btn-secondary btn-block" href="/view_profile/<%= @account_info.at(0).id %>">View your profile</a>
     <% else %>
       <div>It looks like you signed up your email but still need to set up an account. Please choose a username.</div>
       <br>
@@ -33,7 +33,7 @@
           <label for="create_username">Username</label>
           <input id="create_username" type="text" name="new_username" placeholder="Enter a username...">
           
-          <button>Create Account</button>
+          <button class="btn btn-secondary btn-block">Create Account</button>
         </form>
       </div>
     <% end %>
