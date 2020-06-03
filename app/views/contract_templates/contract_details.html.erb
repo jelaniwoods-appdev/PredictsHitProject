@@ -1,11 +1,11 @@
-<h1><%= @contract_row.title %></h1>
+<h1 class="center_title"><%= @contract_row.title %></h1>
 <br>
-<div>
+<div class="center_title">
   <%= @contract_row.description %>
 </div>
 <% if @owner_user_id == current_user.id %>
   <br>
-    <a class="btn btn-secondary" href="/contracts/manage/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= @contract_row.id %>">Manage Contract</a>
+    <div class="center_title"><a class="btn btn-secondary" href="/contracts/manage/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= @contract_row.id %>">Manage Contract</a></div>
   <br>
 <% end %>
 <br>

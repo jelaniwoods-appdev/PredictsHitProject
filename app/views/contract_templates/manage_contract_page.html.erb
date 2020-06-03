@@ -1,22 +1,23 @@
-<h1>Manage Contract</h1>
+<h1 class="center_title">Manage Contract</h1>
 
 <div class="col-md-6 offset-md-3">
   <div class="jumbotron">
-    <h2>Manage Contract Details</h2>
+    <h2 class="center_title">Contract Details</h2>
       <br>
       <form action="/update_contract_details/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= @contract_row.id %>" method="post">
-        
-        <input type="hidden" name="_method" value="patch">
-        <label for="update_contract_title">What is the new title of your contract?</label>
-        <input id="update_contract_title" type="text" name="updated_contract_title" placeholder="Enter a title..." value="<%= @contract_row.title %>">
+        <div class="form-group">
+          <input type="hidden" name="_method" value="patch">
+          <label for="update_contract_title">What is the new title of your contract?</label>
+          <input class="form-control" id="update_contract_title" type="text" name="updated_contract_title" placeholder="Enter a title..." value="<%= @contract_row.title %>">
+          <br>
+          <label for="update_contract_description">What is the new description of your contract?</label>
+          <input class="form-control" id="update_contract_description" type="text" name="updated_contract_description" placeholder="Enter a description..." value="<%= @contract_row.description %>">
 
-        <label for="update_contract_description">What is the new description of your contract?</label>
-        <input id="update_contract_description" type="text" name="updated_contract_description" placeholder="Enter a description..." value="<%= @contract_row.description %>">
-
-        <!-- Add picture field in the future -->
-        <br>
-        <br>
-        <button>Update Contract Details</button>
+          <!-- Add picture field in the future -->
+          <br>
+          <br>
+          <button class="btn btn-secondary btn-block">Update Contract Details</button>
+        </div>
       </form>
   </div>
 </div>

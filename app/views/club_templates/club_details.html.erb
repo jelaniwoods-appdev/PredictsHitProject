@@ -1,15 +1,10 @@
-<h1><%= @club_row.title %></h1>
+<h1 class="center_title"><%= @club_row.title %></h1>
 <br>
-<div>
+<div class="center_title">
   <%= @club_row.description %>
 </div>
-<% if @owner_user_id == current_user.id %>
-  <br>
-    <a class="btn btn-secondary" href="/clubs/manage/<%= @club_row.id %>">Manage Club</a>
-  <br>
-<% end %>
 <br>
-<h2>Seasons available in <%= @club_row.title %></h2>
+<h2 class="center_title">Seasons available in <%= @club_row.title %></h2>
 <table class="table table-hover table-striped">
   <thead class="thead-dark">
     <tr>
@@ -47,7 +42,7 @@
 </table>
 <br>
 
-<h2>Users currently in <%= @club_row.title %></h2>
+<h2 class="center_title">Users currently in <%= @club_row.title %></h2>
 <table class="table table-hover table-striped">
   <thead class="thead-dark">
     <tr>
@@ -81,3 +76,10 @@
   
   <% end %>
 </table>
+<br>
+<% if @owner_user_id == current_user.id %>
+  
+  <br>
+    <div class="center_title"><a class="btn btn-secondary btn-block" href="/clubs/manage/<%= @club_row.id %>">Manage Club</a></div>
+  <br>
+<% end %>

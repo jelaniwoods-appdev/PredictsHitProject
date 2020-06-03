@@ -1,18 +1,8 @@
-<h1><%= @season_row.title %></h1>
-<div><%= @season_row.description %></div>
-<br>
-<div>
-  <a class="btn btn-secondary" href="/clubs/<%= @club_row.id %>">Go to Season's Club page. (<%= @club_row.title %>)</a>
-</div>
-<br>
-<% if @owner_user_id == current_user.id %>
-  <br>
-    <a class="btn btn-secondary" href="/seasons/manage/<%= @club_row.id %>/<%= @season_row.id %>">Manage Season</a>
-  <br>
-<% end %>
+<h1 class="center_title"><%= @season_row.title %></h1>
+<div class="center_title"><%= @season_row.description %></div>
 <br>
 <% if @market_rows.present? %>
-<h2>Markets available in <%= @season_row.title %></h2>
+<h2 class="center_title">Markets available in <%= @season_row.title %></h2>
 <table class="table table-hover table-striped">
   <thead class="thead-dark">
     <tr>
@@ -53,7 +43,7 @@
 <% end %>
 <br>
 
-<h2>Users currently in <%= @season_row.title %></h2>
+<h2 class="center_title">Users currently in <%= @season_row.title %></h2>
 <table class="table table-hover table-striped">
   <thead class="thead-dark">
     <tr>
@@ -87,3 +77,15 @@
   
   <% end %>
 </table>
+
+<br>
+
+<div class="center_title">
+  <a class="btn btn-secondary btn-block" href="/clubs/<%= @club_row.id %>">Go to Season's Club page. (<%= @club_row.title %>)</a>
+</div>
+<br>
+<% if @owner_user_id == current_user.id %>
+  <br>
+    <div class="center_title"><a class="btn btn-secondary btn-block" href="/seasons/manage/<%= @club_row.id %>/<%= @season_row.id %>">Manage Season</a></div>
+  <br>
+<% end %>

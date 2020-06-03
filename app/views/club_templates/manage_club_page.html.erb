@@ -1,49 +1,53 @@
-<h1>Manage Club</h1>
+<div class="col-md-6 offset-md-3">
+    <h1 class="center_title">Manage Club</h1>
+</div>
 
 <div class="col-md-6 offset-md-3">
   <div class="jumbotron">
-    <h2>Manage Club Details</h2>
+    <h2 class="center_title">Club Details</h2>
       <br>
       <form action="/update_club_details/<%= @club_row.id %>" method="post">
-        
-        <input type="hidden" name="_method" value="patch">
-        <label for="update_club_title">What is the new title of your club?</label>
-        <input id="update_club_title" type="text" name="updated_club_title" placeholder="Enter a title..." value="<%= @club_row.title %>">
+        <div class="form-group">
+          <input type="hidden" name="_method" value="patch">
+          <label for="update_club_title">What is the new title of your club?</label>
+          <input class="form-control" id="update_club_title" type="text" name="updated_club_title" placeholder="Enter a title..." value="<%= @club_row.title %>">
+          <br>
+          <label for="update_club_description">What is the new description of your club?</label>
+          <input class="form-control" id="update_club_description" type="text" name="updated_club_description" placeholder="Enter a description..." value="<%= @club_row.description %>">
 
-        <label for="update_club_description">What is the description of your club?</label>
-        <input id="update_club_description" type="text" name="updated_club_description" placeholder="Enter a description..." value="<%= @club_row.description %>">
-
-        <!-- Add picture and a password fields in the future -->
-        <br>
-        <br>
-        <button>Update Club Details</button>
+          <!-- Add picture and a password fields in the future -->
+          <br>
+          <br>
+          <button class="btn btn-secondary btn-block">Update Club Details</button>
+        </div>
       </form>
   </div>
 </div>
 <br>
 <div class="col-md-6 offset-md-3">
   <div class="jumbotron">
-    <h2>Add Club Member</h2>
+    <h2 class="center_title">Add Club Member</h2>
     <br>
       <form action="/add_club_memberships/<%= @club_row.id %>" method="post">
-        
-        <!-- Update to involve search -->
-        <label for="Add_member_id">What is the id of the member you would like to add?</label>
-        <input id="add_member_id" type="text" name="member_id" placeholder="Enter a user ID...">
-
-        <!-- Update to involve drop down options -->
-        <label for="Add_member_category">What permissions would you like to give this member? Options: member or admin. Note: Once added, you cannot remove members. </label>
-        <input id="Add_member_category" type="text" name="member_category" placeholder='Enter "member" or "admin"'>
-        <br>
-        <br>
-        <button>Add Member</button>
+        <div class="form-group">
+          <!-- Update to involve search -->
+          <label for="Add_member_id">What is the id of the member you would like to add?</label>
+          <input class="form-control" id="add_member_id" type="text" name="member_id" placeholder="Enter a user ID...">
+          <br>
+          <!-- Update to involve drop down options -->
+          <label for="Add_member_category">What permissions would you like to give this member? Options: member or admin. Note: Once added, you cannot remove members. </label>
+          <input class="form-control" id="Add_member_category" type="text" name="member_category" placeholder='Enter "member" or "admin"'>
+          <br>
+          <br>
+          <button class="btn btn-secondary btn-block">Add Member</button>
+        </div>
       </form>
   </div>
 </div>
 <br>
 <div class="col-md-6 offset-md-3">
   <div class="jumbotron">
-    Users currently in <%= @club_row.title %>:
+    <h2 class="center_title">Users currently in <%= @club_row.title %></h2>
     <table class="table table-hover table-striped">
       <thead class="thead-dark">
         <tr>
