@@ -52,6 +52,7 @@ class SeasonController < ApplicationController
     @new_season.club_id = params.fetch("associated_club_id")
     @new_season.title = params.fetch("season_title")
     @new_season.description = params.fetch("season_description")
+    @new_season.fund = params.fetch("season_fund")
     @new_season.status = "active"
     @new_season.save
     #Create a new membership to this season and assign the creator of the season to be the 'owner'
@@ -63,6 +64,14 @@ class SeasonController < ApplicationController
     @new_membership.category = "owner"
     @new_membership.save
     
+    #Create a new asset associated to this membership based on funding amount
+    @new_asset = Asset.new
+    @new_asset.membership_id = @new_membership.id
+    @new_asset.season_id = @new_season.id
+    @new_asset.category = "season_fund"
+    @new_asset.quantity = params.fetch("season_fund")
+    @new_asset.save
+
     redirect_to("/")
   end
 

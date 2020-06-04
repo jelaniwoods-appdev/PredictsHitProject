@@ -62,8 +62,9 @@ class MarketController < ApplicationController
     @new_market.season_id = params.fetch("associated_season_id")
     @new_market.title = params.fetch("market_title")
     @new_market.description = params.fetch("market_description")
-    @new_market.price = params.fetch("market_price")
-    @new_market.quantity = params.fetch("market_quantity")
+      #see relevant html.erb page for note on these. uncomment if change there
+        #@new_market.price = params.fetch("market_price")
+        #@new_market.quantity = params.fetch("market_quantity")
     @new_market.status = "active"
     @new_market.save
     
