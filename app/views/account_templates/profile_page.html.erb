@@ -1,41 +1,36 @@
-<div class="col-md-6 offset-md-3">
-  <div class="jumbotron">
-    <h1 class="center_title">My Profile</h1>
-    <br>
-    <!-- Will later update this to automatically create a basic account (username and default profile pic) when signing up through devise. So this will only exist for editing account purposes. -->
-    <% if @account_info.exists? %>
-      <div>Would you like to edit your profile information?</div>
+<% if @account_info.id == current_user.id %>
+
+<!-- Add edit form -->
+  <div class="col-md-6 offset-md-3">
+    <div class="jumbotron">
+      <h1 class="center_title">My Profile</h1>
       <br>
-        <form action="/edit_account/<%= @account_info.at(0).id %>" method="post">
-          <label for="edit_username">Username:</label>
-          <input id="edit_username" type="text" name="edited_username" placeholder="Enter a new username..." value="<%= @account_info.at(0).username %>" class="form-control">
-          <br>
-          <br>
-          Current Profile Picture:
-          <br>
-          <img src="<%= @account_info.at(0).prof_pic %>" height = 200>
-          <!-- Update to use amazon services with file upload options -->
-          <label for="edit_prof_pic">New Profile Picture URL:</label>
-          <br>
-          <input id="edit_prof_pic" type="text" name="edited_prof_pic" class="form-control">
-          <br>
-          <br>
-          <br>
-          <button class="btn btn-secondary btn-block">Update Profile</button>
-        </form>
+      <div>Username: <%= @account_info.username %></div>
       <br>
-      <a class="btn btn-secondary btn-block" href="/view_profile/<%= @account_info.at(0).id %>">View your profile</a>
-    <% else %>
-      <div>It looks like you signed up your email but still need to set up an account. Please choose a username.</div>
+      <div>Email Address: <%= @account_info.email %></div>
       <br>
-      <div class="form-group">
-        <form action="/create_new_account/<%= current_user.id %>" method="post">
-          <label for="create_username">Username</label>
-          <input id="create_username" type="text" name="new_username" placeholder="Enter a username...">
-          
-          <button class="btn btn-secondary btn-block">Create Account</button>
-        </form>
-      </div>
-    <% end %>
+      <div>Current Profile Picture:</div>
+      <br>
+      <div><img src="<%= @account_info.prof_pic %>" height = 200></div>
+      <br>
+      <div class="center_title"><a class="btn btn-secondary btn-block" href="/account/manage/<%= @account_info.id %>">Manage Account</a></div>
+      <br>
+    </div>
   </div>
-</div>
+
+
+<% else %>
+
+  <div class="col-md-6 offset-md-3">
+    <div class="jumbotron">
+      <h1 class="center_title">User Profile</h1>
+      <br>
+      <div>Username: <%= @account_info.username %></div>
+      <br>
+      <div>Current Profile Picture:</div>
+      <br>
+      <div><img src="<%= @account_info.prof_pic %>" height = 200></div>   
+    </div>
+  </div>
+
+<% end %>

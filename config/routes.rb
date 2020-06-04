@@ -10,12 +10,10 @@ Rails.application.routes.draw do
 
   #account routes
   get("/profile/:user_id", { :controller => "account", :action => "show_account" })
+  get("/account/manage/:user_id", { :controller => "account", :action => "manage_account_page" })
 
-  post("/create_new_account/:user_id", { :controller => "account", :action => "create_account" })
+  patch("/update_account/:account_id", { :controller => "account", :action => "update_account" })
 
-  post("/edit_account/:account_id", { :controller => "account", :action => "edit_account" })
-
-  get("/view_profile/:user_id", { :controller => "account", :action => "view_user_profile" })
 
   #club routes
   get("/new_club", { :controller => "club", :action => "club_create_form" })

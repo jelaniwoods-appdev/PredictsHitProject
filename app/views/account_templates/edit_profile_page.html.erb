@@ -1,0 +1,23 @@
+  <h1 class="center_title">Manage Account</h1>
+  
+  <div class="col-md-6 offset-md-3">
+    <div class="jumbotron">
+      <h1 class="center_title">Account Details</h1>
+      <br>
+      <form action="/update_account/<%= @account_info.id %>" method="post">
+        <div class="form-group">
+          <input type="hidden" name="_method" value="patch">
+          
+          <label for="update_account_username">What username would you like to use?</label>
+          <input class="form-control" id="update_account_username" type="text" name="updated_username" placeholder="Enter a username..." value="<%= @account_info.username %>">
+          
+          <br>
+          <!-- Add picture edit options in the future -->
+          <br>
+          <button class="btn btn-secondary btn-block">Update Market Details</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
