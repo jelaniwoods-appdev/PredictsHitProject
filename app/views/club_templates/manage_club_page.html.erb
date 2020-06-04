@@ -67,7 +67,7 @@
       <% @membership_rows.each do |member| %>
       <tr>
         <td>
-          <%= User.where({ :id => member.users_id}).at(0).email %>
+          <%= User.where({ :id => member.users_id}).at(0).username %>
         </td>
         <td>
           <%= member.category %>

@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_31_181254) do
+ActiveRecord::Schema.define(version: 2020_06_04_183430) do
+
+  create_table "assets", force: :cascade do |t|
+    t.string "category"
+    t.decimal "quantity"
+    t.integer "user_id"
+    t.integer "season_id"
+    t.integer "contract_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contract_id"], name: "index_assets_on_contract_id"
+    t.index ["season_id"], name: "index_assets_on_season_id"
+    t.index ["user_id"], name: "index_assets_on_user_id"
+  end
 
   create_table "clubs", force: :cascade do |t|
     t.string "title"
