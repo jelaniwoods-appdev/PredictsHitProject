@@ -3,7 +3,7 @@ class CreateAssets < ActiveRecord::Migration[6.0]
     create_table :assets do |t|
       t.string :category
       t.decimal :quantity
-      t.references :user, index:true
+      t.references :membership, index:true
       t.references :season, index:true
       t.references :contract, index:true
 
