@@ -8,11 +8,10 @@ Rails.application.routes.draw do
   get("/support", { :controller => "home", :action => "show_support" })
   get("/test_page", { :controller => "test", :action => "test_mailgun" })
 
-  #account routes
-  get("/profile/:user_id", { :controller => "account", :action => "show_account" })
-  get("/account/manage/:user_id", { :controller => "account", :action => "manage_account_page" })
-
-  patch("/update_account/:account_id", { :controller => "account", :action => "update_account" })
+  #profile routes
+  get("/profile/:user_id", { :controller => "profile", :action => "show_profile" })
+  get("/profile/manage/:user_id", { :controller => "profile", :action => "manage_profile_page" })
+  patch("/update_profile/:user_id", { :controller => "profile", :action => "update_profile" })
 
 
   #club routes
