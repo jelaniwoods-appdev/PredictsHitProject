@@ -4,6 +4,7 @@ class CreateSeasons < ActiveRecord::Migration[6.0]
       t.string :status
       t.string :title
       t.text :description
+      t.decimal :fund
       t.string :picture
       t.string :password
       t.references :club, index:true

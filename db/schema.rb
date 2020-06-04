@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_183430) do
     t.string "status"
     t.string "title"
     t.text "description"
+    t.decimal "fund"
     t.string "picture"
     t.string "password"
     t.integer "club_id"

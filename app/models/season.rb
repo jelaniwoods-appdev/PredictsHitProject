@@ -4,6 +4,7 @@
 #
 #  id          :integer          not null, primary key
 #  description :text
+#  fund        :decimal(, )
 #  password    :string
 #  picture     :string
 #  status      :string
