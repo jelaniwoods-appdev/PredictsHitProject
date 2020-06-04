@@ -86,6 +86,10 @@
       </th>
 
       <th>
+        Season Fund
+      </th>
+
+      <th>
         View Profile
       </th>
     </tr>
@@ -99,7 +103,11 @@
     <td>
       <%= member.category %>
     </td>
-      
+    
+    <td>
+      $<%= member.assets.where({ :category => "season_fund"}).at(0).quantity %>
+    </td>
+
     <td>
       <a class="btn btn-secondary" class="nav-link" href="/profile/<%= member.users_id %>">User Profile</a>
     </td>

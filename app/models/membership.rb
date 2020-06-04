@@ -22,4 +22,5 @@ class Membership < ApplicationRecord
   belongs_to :user
   belongs_to :club
   belongs_to :season
+  has_many :assets
 end

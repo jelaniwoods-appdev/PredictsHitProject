@@ -56,6 +56,10 @@
       </th>
 
       <th>
+        Funds
+      </th>
+
+      <th>
         View Profile
       </th>
     </tr>
@@ -68,6 +72,10 @@
     </td>
     <td>
       <%= member.category %>
+    </td>
+
+    <td>
+      $<%= member.assets.where({ :category => "season_fund"}).at(0).quantity %>
     </td>
       
     <td>

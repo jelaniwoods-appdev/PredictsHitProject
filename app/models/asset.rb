@@ -19,4 +19,5 @@
 #
 
 class Asset < ApplicationRecord
+  belongs_to :membership
 end
