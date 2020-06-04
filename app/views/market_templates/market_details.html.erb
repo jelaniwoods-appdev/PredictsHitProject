@@ -46,19 +46,43 @@
     </td>
 
     <td>
-      
+      <form action="/buy_yes_contract/<%= contract.id %>" method="post">
+        <div class="form-group">
+          <label for="quantity_buy_yes_contract"></label>
+          <input class="form-control w-50 center_title" id="quantity_buy_yes_contract" type="quantity" name="quantity_buy_yes" placeholder="#">
+          <button class="btn btn-secondary w-50">Buy Yes</button>
+        </div>
+      </form>
     </td>
 
     <td>
-      
+      <form action="/buy_no_contract/<%= contract.id %>" method="post">
+        <div class="form-group">
+          <label for="quantity_buy_no_contract"></label>
+          <input class="form-control w-50 center_title" id="quantity_buy_no_contract" type="quantity" name="quantity_buy_no" placeholder="#">
+          <button class="btn btn-secondary w-50">Buy No</button>
+        </div>
+      </form>
     </td>
 
     <td>
-      
+      <form action="/sell_yes_contract/<%= contract.id %>" method="post">
+        <div class="form-group">
+          <label for="quantity_sell_yes_contract"></label>
+          <input class="form-control w-50 center_title" id="quantity_sell_yes_contract" type="quantity" name="quantity_sell_yes" placeholder="#">
+          <button class="btn btn-secondary w-50">Sell Yes</button>
+        </div>
+      </form>
     </td>
 
     <td>
-      
+      <form action="/sell_no_contract/<%= contract.id %>" method="post">
+        <div class="form-group">
+          <label for="quantity_sell_no_contract"></label>
+          <input class="form-control w-50 center_title" id="quantity_sell_no_contract" type="quantity" name="quantity_sell_no" placeholder="#">
+          <button class="btn btn-secondary w-50">Sell No</button>
+        </div>
+      </form>
     </td>
 
     <td>
