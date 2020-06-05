@@ -86,7 +86,9 @@ class ContractController < ApplicationController
     @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
     @user_starting_season_funds = @user_season_funds_row.quantity
     @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
-    asset_quantity_counter = 0
+    
+    #Confirm do not need to double check that the number is a positive integert.boolean :
+
 
     #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity").
     #If user does, skip step, otherwise, if user does not, create a new asset with a quantity of 0.
@@ -104,30 +106,76 @@ class ContractController < ApplicationController
     #add variable to track contract_asset_row now that we know it must exist:
     @contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
     
+    #set trackers and counters
+    asset_quantity_counter = 0
+    asset_remaining_tracker = @number_of_contracts.to_i
+    looper = asset_remaining_tracker
+    funds_remaining_tracker = @user_starting_season_funds
+    asset_price_tracker = @starting_contract_price
+
     #check if user has sufficient funds to buy one contract. If not, return them to the screen and alert them of insufficient funds.
     if @user_starting_season_funds < @starting_contract_price
       flash[:alert] = "Insufficient funds. Sell some assets or request more money from Season owner."
       redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
       return
     else
-      #(1) remove funds from user's season_funds, (2) add contract asset, (3) update contract price based on algorithm, (4)later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
-      
+      while looper > 0 
+        if funds_remaining_tracker > asset_price_tracker
+          
+          #reduce season funds by amount of current contract price
+          funds_remaining_tracker = funds_remaining_tracker - asset_price_tracker
+
+          #update asset quantity counter to reflect number of assets accumulated
+          asset_quantity_counter = asset_quantity_counter + 1
+
+          #update contract price based on algorithm. Start with simple algorithm that only adds 0.01 to contract price each time one is purchased.
+          asset_price_tracker = asset_price_tracker + 0.01
+
+          #update asset_remaining_tracker to reflect number of assets remaining to be fufilled
+        end
+
+        #update asset remaining tracker to reflect actions
+        looper = looper - 1
+
+      end
+
       #remove funds from user's season_funds
-      @user_season_funds_row.quantity = @user_season_funds_row.quantity - @starting_contract_price
-      @user_season_funds_row.save
+      #@user_season_funds_row.quantity = @user_season_funds_row.quantity - @starting_contract_price
+      #@user_season_funds_row.save
 
       #update contract quantity to reflect new purchase
-      @contract_asset_row.quantity = @contract_asset_row.quantity + 1
-      @contract_asset_row.save
+      #@contract_asset_row.quantity = @contract_asset_row.quantity + 1
+      #@contract_asset_row.save
 
       #update contract price based on algorithm. Start with simple algorithm that only adds 0.01 to contract price each time one is purchased.
-      @contract_row.price = @starting_contract_price + 0.01
-      @contract_row.save
+      #if @contract_row.price < 1
+        #@contract_row.price = @starting_contract_price + 0.01
+        #@contract_row.save
+      #end
 
     end
 
+    #(1) remove accumulated funds from user's season_funds, (2) add contract asset, (3) update contract price based on algorithm, (4)later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
+      #Update tables based on actions above.
 
-    flash[:notice] = @number_of_contracts + " contract(s) sucessfully purchased!"
+      #remove accumulated funds from user's season_funds. Consider updating method to be based on subtraction from current amount instead of current way.
+      @user_season_funds_row.quantity = funds_remaining_tracker
+      @user_season_funds_row.save
+
+      #update contract quantity to reflect new purchase
+      @contract_asset_row.quantity = @contract_asset_row.quantity + asset_quantity_counter
+      @contract_asset_row.save
+        
+      #update contract price based on accumulated new price based on current algo.
+      #Consider issues with multiple purchases in quick sucession. Better/safer way to do this?
+      @contract_row.price = asset_price_tracker
+      @contract_row.save
+
+    if asset_remaining_tracker == 0
+      flash[:notice] = "Yay! All " + asset_quantity_counter.to_s + " contract(s) were sucessfully purchased!"
+    else
+      flash[:notice] = "Your order has partially completed. You only had sufficient funds to purchase " + asset_quantity_counter.to_s + " contract(s)."
+    end
 
     redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
   end

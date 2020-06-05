@@ -44,12 +44,12 @@
     <td>
       <%= number_to_currency(contract.price) %>
     </td>
-
+<!-- Later: Force users to only enter postive integers -->
     <td>
       <form action="/buy_yes_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_buy_yes_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_buy_yes_contract" type="quantity" name="quantity_buy_yes" placeholder="#">
+          <input class="form-control w-50 center_title" id="quantity_buy_yes_contract" type="number" min="1" step="1" name="quantity_buy_yes">
           <button class="btn btn-secondary w-50">Buy Yes</button>
         </div>
       </form>
@@ -59,7 +59,7 @@
       <form action="/buy_no_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_buy_no_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_buy_no_contract" type="quantity" name="quantity_buy_no" placeholder="#">
+          <input class="form-control w-50 center_title" id="quantity_buy_no_contract" type="number" min="1" step="1" name="quantity_buy_no">
           <button class="btn btn-secondary w-50">Buy No</button>
         </div>
       </form>
@@ -69,7 +69,7 @@
       <form action="/sell_yes_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_sell_yes_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_sell_yes_contract" type="quantity" name="quantity_sell_yes" placeholder="#">
+          <input class="form-control w-50 center_title" id="quantity_sell_yes_contract" type="number" min="1" step="1" name="quantity_sell_yes">
           <button class="btn btn-secondary w-50">Sell Yes</button>
         </div>
       </form>
@@ -79,7 +79,7 @@
       <form action="/sell_no_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_sell_no_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_sell_no_contract" type="quantity" name="quantity_sell_no" placeholder="#">
+          <input class="form-control w-50 center_title" id="quantity_sell_no_contract" type="number" min="1" step="1" name="quantity_sell_no">
           <button class="btn btn-secondary w-50">Sell No</button>
         </div>
       </form>
