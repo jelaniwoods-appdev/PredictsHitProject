@@ -53,6 +53,10 @@ Rails.application.routes.draw do
     #post("/buy_no_contract/:contract_id", { :controller => "contract", :action => "buy_no_contracts"})
     #post("/sell_no_contract/:contract_id", { :controller => "contract", :action => "sell_no_contracts"})
 
+  #asset routes
+  patch("/update_season_funds/:club_id/:season_id", { :controller => "asset", :action => "update_season_funds"})
+
+
   # Membership routes
     #club memberships
   post("/add_club_memberships/:club_id", { :controller => "membership", :action => "add_club_member"})
