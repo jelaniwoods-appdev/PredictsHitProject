@@ -79,6 +79,7 @@ class ContractController < ApplicationController
     @market_id = @contract_row.market.id
     @season_id = @contract_row.market.season.id
     @club_id = @contract_row.market.season.club.id
+    
     @number_of_contracts = params.fetch("quantity_buy_yes")
     @starting_contract_price = @contract_row.price
     @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
@@ -87,7 +88,7 @@ class ContractController < ApplicationController
     @user_starting_season_funds = @user_season_funds_row.quantity
     @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
     
-    #Confirm do not need to double check that the number is a positive integert.boolean :
+    #Confirm do not need to double check that the number is a positive integer.
 
 
     #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity").
@@ -128,8 +129,8 @@ class ContractController < ApplicationController
           #update asset quantity counter to reflect number of assets accumulated
           asset_quantity_counter = asset_quantity_counter + 1
 
-          #update contract price based on algorithm. Start with simple algorithm that only adds 0.01 to contract price each time one is purchased.
-          if asset_price_tracker < 1.00
+          #update contract price based on algorithm. Start with simple algorithm that only adds 0.001 to contract price each time one is purchased.
+          if asset_price_tracker < 1.000
             asset_price_tracker = asset_price_tracker + 0.001
           end
 
@@ -173,7 +174,99 @@ class ContractController < ApplicationController
   
 
   def sell_yes_contracts
+    #set variables
+    @contract_id = params.fetch("contract_id")
+    @contract_row = Contract.where({ :id => @contract_id }).at(0)
+    @market_id = @contract_row.market.id
+    @season_id = @contract_row.market.season.id
+    @club_id = @contract_row.market.season.club.id
+    
     @number_of_contracts = params.fetch("quantity_sell_yes")
+    @starting_contract_price = @contract_row.price
+    @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
+    @user_asset_rows = @membership_row.assets
+    @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
+    @user_starting_season_funds = @user_season_funds_row.quantity
+    @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
+    
+    #Confirm do not need to double check that the number is a positive integer.
+
+    #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity").
+    #If user does, continue, otherwise, display error saying that user needs to purchase assets before they can sell.
+    if @starting_contract_asset_row.present?
+    else
+      flash[:alert] = "It looks like you don't have any of " + @contract_row.title + " to sell. You'll need to buy some contracts before you can sell them."
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      return
+    end
+
+    #add variable to track contract_asset_row now that we know it must exist:
+    @contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
+    
+    #set trackers and counters
+    asset_quantity_counter = 0
+    asset_remaining_tracker = @number_of_contracts.to_i
+    looper = asset_remaining_tracker
+    funds_remaining_tracker = @user_starting_season_funds
+    contracts_remaining_tracker = @contract_asset_row.quantity
+    asset_price_tracker = @starting_contract_price
+
+    #check if user has at least one contract to sell. If not, return them to the screen and alert them of insufficient contracts.
+    if @contract_asset_row.quantity < 1
+      flash[:alert] = "It looks like you don't have any of " + @contract_row.title + " to sell. You'll need to buy some contracts before you can sell them."
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      return
+    else
+      while looper > 0 
+        if contracts_remaining_tracker > 0
+          #increase season funds by amount of current contract price
+          funds_remaining_tracker = funds_remaining_tracker + asset_price_tracker
+
+          #update contracts_remaining_tracker to reflect the number of contracts remaining in user's account that can be sold
+          contracts_remaining_tracker = contracts_remaining_tracker - 1
+
+          #update contract price based on algorithm. Start with simple algorithm that only subtracts 0.001 from contract price each time one is sold.
+          if asset_price_tracker > 0.000
+            asset_price_tracker = asset_price_tracker - 0.001
+          end
+
+          #update asset_remaining_tracker to reflect number of assets remaining to be fufilled
+          asset_remaining_tracker = asset_remaining_tracker - 1
+          
+          #updated asset_quantity_counter to indicate how many were purchased
+          asset_quantity_counter = asset_quantity_counter + 1 
+        end
+
+        #update looper to remove one loop count
+        looper = looper - 1
+
+      end
+
+    end
+
+    #(1) add accumulated funds from user's season_funds, (2) add contract asset, (3) update contract price based on algorithm, (4)later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
+      #Update tables based on actions above.
+
+      #add accumulated funds to user's season_funds. Consider updating method to be based on addition from current amount instead of current way.
+      @user_season_funds_row.quantity = funds_remaining_tracker
+      @user_season_funds_row.save
+
+      #update contract quantity to reflect sale of contracts
+      @contract_asset_row.quantity = contracts_remaining_tracker
+      @contract_asset_row.save
+        
+      #update contract price based on accumulated new price based on current algo.
+      #Consider issues with multiple purchases in quick sucession. Better/safer way to do this?
+      @contract_row.price = asset_price_tracker
+      @contract_row.save
+
+    if asset_remaining_tracker == 0
+      flash[:notice] = "Yay! All " + asset_quantity_counter.to_s + " contract(s) were sucessfully sold!"
+    else
+      flash[:notice] = "Your order has partially completed. You only sold " + asset_quantity_counter.to_s + " contract(s)."
+    end
+
+    redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
 
   end
 

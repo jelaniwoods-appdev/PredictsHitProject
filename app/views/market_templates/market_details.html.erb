@@ -49,7 +49,7 @@
       <form action="/buy_yes_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_buy_yes_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_buy_yes_contract" type="number" min="1" step="1" max="9999" name="quantity_buy_yes">
+          <input class="form-control w-50 center_title" id="quantity_buy_yes_contract" type="number" min="1" step="1" max="9999" name="quantity_buy_yes" required>
           <button class="btn btn-secondary w-50">Buy</button>
         </div>
       </form>
@@ -59,7 +59,7 @@
       <form action="/sell_yes_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_sell_yes_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_sell_yes_contract" type="number" min="1" step="1" max="9999" name="quantity_sell_yes">
+          <input class="form-control w-50 center_title" id="quantity_sell_yes_contract" type="number" min="1" step="1" max="9999" name="quantity_sell_yes" required>
           <button class="btn btn-secondary w-50">Sell</button>
         </div>
       </form>
@@ -70,7 +70,7 @@
       <form action="/buy_no_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_buy_no_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_buy_no_contract" type="number" min="1" step="1" max="9999" name="quantity_buy_no">
+          <input class="form-control w-50 center_title" id="quantity_buy_no_contract" type="number" min="1" step="1" max="9999" name="quantity_buy_no" required>
           <button class="btn btn-secondary w-50">Buy</button>
         </div>
       </form>
@@ -80,7 +80,7 @@
       <form action="/sell_no_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_sell_no_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_sell_no_contract" type="number" min="1" step="1" max="9999" name="quantity_sell_no">
+          <input class="form-control w-50 center_title" id="quantity_sell_no_contract" type="number" min="1" step="1" max="9999" name="quantity_sell_no" required>
           <button class="btn btn-secondary w-50">Sell</button>
         </div>
       </form>
