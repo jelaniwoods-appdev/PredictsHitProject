@@ -21,17 +21,18 @@
       </th>
 
       <th>
-        Buy No
+        Sell Yes
       </th>
 
+<!-- Fill in later to allow buying and selling no to each contract
       <th>
-        Sell Yes
+        Buy No
       </th>
 
       <th>
         Sell No
       </th>
-
+-->
       <th></th>
     </tr>
   </thead>
@@ -44,23 +45,12 @@
     <td>
       <%= number_to_currency(contract.price) %>
     </td>
-<!-- Later: Force users to only enter postive integers -->
     <td>
       <form action="/buy_yes_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_buy_yes_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_buy_yes_contract" type="number" min="1" step="1" name="quantity_buy_yes">
-          <button class="btn btn-secondary w-50">Buy Yes</button>
-        </div>
-      </form>
-    </td>
-
-    <td>
-      <form action="/buy_no_contract/<%= contract.id %>" method="post">
-        <div class="form-group">
-          <label for="quantity_buy_no_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_buy_no_contract" type="number" min="1" step="1" name="quantity_buy_no">
-          <button class="btn btn-secondary w-50">Buy No</button>
+          <input class="form-control w-50 center_title" id="quantity_buy_yes_contract" type="number" min="1" step="1" max="9999" name="quantity_buy_yes">
+          <button class="btn btn-secondary w-50">Buy</button>
         </div>
       </form>
     </td>
@@ -69,8 +59,19 @@
       <form action="/sell_yes_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_sell_yes_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_sell_yes_contract" type="number" min="1" step="1" name="quantity_sell_yes">
-          <button class="btn btn-secondary w-50">Sell Yes</button>
+          <input class="form-control w-50 center_title" id="quantity_sell_yes_contract" type="number" min="1" step="1" max="9999" name="quantity_sell_yes">
+          <button class="btn btn-secondary w-50">Sell</button>
+        </div>
+      </form>
+    </td>
+
+<!-- Fill in later to allow yes and no for same contract
+    <td>
+      <form action="/buy_no_contract/<%= contract.id %>" method="post">
+        <div class="form-group">
+          <label for="quantity_buy_no_contract"></label>
+          <input class="form-control w-50 center_title" id="quantity_buy_no_contract" type="number" min="1" step="1" max="9999" name="quantity_buy_no">
+          <button class="btn btn-secondary w-50">Buy</button>
         </div>
       </form>
     </td>
@@ -79,12 +80,12 @@
       <form action="/sell_no_contract/<%= contract.id %>" method="post">
         <div class="form-group">
           <label for="quantity_sell_no_contract"></label>
-          <input class="form-control w-50 center_title" id="quantity_sell_no_contract" type="number" min="1" step="1" name="quantity_sell_no">
-          <button class="btn btn-secondary w-50">Sell No</button>
+          <input class="form-control w-50 center_title" id="quantity_sell_no_contract" type="number" min="1" step="1" max="9999" name="quantity_sell_no">
+          <button class="btn btn-secondary w-50">Sell</button>
         </div>
       </form>
     </td>
-
+-->
     <td>
       <a class="btn btn-secondary" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>">Go to Contract</a>
     </td>

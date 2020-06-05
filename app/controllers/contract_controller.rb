@@ -129,29 +129,19 @@ class ContractController < ApplicationController
           asset_quantity_counter = asset_quantity_counter + 1
 
           #update contract price based on algorithm. Start with simple algorithm that only adds 0.01 to contract price each time one is purchased.
-          asset_price_tracker = asset_price_tracker + 0.01
+          if asset_price_tracker < 1.00
+            asset_price_tracker = asset_price_tracker + 0.001
+          end
 
           #update asset_remaining_tracker to reflect number of assets remaining to be fufilled
+          asset_remaining_tracker = asset_remaining_tracker - 1
+
         end
 
-        #update asset remaining tracker to reflect actions
+        #update looper to remove one loop count
         looper = looper - 1
 
       end
-
-      #remove funds from user's season_funds
-      #@user_season_funds_row.quantity = @user_season_funds_row.quantity - @starting_contract_price
-      #@user_season_funds_row.save
-
-      #update contract quantity to reflect new purchase
-      #@contract_asset_row.quantity = @contract_asset_row.quantity + 1
-      #@contract_asset_row.save
-
-      #update contract price based on algorithm. Start with simple algorithm that only adds 0.01 to contract price each time one is purchased.
-      #if @contract_row.price < 1
-        #@contract_row.price = @starting_contract_price + 0.01
-        #@contract_row.save
-      #end
 
     end
 
@@ -180,19 +170,22 @@ class ContractController < ApplicationController
     redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
   end
 
-  def buy_no_contracts
-    @number_of_contracts = params.fetch("quantity_buy_no")
-
-  end
+  
 
   def sell_yes_contracts
     @number_of_contracts = params.fetch("quantity_sell_yes")
 
   end
 
-  def sell_no_contracts
-    @number_of_contracts = params.fetch("quantity_sell_no")
+  #Add in once allowing for buying and selling of no for each contract
+  #def buy_no_contracts
+  #  @number_of_contracts = params.fetch("quantity_buy_no")
 
-  end
+  #end
+
+  #def sell_no_contracts
+  #  @number_of_contracts = params.fetch("quantity_sell_no")
+
+  #end
 
 end
