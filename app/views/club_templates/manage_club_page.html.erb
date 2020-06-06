@@ -34,9 +34,10 @@
           <label for="Add_member_id">What is the id of the member you would like to add?</label>
           <input class="form-control" id="add_member_id" type="text" name="member_id" placeholder="Enter a user ID...">
           <br>
-          <!-- Update to involve drop down options -->
-          <label for="Add_member_category">What permissions would you like to give this member? Options: member or admin. Note: Once added, you cannot remove members. </label>
-          <input class="form-control" id="Add_member_category" type="text" name="member_category" placeholder='Enter "member" or "admin"'>
+          <select class="form-control" required="required" id="select_member_category" name="member_category"><option value="">Select role for new Club member</option>
+            <option value="member">Member</option>
+            <option value="admin">Admin</option>
+          </select>
           <br>
           <br>
           <button class="btn btn-secondary btn-block">Add Member</button>
