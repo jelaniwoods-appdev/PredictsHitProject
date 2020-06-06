@@ -88,8 +88,12 @@ class ContractController < ApplicationController
     @user_starting_season_funds = @user_season_funds_row.quantity
     @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
     
-    #Confirm do not need to double check that the number is a positive integer.
-
+    #Confirm number is a positive integer.
+    if @number_of_contracts.to_i < 1 || @number_of_contracts.include?(".")
+      flash[:alert] = "There was an error processing your request."
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      return
+    end
 
     #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity").
     #If user does, skip step, otherwise, if user does not, create a new asset with a quantity of 0.
@@ -189,7 +193,12 @@ class ContractController < ApplicationController
     @user_starting_season_funds = @user_season_funds_row.quantity
     @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
     
-    #Confirm do not need to double check that the number is a positive integer.
+    #Confirm number is a positive integer.
+    if @number_of_contracts.to_i < 1 || @number_of_contracts.include?(".")
+      flash[:alert] = "There was an error processing your request."
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      return
+    end
 
     #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity").
     #If user does, continue, otherwise, display error saying that user needs to purchase assets before they can sell.
