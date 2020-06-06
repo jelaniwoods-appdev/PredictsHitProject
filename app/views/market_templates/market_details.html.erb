@@ -13,6 +13,10 @@
       </th>
 
       <th>
+         Contracts Owned
+      </th>
+
+      <th>
         Price
       </th>
 
@@ -40,6 +44,14 @@
   <tr>
     <td>
       <%= contract.title %>
+    </td>
+
+    <td>
+      <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity"}).at(0) == nil %>
+        0
+      <% else %>
+        <%= Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity"}).at(0).quantity.to_i  %>
+      <% end %>
     </td>
 
     <td>

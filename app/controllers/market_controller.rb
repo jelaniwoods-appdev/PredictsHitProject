@@ -46,6 +46,8 @@ class MarketController < ApplicationController
     @contract_rows = @market_row.contracts
     @membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
+    #determine current user asset quantities
+    @membership_id = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id }).at(0).id
     #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets.
     @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
 
