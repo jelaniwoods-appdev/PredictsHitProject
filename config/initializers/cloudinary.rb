@@ -4,3 +4,7 @@ Cloudinary.config do |config|
   config.api_secret = ENV["CLOUDINARY_API_SECRET"]
   config.cdn_subdomain = true
 end
+
+CarrierWave.configure do |config|
+ config.cache_storage = :file
+end
