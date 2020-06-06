@@ -55,8 +55,7 @@ Rails.application.routes.draw do
 
   #asset routes
   patch("/update_season_funds/:club_id/:season_id", { :controller => "asset", :action => "update_season_funds"})
-  patch("/add_user_funds/:club_id/:season_id/:user_id", { :controller => "asset", :action => "add_user_season_funds"})
-  patch("/subtract_user_funds/:club_id/:season_id/:user_id", { :controller => "asset", :action => "subtract_user_season_funds"})
+  patch("/adjust_user_funds/:club_id/:season_id/:user_id", { :controller => "asset", :action => "adjust_user_season_funds"})
 
 
   # Membership routes

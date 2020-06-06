@@ -109,15 +109,16 @@
         </td>
 
         <td>
-          <form action="/add_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= User.where({ :id => member.users_id}).at(0).id %>" method="post">
+          <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= User.where({ :id => member.users_id}).at(0).id %>" method="post">
             <div class="form-group">
               <input type="hidden" name="_method" value="patch">
-              <label for="increase_user_funds"></label>
+              <input type="hidden" name="adjustment_factor" value="positive">
+              <label for="adjust_user_funds"></label>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">$</span>
                 </div>
-              <input class="form-control center_title" id="increase_user_funds" type="number" name="funds_added" required>
+              <input class="form-control center_title" id="adjust_user_funds" type="number" name="fund_amount" required>
               </div>
               <button class="btn btn-secondary w-100">Add</button>
             </div>
@@ -125,15 +126,16 @@
         </td>
 
         <td>
-          <form action="/subtract_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= User.where({ :id => member.users_id}).at(0).id %>" method="post">
+          <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= User.where({ :id => member.users_id}).at(0).id %>" method="post">
             <div class="form-group">
               <input type="hidden" name="_method" value="patch">
-              <label for="increase_user_funds"></label>
+              <input type="hidden" name="adjustment_factor" value="negative">
+              <label for="adjust_user_funds"></label>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text">$</span>
                 </div>
-              <input class="form-control center_title" id="increase_user_funds" type="number" name="funds_substracted" required>
+              <input class="form-control center_title" id="adjust_user_funds" type="number" name="fund_amount" required>
               </div>
               <button class="btn btn-secondary w-100">Remove</button>
             </div>
