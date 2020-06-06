@@ -1,6 +1,6 @@
 <h1 class="center_title">Manage Season</h1>
 
-<div class="col-md-6 offset-md-3">
+<div class="col-md-8 offset-md-2">
   <div class="jumbotron">
     <h2 class="center_title">Season Details</h2>
       <br>
@@ -22,7 +22,7 @@
   </div>
 </div>
 <br>
-<div class="col-md-6 offset-md-3">
+<div class="col-md-8 offset-md-2">
   <div class="jumbotron">
     <h2 class="center_title">Add Season Member</h2>
     <br>
@@ -43,7 +43,7 @@
   </div>
 </div>
 <br>
-<div class="col-md-6 offset-md-3">
+<div class="col-md-8 offset-md-2">
   <div class="jumbotron">
     <h2 class="center_title">Manage User Funds</h2>
     <br>
@@ -79,6 +79,10 @@
           </th>
 
           <th>
+            Funds
+          </th>
+
+          <th>
             Add Funds
           </th>
 
@@ -101,11 +105,39 @@
         </td>
 
         <td>
-          <%= member.category %>
+          $<%= member.assets.where({ :category => "season_fund"}).at(0).quantity %>
         </td>
 
         <td>
-          <%= member.category %>
+          <form action="/add_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= User.where({ :id => member.users_id}).at(0).id %>" method="post">
+            <div class="form-group">
+              <input type="hidden" name="_method" value="patch">
+              <label for="increase_user_funds"></label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+              <input class="form-control center_title" id="increase_user_funds" type="number" name="funds_added" required>
+              </div>
+              <button class="btn btn-secondary w-100">Add</button>
+            </div>
+          </form>
+        </td>
+
+        <td>
+          <form action="/subtract_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= User.where({ :id => member.users_id}).at(0).id %>" method="post">
+            <div class="form-group">
+              <input type="hidden" name="_method" value="patch">
+              <label for="increase_user_funds"></label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+              <input class="form-control center_title" id="increase_user_funds" type="number" name="funds_substracted" required>
+              </div>
+              <button class="btn btn-secondary w-100">Remove</button>
+            </div>
+          </form>
         </td>
           
         <td>
