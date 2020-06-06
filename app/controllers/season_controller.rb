@@ -45,7 +45,7 @@ class SeasonController < ApplicationController
   def season_create_form
     @user_id = current_user.id
 
-    #pull the memberships in which the user is an owner or admin for
+    #pull the club memberships in which the user is an owner or admin for
     #see if better way to map memberships to clubs
     #later make it so only active clubs show up and/or include search option.
     @user_club_memberships = Membership.where({ :users_id => @user_id, :goes_to => "clubs_table", :category => "owner"}).or(Membership.where({ :users_id => @user_id, :goes_to => "clubs_table", :category => "admin"}))

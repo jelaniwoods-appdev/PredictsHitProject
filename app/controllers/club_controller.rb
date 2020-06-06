@@ -57,7 +57,7 @@ class ClubController < ApplicationController
     @new_membership.category = "owner"
     @new_membership.save
     
-    redirect_to("/")
+    redirect_to("/clubs/" + @new_club.id.to_s)
   end
 
 end

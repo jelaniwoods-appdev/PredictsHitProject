@@ -55,6 +55,13 @@ class MarketController < ApplicationController
   end
   
   def market_create_form
+    @user_id = current_user.id
+
+    #pull the season memberships in which the user is an owner or admin for
+    #see if better way to map memberships to seasons
+    #later make it so only active clubs show up and/or include search option.
+    @user_season_memberships = Membership.where({ :users_id => @user_id, :goes_to => "seasons_table", :category => "owner"}).or(Membership.where({ :users_id => @user_id, :goes_to => "seasons_table", :category => "admin"})).order({ :clubs_id => :asc })
+    
     render({ :template => "market_templates/create_market_page.html.erb" })
   end
 
@@ -70,8 +77,7 @@ class MarketController < ApplicationController
     @new_market.status = "active"
     @new_market.save
     
-    redirect_to("/")
+    redirect_to("/markets/" + @new_market.season.club.id.to_s + "/" + @new_market.season.id.to_s + "/" + @new_market.id.to_s)
   end
-
 
 end
