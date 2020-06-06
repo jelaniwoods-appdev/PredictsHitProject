@@ -4,7 +4,7 @@
     <div class="jumbotron">
       <h1 class="center_title">Profile Details</h1>
       <br>
-      <form action="/update_profile/<%= @profile_info.id %>" method="post">
+      <form action="/update_profile/<%= @profile_info.id %>" method="post" class="form-horizontal" enctype="multipart/form-data">
         <div class="form-group">
           <input type="hidden" name="_method" value="patch">
           
@@ -12,7 +12,7 @@
           <input class="form-control" id="update_profile_username" type="text" name="updated_username" placeholder="Enter a username..." value="<%= @profile_info.username %>">
           
           <br>
-          <!-- Add picture edit options in the future -->
+          <input type="file" id="prof_pic" name="prof_pic" class="form-control">
           <br>
           <button class="btn btn-secondary btn-block">Update Profile Details</button>
         </div>
