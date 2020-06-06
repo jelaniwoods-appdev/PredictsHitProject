@@ -10,7 +10,11 @@ class SeasonController < ApplicationController
     season_id = params.fetch("season_id")
     @club_row = Club.where({ :id => club_id }).at(0)
     @season_row = Season.where({ :id => season_id }).at(0)
-    @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+    @season_membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+    @club_membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
+    
+    #later limit so only shows club members not already in season.
+    
     render({ :template => "season_templates/manage_season_page.html.erb" })
   end
 
