@@ -43,6 +43,13 @@ class SeasonController < ApplicationController
   end
   
   def season_create_form
+    @user_id = current_user.id
+
+    #pull the memberships in which the user is an owner or admin for
+    #see if better way to map memberships to clubs
+    #later make it so only active clubs show up and/or include search option.
+    @user_club_memberships = Membership.where({ :users_id => @user_id, :goes_to => "clubs_table", :category => "owner"}).or(Membership.where({ :users_id => @user_id, :goes_to => "clubs_table", :category => "admin"}))
+    
     render({ :template => "season_templates/create_season_page.html.erb" })
   end
 
@@ -72,7 +79,7 @@ class SeasonController < ApplicationController
     @new_asset.quantity = params.fetch("season_fund")
     @new_asset.save
 
-    redirect_to("/")
+    redirect_to("/seasons/" + @new_season.club_id.to_s + "/" + @new_season.id.to_s)
   end
 
 end

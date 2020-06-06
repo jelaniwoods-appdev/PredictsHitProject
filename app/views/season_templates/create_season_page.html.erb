@@ -7,8 +7,11 @@
           <!-- Change this to a dropdown of available clubs instead of text entry -->
           <!-- If user does not have a club they can add season for then put msg that they need to create a club first and -->
           <!-- Include some form of permission functionality where only members of each club who are designated owner or admin under category column can create season -->
-          <label for="create_season_club_connection">Which club would you like to create a season for?</label>
-          <input class="form-control" id="create_season_club_connection" type="text" name="associated_club_id" placeholder="Enter the club ID...">
+          <select class="form-control" required="required" id="select_club" name="associated_club_id"><option value="">Select Club</option>
+            <% @user_club_memberships.each do |club_option| %>
+            <option value="<%= club_option.clubs_id %>"><%= Club.where({:id => club_option.clubs_id }).at(0).title %></option>
+            <% end %>
+          </select>
           <br>
           <label for="create_season_title">What is the title of your season?</label>
           <input class="form-control" id="create_season_title" type="text" name="season_title" placeholder="Enter a title...">
