@@ -19,6 +19,25 @@ class MarketController < ApplicationController
     render({ :template => "market_templates/manage_market_page.html.erb" })
   end
 
+  def close_market_page
+    club_id = params.fetch("club_id")
+    season_id = params.fetch("season_id")
+    market_id = params.fetch("market_id")
+
+    @club_row = Club.where({ :id => club_id }).at(0)
+    @season_row = Season.where({ :id => season_id }).at(0)
+    @market_row = Market.where({ :id => market_id }).at(0)
+    @contract_rows = @market_row.contracts
+    @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+
+    render({ :template => "market_templates/close_market_page.html.erb" })
+  end
+
+
+
+
+
+
   def update_market_details
     @club_id = params.fetch("club_id")
     @season_id = params.fetch("season_id")

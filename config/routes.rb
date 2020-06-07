@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get("/my_markets", { :controller => "market", :action => "show_markets" })
   get("/markets/:club_id/:season_id/:market_id", { :controller => "market", :action => "view_market" })
   get("/markets/manage/:club_id/:season_id/:market_id", { :controller => "market", :action => "manage_market" })
+  get("/markets/manage/close/:club_id/:season_id/:market_id", { :controller => "market", :action => "close_market_page" })
   patch("/update_market_details/:club_id/:season_id/:market_id", { :controller => "market", :action => "update_market_details"})
   
   #contract routes
