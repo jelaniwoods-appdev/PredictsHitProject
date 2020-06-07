@@ -24,7 +24,4 @@ class Market < ApplicationRecord
   belongs_to :season
   has_many :contracts
 
-  validates :price, :numericality => true
-  validates :quantity, :numericality => true
-
 end
