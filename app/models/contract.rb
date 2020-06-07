@@ -18,4 +18,5 @@
 
 class Contract < ApplicationRecord
   belongs_to :market
+  validates :price, :numericality => true
 end

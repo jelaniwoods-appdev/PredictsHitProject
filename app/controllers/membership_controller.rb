@@ -13,13 +13,15 @@ class MembershipController < ApplicationController
       @new_membership.clubs_id = @club_id
       @new_membership.goes_to = "clubs_table"
       @new_membership.category = @member_category
-      @new_membership.save
-
-      flash[:notice] = "Club Member was successfully added!" 
+      if @new_membership.valid?
+        @new_membership.save
+        flash[:notice] = "Club Member was successfully added!" 
+      else
+        flash[:alert] = "It looks like this user is already a member!" 
+      end
     else 
       flash[:alert] = "There was an issue adding this member to your Club. Please confirm you entered the correct username."
     end
-
     redirect_to("/clubs/manage/" + @club_id.to_s)
   end
 

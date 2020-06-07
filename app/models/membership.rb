@@ -23,4 +23,6 @@ class Membership < ApplicationRecord
   belongs_to :club
   belongs_to :season
   has_many :assets
+
+  validates :users_id, uniqueness: {scope: [:goes_to, :clubs_id , :seasons_id ]}
 end

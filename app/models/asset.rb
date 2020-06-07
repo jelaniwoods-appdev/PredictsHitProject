@@ -20,4 +20,5 @@
 
 class Asset < ApplicationRecord
   belongs_to :membership
+  validates :quantity, :numericality => true
 end

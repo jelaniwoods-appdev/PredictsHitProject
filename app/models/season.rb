@@ -23,4 +23,6 @@ class Season < ApplicationRecord
   has_many :markets
   has_many :memberships
   has_many :users, :through => :memberships
+
+  validates :fund, :numericality => true
 end
