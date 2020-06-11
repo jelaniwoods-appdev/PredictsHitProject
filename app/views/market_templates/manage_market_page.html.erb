@@ -1,4 +1,8 @@
+<% if @market_row.status == "closed" %>
+<h1 class="center_title">This Market is closed!</h1>
+<% else %>
 <h1 class="center_title">Manage Market</h1>
+<% end %>
 
 <div class="col-md-8 offset-md-2">
   <div class="jumbotron">
@@ -82,7 +86,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text">$</span>
             </div>
-            <input class="form-control" id="new_contract_starting_price" type="text" name="contract_starting_price" placeholder="Enter a price between $0.00 and $1.00...">
+            <input class="form-control" id="new_contract_starting_price" type="number" name="contract_starting_price" min="0" step=".01" max="1" placeholder="Enter a price between $0.00 and $1.00..." >
           </div>
           <br>
           <button class="btn btn-secondary btn-block">Add Contract</button>
@@ -131,6 +135,7 @@
   </div>
 </div>
 
+<% if @market_row.status == "active" %>
 <br>
 <br>
 <div class="col-md-8 offset-md-2">
@@ -138,3 +143,4 @@
     <div class="center_title"><a class="btn btn-secondary btn-block" href="/markets/manage/close/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>">Close Market</a></div>
   </div>
 </div>
+<% end %>
