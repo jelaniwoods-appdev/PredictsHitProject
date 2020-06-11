@@ -33,6 +33,53 @@ class MarketController < ApplicationController
     render({ :template => "market_templates/close_market_page.html.erb" })
   end
 
+  def close_market_action
+    club_id = params.fetch("club_id")
+    season_id = params.fetch("season_id")
+    market_id = params.fetch("market_id")
+    @market_row = Market.where({ :id => market_id }).at(0)
+    @contract_rows = @market_row.contracts
+    @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+
+    #For each contract in the market, determine final resolution
+
+    @contract_rows.each do |contract_x|
+      contract_outcome =  params.fetch(contract_x.id.to_s)
+      if contract_outcome == "no"
+        contract_x.status = "closed"
+        contract_x.save
+        
+      elsif contract_outcome == "yes" #consider adding 'and' conditional that contract is active to prevent potential double counting/erros
+        #determine rows in asset table associated with this contract
+        asset_rows = Asset.where({ :contract_id => contract_x.id, :category => "contract_quantity"})
+
+        #run loop on each relevant asset row to 1) determine quantity associated with each membership and then 2) to add to season fund to the relevant membership
+        asset_rows.each do |payout_contract|
+          amount = payout_contract.quantity #for now assume always 1 to 1 relationship. Can always add factor to adjust quantity if necessary
+
+          #find associated season_fund row for this membership
+          season_fund_row = Asset.where({ :membership_id => payout_contract.membership_id, :category => "season_fund"}).at(0)
+
+          #Add amount associated with contract to season_fund for each relevant membership
+          season_fund_row.quantity = season_fund_row.quantity + amount
+          season_fund_row.save
+
+        end
+        contract_x.status = "closed"
+        contract_x.save
+      end
+    end
+
+    #convert each user's contract quantities into season funds based on the final resoultion
+    
+    #change market status to closed
+    @market_row.status = "closed"
+    @market_row.save
+
+
+    flash[:notice] = "Market has been successfully closed!"
+    redirect_to("/markets/manage/" + club_id.to_s + "/" + season_id.to_s + "/" + market_id.to_s)
+  end
 
 
 

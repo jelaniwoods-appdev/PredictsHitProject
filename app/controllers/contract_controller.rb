@@ -133,9 +133,9 @@ class ContractController < ApplicationController
           #update asset quantity counter to reflect number of assets accumulated
           asset_quantity_counter = asset_quantity_counter + 1
 
-          #update contract price based on algorithm. Start with simple algorithm that only adds 0.001 to contract price each time one is purchased.
+          #update contract price based on algorithm. Start with simple algorithm that only adds 0.005 to contract price each time one is purchased.
           if asset_price_tracker < 1.000
-            asset_price_tracker = asset_price_tracker + 0.001
+            asset_price_tracker = asset_price_tracker + 0.005
           end
 
           #update asset_remaining_tracker to reflect number of assets remaining to be fufilled
@@ -234,9 +234,9 @@ class ContractController < ApplicationController
           #update contracts_remaining_tracker to reflect the number of contracts remaining in user's account that can be sold
           contracts_remaining_tracker = contracts_remaining_tracker - 1
 
-          #update contract price based on algorithm. Start with simple algorithm that only subtracts 0.001 from contract price each time one is sold.
+          #update contract price based on algorithm. Start with simple algorithm that only subtracts 0.005 from contract price each time one is sold.
           if asset_price_tracker > 0.000
-            asset_price_tracker = asset_price_tracker - 0.001
+            asset_price_tracker = asset_price_tracker - 0.005
           end
 
           #update asset_remaining_tracker to reflect number of assets remaining to be fufilled
