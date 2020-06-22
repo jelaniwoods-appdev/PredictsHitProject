@@ -1,3 +1,7 @@
+<div class="col-md-8 offset-md-2">
+    <div class="center_title"><a class="btn btn-secondary btn-block" href="/markets/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>">Return to Market</a></div>
+</div>
+<br>
 <% if @market_row.status == "closed" %>
 <h1 class="center_title">This Market is closed!</h1>
 <% else %>
@@ -8,7 +12,7 @@
   <div class="jumbotron">
     <h2 class="center_title">Market Details</h2>
       <br>
-      <form action="/update_market_details/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+      <form action="/update_market_details/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <input type="hidden" name="_method" value="patch">
           <label for="update_market_title">What is the new title of your market?</label>
@@ -17,7 +21,8 @@
           <label for="update_market_description">What is the description of your market?</label>
           <input class="form-control" id="update_market_description" type="text" name="updated_market_description" placeholder="Enter a description..." value="<%= @market_row.description %>">
           <br>
-          <!-- Add picture and a password fields in the future -->
+          <label for="update_market_picture">What picture would you like to set for your Market?</label>
+          <input type="file" id="update_market_picture" name="updated_market_picture" class="form-control">
           <br>
           <br>
           <button class="btn btn-secondary btn-block">Update Market Details</button>

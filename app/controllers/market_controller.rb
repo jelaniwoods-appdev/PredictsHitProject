@@ -95,6 +95,9 @@ class MarketController < ApplicationController
     updated_market_details = Market.where({ :id => @market_id }).at(0)
     updated_market_details.title = @updated_title
     updated_market_details.description = @updated_description
+    if params[:updated_market_picture].present?
+      updated_market_details.picture = params.fetch("updated_market_picture")
+    end
     updated_market_details.save
 
     flash[:notice] = "Market Details were successfully updated!"
@@ -141,6 +144,9 @@ class MarketController < ApplicationController
         #@new_market.price = params.fetch("market_price")
         #@new_market.quantity = params.fetch("market_quantity")
     @new_market.status = "active"
+    if params[:market_picture].present?
+      @new_market.picture = params.fetch("market_picture")
+    end
     @new_market.save
     
     redirect_to("/markets/" + @new_market.season.club.id.to_s + "/" + @new_market.season.id.to_s + "/" + @new_market.id.to_s)

@@ -1,6 +1,9 @@
 <h1 class="center_title"><%= @market_row.title %></h1>
 <div class="center_title"><%= @market_row.description %></div>
-
+<br>
+<div class="center_title">
+  <img src="<%= @market_row.picture %>" height = 200 class="img-responsive">
+</div>
 <br>
 
 <% if @contract_rows.present? %>

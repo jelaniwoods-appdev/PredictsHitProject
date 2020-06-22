@@ -2,7 +2,7 @@
   <div class="jumbotron">
     <h1 class="center_title">Create a New Market</h1>
     <br>
-      <form action="/create_new_market" method="post">
+      <form action="/create_new_market" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <!-- Change this to a dropdown of available clubs & seasons instead of text entry -->
           <!-- If user does not have a club and season they can add a market for then put msg that they need to create a club/season first and -->
@@ -18,7 +18,6 @@
           <br>
           <label for="create_market_description">What is the description of your market?</label>
           <input class="form-control" id="create_market_description" type="text" name="market_description" placeholder="Enter a description...">
-          <br>
                 <!-- Consider adding in future functionality that allows giving season participants more money when a market is created and/or some quantity of contracts
                   <label for="create_market_price">How much money do you want market participants to start with?</label>
                   <div class="input-group mb-3">
@@ -31,7 +30,9 @@
                   <label for="create_market_quantity">For each contract in your market, how many assets do you want your market participants to start with?</label>
                   <input class="form-control" id="create_market_quantity" type="text" name="market_quantity" placeholder="Enter a quantity...">
                 -->
-          <!-- Add picture and a password fields in the future -->
+          <br>
+          <label for="create_market_picture">What picture would you like to set for your Market?</label>
+          <input type="file" id="create_market_picture" name="market_picture" class="form-control">
           <br>
           <button class="btn btn-secondary btn-block">Create Market</button>
         </div>
