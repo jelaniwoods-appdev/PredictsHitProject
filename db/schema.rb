@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_04_183430) do
+ActiveRecord::Schema.define(version: 2020_06_22_205516) do
 
   create_table "assets", force: :cascade do |t|
     t.string "category"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_183430) do
     t.integer "market_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "contractpic"
     t.index ["market_id"], name: "index_contracts_on_market_id"
   end
 

@@ -3,6 +3,7 @@
 # Table name: contracts
 #
 #  id          :integer          not null, primary key
+#  contractpic :string
 #  description :text
 #  price       :decimal(, )
 #  status      :string
@@ -19,4 +20,6 @@
 class Contract < ApplicationRecord
   belongs_to :market
   validates :price, :numericality => true
+
+  mount_uploader :contractpic, ContractpicUploader
 end
