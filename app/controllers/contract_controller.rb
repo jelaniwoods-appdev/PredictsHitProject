@@ -65,6 +65,9 @@ class ContractController < ApplicationController
     updated_contract_details = Contract.where({ :id => @contract_id }).at(0)
     updated_contract_details.title = @updated_title
     updated_contract_details.description = @updated_description
+    if params[:updated_contract_picture].present?
+      updated_contract_details.contractpic = params.fetch("updated_contract_picture")
+    end
     updated_contract_details.save
 
     flash[:notice] = "Contract Details were successfully updated!"
