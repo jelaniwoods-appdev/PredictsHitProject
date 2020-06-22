@@ -15,4 +15,6 @@ class Club < ApplicationRecord
   has_many :memberships
   has_many :users, :through => :memberships
   has_many :seasons
+
+  mount_uploader :picture, PictureUploader
 end

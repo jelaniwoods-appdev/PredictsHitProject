@@ -22,6 +22,9 @@ class ClubController < ApplicationController
     updated_club_details = Club.where({ :id => @club_id }).at(0)
     updated_club_details.title = @updated_title
     updated_club_details.description = @updated_description
+    if params[:updated_club_picture].present?
+      updated_club_details.picture = params.fetch("updated_club_picture")
+    end
     updated_club_details.save
 
     flash[:notice] = "Club Details were successfully updated!"
@@ -48,6 +51,9 @@ class ClubController < ApplicationController
     @new_club = Club.new
     @new_club.title = params.fetch("club_title")
     @new_club.description = params.fetch("club_description")
+    if params[:club_picture].present?
+      @new_club.picture = params.fetch("club_picture")
+    end
     @new_club.save
     #Create a new membership to this club and assign the creator of the club to be the 'owner'
     @new_membership = Membership.new

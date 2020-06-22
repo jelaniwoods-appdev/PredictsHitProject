@@ -1,4 +1,8 @@
 <div class="col-md-6 offset-md-3">
+    <div class="center_title"><a class="btn btn-secondary btn-block" href="/clubs/<%= @club_row.id %>">Return to Club</a></div>
+</div>
+<br>
+<div class="col-md-6 offset-md-3">
     <h1 class="center_title">Manage Club</h1>
 </div>
 
@@ -6,7 +10,7 @@
   <div class="jumbotron">
     <h2 class="center_title">Club Details</h2>
       <br>
-      <form action="/update_club_details/<%= @club_row.id %>" method="post">
+      <form action="/update_club_details/<%= @club_row.id %>" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <input type="hidden" name="_method" value="patch">
           <label for="update_club_title">What is the new title of your club?</label>
@@ -14,8 +18,10 @@
           <br>
           <label for="update_club_description">What is the new description of your club?</label>
           <input class="form-control" id="update_club_description" type="text" name="updated_club_description" placeholder="Enter a description..." value="<%= @club_row.description %>">
-
-          <!-- Add picture and a password fields in the future -->
+          <br>
+          <label for="update_club_picture">What picture would you like to set for your Club?</label>
+          <input type="file" id="update_club_picture" name="updated_club_picture" class="form-control">
+          <!-- Add a password field in the future -->
           <br>
           <br>
           <button class="btn btn-secondary btn-block">Update Club Details</button>
@@ -83,3 +89,4 @@
     </table>
   </div>
 </div>
+

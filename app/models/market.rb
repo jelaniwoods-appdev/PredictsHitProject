@@ -24,4 +24,5 @@ class Market < ApplicationRecord
   belongs_to :season
   has_many :contracts
 
+  mount_uploader :picture, PictureUploader
 end
