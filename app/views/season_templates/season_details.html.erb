@@ -1,6 +1,10 @@
 <h1 class="center_title"><%= @season_row.title %></h1>
 <div class="center_title"><%= @season_row.description %></div>
 <br>
+<div class="center_title">
+  <img src="<%= @season_row.picture %>" height = 200 class="img-responsive">
+</div>
+<br>
 <% if @market_rows.present? %>
 <h2 class="center_title">Markets available in <%= @season_row.title %></h2>
 <table class="table table-hover table-striped">

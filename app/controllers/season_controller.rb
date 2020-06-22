@@ -26,6 +26,9 @@ class SeasonController < ApplicationController
     updated_season_details = Season.where({ :id => @season_id }).at(0)
     updated_season_details.title = @updated_title
     updated_season_details.description = @updated_description
+    if params[:updated_season_picture].present?
+      updated_season_details.picture = params.fetch("updated_season_picture")
+    end
     updated_season_details.save
 
     flash[:notice] = "Season Details were successfully updated!"
@@ -64,6 +67,9 @@ class SeasonController < ApplicationController
     @new_season.description = params.fetch("season_description")
     @new_season.fund = params.fetch("season_fund")
     @new_season.status = "active"
+    if params[:season_picture].present?
+      @new_season.picture = params.fetch("season_picture")
+    end
     @new_season.save
     #Create a new membership to this season and assign the creator of the season to be the 'owner'
     @new_membership = Membership.new

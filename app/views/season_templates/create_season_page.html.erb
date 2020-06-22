@@ -2,7 +2,7 @@
   <div class="jumbotron">
     <h1 class="center_title">Create a New Season</h1>
     <br>
-      <form action="/create_new_season" method="post">
+      <form action="/create_new_season" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <!-- Change this to a dropdown of available clubs instead of text entry -->
           <!-- If user does not have a club they can add season for then put msg that they need to create a club first and -->
@@ -26,8 +26,10 @@
               </div>
             <input class="form-control" id="create_season_fund" type="text" name="season_fund" placeholder="Enter an amount...">
           </div>
-
-          <!-- Add picture and a password fields in the future -->
+          <br>
+          <label for="create_season_picture">What picture would you like to set for your Season?</label>
+          <input type="file" id="create_season_picture" name="season_picture" class="form-control">
+          <!-- Add a password field in the future -->
           <br>          
           <button class="btn btn-secondary btn-block">Create Season</button>
         </div>

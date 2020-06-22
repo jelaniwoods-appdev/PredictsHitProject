@@ -1,9 +1,13 @@
+<div class="col-md-8 offset-md-2">
+    <div class="center_title"><a class="btn btn-secondary btn-block" href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>">Return to Season</a></div>
+</div>
+<br>
 <h1 class="center_title">Manage Season</h1>
 <div class="col-md-8 offset-md-2">
   <div class="jumbotron">
     <h2 class="center_title">Season Details</h2>
       <br>
-      <form action="/update_season_details/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
+      <form action="/update_season_details/<%= @club_row.id %>/<%= @season_row.id %>" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <input type="hidden" name="_method" value="patch">
           <label for="update_season_title">What is the new title of your season?</label>
@@ -11,8 +15,10 @@
           <br>
           <label for="update_season_description">What is the new description of your season?</label>
           <input class="form-control" id="update_season_description" type="text" name="updated_season_description" placeholder="Enter a description..." value="<%= @season_row.description %>">
-
-          <!-- Add picture and a password fields in the future -->
+          <br>
+          <label for="update_season_picture">What picture would you like to set for your Season?</label>
+          <input type="file" id="update_season_picture" name="updated_season_picture" class="form-control">
+          <!-- Add a password field in the future -->
           <br>
           <br>
           <button class="btn btn-secondary btn-block">Update Season Details</button>
