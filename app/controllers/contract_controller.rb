@@ -11,6 +11,9 @@ class ContractController < ApplicationController
     @new_contract.description = params.fetch("contract_description")
     @new_contract.price = params.fetch("contract_starting_price")
     @new_contract.status = "active"
+    if params[:contract_picture].present?
+      @new_contract.contractpic = params.fetch("contract_picture")
+    end
     @new_contract.market_id = @market_id
     @new_contract.save
 
