@@ -25,6 +25,8 @@ class Season < ApplicationRecord
   has_many :users, :through => :memberships
 
   validates :fund, :numericality => true
-
+  validates_presence_of :title
+  
   mount_uploader :picture, PictureUploader
+
 end

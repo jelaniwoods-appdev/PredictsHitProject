@@ -14,14 +14,13 @@
         <div class="form-group">
           <input type="hidden" name="_method" value="patch">
           <label for="update_club_title">What is the new title of your club?</label>
-          <input class="form-control" id="update_club_title" type="text" name="updated_club_title" placeholder="Enter a title..." value="<%= @club_row.title %>">
+          <input class="form-control" id="update_club_title" type="text" name="updated_club_title" placeholder="Enter a title..." value="<%= @club_row.title %>" required="required">
           <br>
           <label for="update_club_description">What is the new description of your club?</label>
           <input class="form-control" id="update_club_description" type="text" name="updated_club_description" placeholder="Enter a description..." value="<%= @club_row.description %>">
           <br>
           <label for="update_club_picture">What picture would you like to set for your Club?</label>
           <input type="file" id="update_club_picture" name="updated_club_picture" class="form-control">
-          <!-- Add a password field in the future -->
           <br>
           <br>
           <button class="btn btn-secondary btn-block">Update Club Details</button>

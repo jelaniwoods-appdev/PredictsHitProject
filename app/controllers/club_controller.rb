@@ -25,10 +25,14 @@ class ClubController < ApplicationController
     if params[:updated_club_picture].present?
       updated_club_details.picture = params.fetch("updated_club_picture")
     end
-    updated_club_details.save
-
-    flash[:notice] = "Club Details were successfully updated!"
-    redirect_to("/clubs/manage/" + @club_id.to_s)
+    if updated_club_details.valid?
+      updated_club_details.save
+      flash[:notice] = "Club details were successfully updated!"
+      redirect_to("/clubs/manage/" + @club_id.to_s)
+    else
+      flash[:alert] = "Club details were not updated. Please include a title."
+      redirect_to("/clubs/manage/" + @club_id.to_s)
+    end
   end
 
   def view_club
@@ -54,16 +58,21 @@ class ClubController < ApplicationController
     if params[:club_picture].present?
       @new_club.picture = params.fetch("club_picture")
     end
-    @new_club.save
-    #Create a new membership to this club and assign the creator of the club to be the 'owner'
-    @new_membership = Membership.new
-    @new_membership.users_id = current_user.id
-    @new_membership.clubs_id = @new_club.id
-    @new_membership.goes_to = "clubs_table"
-    @new_membership.category = "owner"
-    @new_membership.save
-    
-    redirect_to("/clubs/" + @new_club.id.to_s)
+    if @new_club.valid?
+      @new_club.save
+      #Create a new membership to this club and assign the creator of the club to be the 'owner'
+      @new_membership = Membership.new
+      @new_membership.users_id = current_user.id
+      @new_membership.clubs_id = @new_club.id
+      @new_membership.goes_to = "clubs_table"
+      @new_membership.category = "owner"
+      @new_membership.save
+      
+      flash[:notice] = "Club successfully created!" 
+      redirect_to("/clubs/" + @new_club.id.to_s)
+    else
+      flash[:alert] = "Club creation was unsuccessful. Please enter a title." 
+      redirect_to("/new_club")
+    end
   end
-
 end

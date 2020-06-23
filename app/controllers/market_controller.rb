@@ -81,10 +81,6 @@ class MarketController < ApplicationController
     redirect_to("/markets/manage/" + club_id.to_s + "/" + season_id.to_s + "/" + market_id.to_s)
   end
 
-
-
-
-
   def update_market_details
     @club_id = params.fetch("club_id")
     @season_id = params.fetch("season_id")
@@ -98,10 +94,16 @@ class MarketController < ApplicationController
     if params[:updated_market_picture].present?
       updated_market_details.picture = params.fetch("updated_market_picture")
     end
-    updated_market_details.save
+    if updated_market_details.valid?
+      updated_market_details.save
 
-    flash[:notice] = "Market Details were successfully updated!"
-    redirect_to("/markets/manage/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
+      flash[:notice] = "Market Details were successfully updated!"
+      redirect_to("/markets/manage/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
+    else
+      flash[:alert] = "Market details were not updated. Please include a title."
+      redirect_to("/markets/manage/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
+    end
+    
   end
 
   def view_market
@@ -147,9 +149,16 @@ class MarketController < ApplicationController
     if params[:market_picture].present?
       @new_market.picture = params.fetch("market_picture")
     end
-    @new_market.save
+    if @new_market.valid?
+      @new_market.save
+      flash[:notice] = "Market successfully created!" 
+      redirect_to("/markets/" + @new_market.season.club.id.to_s + "/" + @new_market.season.id.to_s + "/" + @new_market.id.to_s)
+    else
+      flash[:alert] = "Market creation was unsuccessful. Please enter a title." 
+      redirect_to("/new_market")
+    end
     
-    redirect_to("/markets/" + @new_market.season.club.id.to_s + "/" + @new_market.season.id.to_s + "/" + @new_market.id.to_s)
+    
   end
 
 end

@@ -70,25 +70,35 @@ class SeasonController < ApplicationController
     if params[:season_picture].present?
       @new_season.picture = params.fetch("season_picture")
     end
-    @new_season.save
-    #Create a new membership to this season and assign the creator of the season to be the 'owner'
-    @new_membership = Membership.new
-    @new_membership.users_id = current_user.id
-    @new_membership.seasons_id = @new_season.id
-    @new_membership.clubs_id = params.fetch("associated_club_id")
-    @new_membership.goes_to = "seasons_table"
-    @new_membership.category = "owner"
-    @new_membership.save
-    
-    #Create a new asset associated to this membership based on funding amount
-    @new_asset = Asset.new
-    @new_asset.membership_id = @new_membership.id
-    @new_asset.season_id = @new_season.id
-    @new_asset.category = "season_fund"
-    @new_asset.quantity = params.fetch("season_fund")
-    @new_asset.save
+    if @new_season.valid?
+      @new_season.save
+      #Create a new membership to this season and assign the creator of the season to be the 'owner'
+      @new_membership = Membership.new
+      @new_membership.users_id = current_user.id
+      @new_membership.seasons_id = @new_season.id
+      @new_membership.clubs_id = params.fetch("associated_club_id")
+      @new_membership.goes_to = "seasons_table"
+      @new_membership.category = "owner"
+      @new_membership.save
+      
+      #Create a new asset associated to this membership based on funding amount
+      @new_asset = Asset.new
+      @new_asset.membership_id = @new_membership.id
+      @new_asset.season_id = @new_season.id
+      @new_asset.category = "season_fund"
+      @new_asset.quantity = params.fetch("season_fund")
+      @new_asset.save
 
-    redirect_to("/seasons/" + @new_season.club_id.to_s + "/" + @new_season.id.to_s)
+      flash[:notice] = "Season successfully created!" 
+      redirect_to("/seasons/" + @new_season.club_id.to_s + "/" + @new_season.id.to_s)
+    else
+      if @new_season.title == nil
+        flash[:alert] = "Season creation was unsuccessful. Please provide a title for your Season."
+      else
+        flash[:alert] = "Season creation was unsuccessful. Please enter a numerical amount of money for season participants to start with. If you do not want to give participants money yet, please enter 0."
+      end
+      redirect_to("/new_season")
+    end
   end
 
 end

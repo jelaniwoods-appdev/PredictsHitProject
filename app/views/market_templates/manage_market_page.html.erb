@@ -16,7 +16,7 @@
         <div class="form-group">
           <input type="hidden" name="_method" value="patch">
           <label for="update_market_title">What is the new title of your market?</label>
-          <input class="form-control" id="update_market_title" type="text" name="updated_market_title" placeholder="Enter a title..." value="<%= @market_row.title %>">
+          <input class="form-control" id="update_market_title" type="text" name="updated_market_title" placeholder="Enter a title..." value="<%= @market_row.title %>" required>
           <br>
           <label for="update_market_description">What is the description of your market?</label>
           <input class="form-control" id="update_market_description" type="text" name="updated_market_description" placeholder="Enter a description..." value="<%= @market_row.description %>">

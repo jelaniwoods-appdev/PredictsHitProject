@@ -60,20 +60,22 @@
   <div class="jumbotron">
     <h2 class="center_title">Manage User Funds</h2>
     <br>
-    <h3 class="center_title">Add Funds for all Users in Season</h3>
+    <div>Current Season Fund Amount: <%= number_to_currency(@season_row.fund) %></div>
+    <br>
+    <h3 class="center_title">Add (or Remove) Funds for all Users in Season</h3>
     
     <form action="/update_season_funds/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
       <div class="form-group">
         <input type="hidden" name="_method" value="patch">
-        <label for="update_season_fund">How much would you like to add to the season fund?</label>
+        <label for="update_season_fund">How much would you like to add to (or subtract from) the season fund?</label>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text">$</span>
           </div>
-            <input class="form-control" id="add_to_season_fund" type="text" name="amount_added" placeholder="Enter a dollar amount...">
+            <input class="form-control" id="update_season_fund" name="amount_added" placeholder="Enter a dollar amount..." type="number" step=".01" required="required">
           </div>
         <br>
-        <button class="btn btn-secondary btn-block">Add Funds</button>
+        <button class="btn btn-secondary btn-block">Add (or Remove) Funds</button>
         </div>
     </form>
     <br>

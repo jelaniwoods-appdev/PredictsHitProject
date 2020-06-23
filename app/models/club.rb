@@ -16,5 +16,7 @@ class Club < ApplicationRecord
   has_many :users, :through => :memberships
   has_many :seasons
 
+  validates_presence_of :title
+
   mount_uploader :picture, PictureUploader
 end
