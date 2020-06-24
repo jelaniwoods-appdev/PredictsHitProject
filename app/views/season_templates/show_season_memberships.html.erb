@@ -1,54 +1,23 @@
 <h1 class="center_title">My Seasons</h1>
 <br>
-
-<table class="table table-hover table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th>
-        Club Title
-      </th>
-
-      <th>
-        Season Title
-      </th>
-
-      <th>
-        Season Description
-      </th>
-
-      <th></th>
-    </tr>
-  </thead>
-
-  <!-- There's likely a better way to do this -->
-  <!-- Fix formatting to make it tile based instead of table based -->
-  <% @membership_rows.each do |member| %>
-  <tr>
-    <td>
-      <%= Season.where({ :id => member.seasons_id }).at(0).club.title %>
-    </td>
-
-    <td>
-      <%= Season.where({ :id => member.seasons_id }).at(0).title %>
-    </td>
-
-    <td>
-      <%= Season.where({ :id => member.seasons_id }).at(0).description %>
-    </td>
-
-    <td>
-      <a class="btn btn-secondary" href="/seasons/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s %>">Go to Season</a>
-    </td>
-  </tr>
-  
-  <% end %>
-</table>
- <!-- test tile based images -->
+<!-- There's likely a better way to do this -->
+<!-- Looping based on clubs then based on seasons within clubs. Confirm this is okay how it is structured-->
 <br>
 <br>
+<% club_id = 0 %>
 
-<div class="row row-cols-1 row-cols-md-4">
   <% @membership_rows.each do |member| %>
+    <% if Season.where({ :id => member.seasons_id }).at(0).club.id != club_id %>
+      <% if club_id != 0 %>
+        </div>
+      <% end %>
+      <h2>
+        <%= Season.where({ :id => member.seasons_id }).at(0).club.title %>
+      </h2>
+      <br>
+    <div class="row row-cols-1 row-cols-md-4">
+    <% end %>
+    <% club_id = Season.where({ :id => member.seasons_id }).at(0).club.id %>
     <div class="col mb-4">
       <div class="card h-100">
         <img src="<%= Season.where({ :id => member.seasons_id }).at(0).picture %>" class="card-img-top" alt="...">
@@ -59,9 +28,9 @@
           <% else %>
             <p class="card-text"><%= Season.where({ :id => member.seasons_id }).at(0).description %> </p>
           <% end %>
-          <div class="text-center"><a class="btn btn-secondary stretched-link" href="/clubs/<%= member.clubs_id %>">Go to Club</a></div>
+          <div class="text-center"><a class="btn btn-secondary stretched-link" href="/seasons/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s %>">Go to Season</a></div>
         </div>
       </div>
     </div>
   <% end %>
-</div>
+  </div>
