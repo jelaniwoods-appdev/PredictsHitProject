@@ -8,41 +8,25 @@
 </div>
 <br>
 <h2 class="center_title">Seasons available in <%= @club_row.title %></h2>
-<table class="table table-hover table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th>
-        Season Title
-      </th>
-
-      <th>
-        Season Description
-      </th>
-
-      <th></th>
-    </tr>
-  </thead>
-
-  <!-- There's likely a better way to do this -->
-  <!-- Fix formatting to make it tile based instead of table based -->
-  <!-- Put users table on the left and the tile based seasons in the middle/right -->
+<br>
+<div class="row row-cols-1 row-cols-md-4">
   <% @season_rows.each do |season| %>
-  <tr>
-    <td>
-      <%= season.title %>
-    </td>
-
-    <td>
-      <%= season.description %>
-    </td>
-
-    <td>
-      <a class="btn btn-secondary" href="/seasons/<%= season.club.id.to_s + '/' + season.id.to_s %>">Go to Season</a>
-    </td>
-  </tr>
-  
+    <div class="col mb-4">
+      <div class="card h-100">
+        <img src="<%= season.picture %>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= season.title %></h5>
+          <% if season.description == "" %>
+            <p class="card-text">[No Description]</p>
+          <% else %>
+            <p class="card-text"><%= season.description %> </p>
+          <% end %>
+          <div class="text-center"><a class="btn btn-secondary stretched-link" href="/seasons/<%= season.club.id.to_s + '/' + season.id.to_s %>">Go to Season</a></div>
+        </div>
+      </div>
+    </div>
   <% end %>
-</table>
+</div>
 <br>
 
 <h2 class="center_title">Users currently in <%= @club_row.title %></h2>

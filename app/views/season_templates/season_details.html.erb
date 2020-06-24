@@ -7,41 +7,27 @@
 <br>
 <% if @market_rows.present? %>
 <h2 class="center_title">Markets available in <%= @season_row.title %></h2>
-<table class="table table-hover table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th>
-        Market Title
-      </th>
-
-      <th>
-        Market Description
-      </th>
-
-      <th></th>
-    </tr>
-  </thead>
-
-  <!-- Fix formatting to make it tile based instead of table based -->
-  <!-- Put users table on the left and the tile based seasons in the middle/right -->
-  <!-- add conditional to show 'there are no markets here' -->
+<br>
+<div class="row row-cols-1 row-cols-md-4">
   <% @market_rows.each do |market| %>
-  <tr>
-    <td>
-      <%= market.title %>
-    </td>
-
-    <td>
-      <%= market.description %>
-    </td>
-
-    <td>
-      <a class="btn btn-secondary" href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a>
-    </td>
-  </tr>
-  
+    <div class="col mb-4">
+      <div class="card h-100">
+        <img src="<%= market.picture %>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= market.title %></h5>
+          <% if market.description == "" %>
+            <p class="card-text">[No Description]</p>
+          <% else %>
+            <p class="card-text"><%= market.description %> </p>
+          <% end %>
+          <div class="text-center"><a class="btn btn-secondary stretched-link" href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a></div>
+        </div>
+      </div>
+    </div>
   <% end %>
-</table>
+</div>
+<br>
+
 <% else %>
 <h2>There do not appear to be any markets active in this Season.</h2>
 <% end %>
