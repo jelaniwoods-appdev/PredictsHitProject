@@ -1,7 +1,11 @@
-<div class="col-md-6 offset-md-3">
-    <div class="center_title"><a class="btn btn-secondary btn-block" href="/clubs/<%= @club_row.id %>">Return to Club</a></div>
-</div>
-<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
+    <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
+    <li class="breadcrumb-item active" aria-current="page">Manage Club</li>
+  </ol>
+</nav>
+
 <div class="col-md-6 offset-md-3">
     <h1 class="center_title">Manage Club</h1>
 </div>

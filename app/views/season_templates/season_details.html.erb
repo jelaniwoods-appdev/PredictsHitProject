@@ -1,3 +1,11 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
+    <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
+    <li class="breadcrumb-item active" aria-current="page"><%= @season_row.title %></li>
+  </ol>
+</nav>
+
 <h1 class="center_title"><%= @season_row.title %></h1>
 <div class="center_title"><%= @season_row.description %></div>
 <br>
@@ -78,10 +86,6 @@
 
 <br>
 
-<div class="center_title">
-  <a class="btn btn-secondary btn-block" href="/clubs/<%= @club_row.id %>">Go to Season's Club page. (<%= @club_row.title %>)</a>
-</div>
-<br>
 <% if @owner_user_id == current_user.id %>
   <br>
     <div class="center_title"><a class="btn btn-secondary btn-block" href="/seasons/manage/<%= @club_row.id %>/<%= @season_row.id %>">Manage Season</a></div>
