@@ -22,11 +22,11 @@
       <div class="card h-100">
         <img src="<%= market.picture %>" class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title"><%= market.title %></h5>
+          <h5 class="card-title text-truncate"><%= market.title %></h5>
           <% if market.description == "" %>
-            <p class="card-text">[No Description]</p>
+            <p class="card-text text-truncate">[No Description]</p>
           <% else %>
-            <p class="card-text"><%= market.description %> </p>
+            <p class="card-text text-truncate"><%= market.description %> </p>
           <% end %>
           <div class="text-center"><a class="btn btn-secondary stretched-link" href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a></div>
         </div>
@@ -37,7 +37,15 @@
 <br>
 
 <% else %>
-<h2>There do not appear to be any markets active in this Season.</h2>
+<h2>
+  There are no markets currently available in <%= @season_row.title %>.
+  <br>
+  <br>
+  <% if @owner_user_id == current_user.id %>
+    Create the first Market in this Season!
+  <% else %>
+    Ask the Season owner to create a Market in this Season!
+  <% end %>
 <% end %>
 <br>
 

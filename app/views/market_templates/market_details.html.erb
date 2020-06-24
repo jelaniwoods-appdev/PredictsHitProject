@@ -62,8 +62,8 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title"><%= contract.title %></h5>
-              <p class="card-text"><%= contract.description %></p>
+              <h5 class="card-title text-truncate"><%= contract.title %></h5>
+              <p class="card-text text-truncate"><%= contract.description %></p>
             </div>
           </div>
         </div>
@@ -130,7 +130,15 @@
   <% end %>
 </table>
 <% else %>
-<h2>There are no active contracts in this Market.</h2>
+<h2>
+  There are no contracts currently available in <%= @market_row.title %>.
+  <br>
+  <br>
+  <% if @owner_user_id == current_user.id %>
+    Create the first Contract in this Market!
+  <% else %>
+    Ask the Season/Market owner to create a Contract in this Market!
+  <% end %>
 <% end %>
 <br>
 

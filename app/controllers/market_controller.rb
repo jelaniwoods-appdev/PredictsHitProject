@@ -2,6 +2,12 @@ class MarketController < ApplicationController
 
   def show_markets
     @membership_rows = Membership.where({ :users_id => current_user.id, :goes_to => "seasons_table" }).order({ :clubs_id => :asc, :seasons_id => :asc })
+    @m_count = 0
+    @membership_rows.each do |member_check|
+      Season.where({ :id => member_check.seasons_id }).at(0).markets.each do |market_count|
+        @m_count = @m_count + 1
+      end
+    end
     render({ :template => "market_templates/show_market_memberships.html.erb" })
   end
 

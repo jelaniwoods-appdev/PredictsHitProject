@@ -9,22 +9,30 @@
 <h1 class="center_title">My Clubs</h1>
 <br>
 <!-- There's likely a better way to do this -->
-
-<div class="row row-cols-1 row-cols-md-4">
-  <% @membership_rows.each do |member| %>
-    <div class="col mb-4">
-      <div class="card h-100">
-        <img src="<%= Club.where({ :id => member.clubs_id }).at(0).picture %>" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title"><%= Club.where({ :id => member.clubs_id }).at(0).title %></h5>
-          <% if Club.where({ :id => member.clubs_id }).at(0).description == "" %>
-            <p class="card-text">[No Description]</p>
-          <% else %>
-            <p class="card-text"><%= Club.where({ :id => member.clubs_id }).at(0).description %> </p>
-          <% end %>
-          <div class="text-center"><a class="btn btn-secondary stretched-link" href="/clubs/<%= member.clubs_id %>">Go to Club</a></div>
+<% if @membership_rows.present? %>
+  <div class="row row-cols-1 row-cols-md-4">
+    <% @membership_rows.each do |member| %>
+      <div class="col mb-4">
+        <div class="card h-100">
+          <img src="<%= Club.where({ :id => member.clubs_id }).at(0).picture %>" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title text-truncate"><%= Club.where({ :id => member.clubs_id }).at(0).title %></h5>
+            <% if Club.where({ :id => member.clubs_id }).at(0).description == "" %>
+              <p class="card-text text-truncate">[No Description]</p>
+            <% else %>
+              <p class="card-text text-truncate"><%= Club.where({ :id => member.clubs_id }).at(0).description %> </p>
+            <% end %>
+            <div class="text-center"><a class="btn btn-secondary stretched-link" href="/clubs/<%= member.clubs_id %>">Go to Club</a></div>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+<% else %>
+  <h2>
+    You do not belong to any Clubs yet.
+    <br>
+    <br>
+    Ask a current Club owner to invite you to their Club...or create your own!
+  </h2>
+<% end %>
