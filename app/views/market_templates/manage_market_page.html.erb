@@ -87,7 +87,7 @@
       <form action="/add_market_contract/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="new_contract_title">What is the title of the contract you would like to add?</label>
-          <input class="form-control" id="new_contract_title" type="text" name="contract_title" placeholder="Enter a title...">
+          <input class="form-control" id="new_contract_title" type="text" name="contract_title" placeholder="Enter a title..." required>
           <br>
           <label for="new_contract_description">What is the description of the contract you would like to add?</label>
           <input class="form-control" id="new_contract_description" type="text" name="contract_description" placeholder="Enter a description...">
@@ -97,7 +97,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text">$</span>
             </div>
-            <input class="form-control" id="new_contract_starting_price" type="number" name="contract_starting_price" min="0" step=".01" max="1" placeholder="Enter a price between $0.00 and $1.00..." >
+            <input class="form-control" id="new_contract_starting_price" type="number" name="contract_starting_price" min="0.01" step=".01" max="0.99" placeholder="Enter a price between $0.00 and $1.00, exclusive..." required>
           </div>
           <br>
           <label for="create_contract_picture">What picture would you like to set for this Contract?</label>

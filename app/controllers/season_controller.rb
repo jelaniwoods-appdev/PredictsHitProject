@@ -104,10 +104,10 @@ class SeasonController < ApplicationController
       flash[:notice] = "Season successfully created!" 
       redirect_to("/seasons/" + @new_season.club_id.to_s + "/" + @new_season.id.to_s)
     else
-      if @new_season.title == nil
-        flash[:alert] = "Season creation was unsuccessful. Please provide a title for your Season."
-      else
+      if params.fetch("season_title").present?
         flash[:alert] = "Season creation was unsuccessful. Please enter a numerical amount of money for season participants to start with. If you do not want to give participants money yet, please enter 0."
+      else
+        flash[:alert] = "Season creation was unsuccessful. Please provide a title for your Season."
       end
       redirect_to("/new_season")
     end

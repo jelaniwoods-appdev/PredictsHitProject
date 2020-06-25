@@ -19,7 +19,9 @@
 
 class Contract < ApplicationRecord
   belongs_to :market
-  validates :price, :numericality => true
+  
+  validates_presence_of :title
+  validates :price, :numericality => {:greater_than => 0, :less_than => 1}
 
   mount_uploader :contractpic, ContractpicUploader
 end
