@@ -94,10 +94,18 @@ class ContractController < ApplicationController
     if params[:updated_contract_picture].present?
       updated_contract_details.contractpic = params.fetch("updated_contract_picture")
     end
-    updated_contract_details.save
 
-    flash[:notice] = "Contract Details were successfully updated!"
-    redirect_to("/contracts/manage/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
+    if updated_contract_details.valid?
+      
+      updated_contract_details.save
+
+      flash[:notice] = "Contract details were successfully updated!"
+      redirect_to("/contracts/manage/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
+    else
+      flash[:alert] = "Contract details were not updated. Please include a title."
+      redirect_to("/contracts/manage/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
+    end
+
   end
 
   #buy/sell contracts 

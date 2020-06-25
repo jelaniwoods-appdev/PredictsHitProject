@@ -119,7 +119,7 @@ class MarketController < ApplicationController
     if updated_market_details.valid?
       updated_market_details.save
 
-      flash[:notice] = "Market Details were successfully updated!"
+      flash[:notice] = "Market details were successfully updated!"
       redirect_to("/markets/manage/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
     else
       flash[:alert] = "Market details were not updated. Please include a title."
