@@ -21,8 +21,16 @@ class MarketController < ApplicationController
     @market_row = Market.where({ :id => market_id }).at(0)
     @contract_rows = @market_row.contracts
     @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
+    @owner_user_id = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
 
-    render({ :template => "market_templates/manage_market_page.html.erb" })
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to view this page."
+      redirect_to("/")
+    else
+      render({ :template => "market_templates/manage_market_page.html.erb" })
+    end
+    
   end
 
   def close_market_page
@@ -35,8 +43,16 @@ class MarketController < ApplicationController
     @market_row = Market.where({ :id => market_id }).at(0)
     @contract_rows = @market_row.contracts
     @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
+    @owner_user_id = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
 
-    render({ :template => "market_templates/close_market_page.html.erb" })
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to view this page."
+      redirect_to("/")
+    else
+      render({ :template => "market_templates/close_market_page.html.erb" })
+    end
+    
   end
 
   def close_market_action
@@ -123,12 +139,18 @@ class MarketController < ApplicationController
     @contract_rows = @market_row.contracts
     @membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
-    #determine current user asset quantities
-    @membership_id = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id }).at(0).id
-    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets.
-    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    if @membership_rows.where({ :users_id => current_user.id}).empty?
+      flash[:alert] = "You are not authorized to view this page."
+      redirect_to("/")
+    else
+      #determine current user asset quantities (this seems unnecessary because i could just call current_user.id. Think through and decide whether to update.)
+      @membership_id = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id }).at(0).id
+      #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets.
+      @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
 
-    render({ :template => "market_templates/market_details.html.erb" })
+      render({ :template => "market_templates/market_details.html.erb" })
+    end
+    
   end
   
   def market_create_form
