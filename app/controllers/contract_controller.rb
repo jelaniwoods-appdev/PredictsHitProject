@@ -31,8 +31,16 @@ class ContractController < ApplicationController
     @market_row = Market.where({ :id => market_id }).at(0)
     @contract_row = Contract.where({ :id => contract_id }).at(0)
     @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
+    @owner_user_id = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
 
-    render({ :template => "contract_templates/manage_contract_page.html.erb" })
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to view this page."
+      redirect_to("/")
+    else
+      render({ :template => "contract_templates/manage_contract_page.html.erb" })
+    end
+    
   end
 
 
@@ -48,10 +56,18 @@ class ContractController < ApplicationController
     @contract_row = Contract.where({ :id => @contract_id}).at(0)
     @membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
-    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets/contracts.
-    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    
 
-    render({ :template => "contract_templates/contract_details.html.erb" })
+    if @membership_rows.where({ :users_id => current_user.id}).empty?
+      flash[:alert] = "You are not authorized to view this page."
+      redirect_to("/")
+    else
+      #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets/contracts.
+      @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+
+      render({ :template => "contract_templates/contract_details.html.erb" })
+    end
+
   end
 
   def update_contract_details

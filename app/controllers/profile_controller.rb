@@ -24,8 +24,14 @@ class ProfileController < ApplicationController
 
   def manage_profile_page
     @user_id = params.fetch("user_id")
-    @profile_info = User.where({ :id => @user_id }).at(0)
-    render({ :template => "profile_templates/edit_profile_page.html.erb" })
+    
+    if @user_id != current_user.id.to_s
+      flash[:alert] = "You are not authorized to view this page."
+      redirect_to("/")
+    else
+      @profile_info = User.where({ :id => @user_id }).at(0)
+      render({ :template => "profile_templates/edit_profile_page.html.erb" })
+    end
   end
 
 end
