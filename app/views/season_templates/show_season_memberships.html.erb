@@ -16,28 +16,28 @@
   <% club_id = 0 %>
 
     <% @membership_rows.each do |member| %>
-      <% if Season.where({ :id => member.seasons_id }).at(0).club.id != club_id %>
+      <% if member.season.club_id != club_id %>
         <% if club_id != 0 %>
           </div> <!-- This is to end the card div each time there is a new club associated with the remaining seasons (except for the first time before a card has been created) -->
         <% end %>
         <h2>
-          <%= Season.where({ :id => member.seasons_id }).at(0).club.title %>
+          <%= member.season.club.title %>
         </h2>
         <br>
       <div class="row row-cols-1 row-cols-md-4">
       <% end %>
-      <% club_id = Season.where({ :id => member.seasons_id }).at(0).club.id %>
+      <% club_id = member.season.club.id %>
       <div class="col mb-4">
         <div class="card h-100">
-          <img src="<%= Season.where({ :id => member.seasons_id }).at(0).picture %>" class="card-img-top" alt="...">
+          <img src="<%= member.season.picture %>" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title text-truncate"><%= Season.where({ :id => member.seasons_id }).at(0).title %></h5>
-            <% if Season.where({ :id => member.seasons_id }).at(0).description == "" %>
+            <h5 class="card-title text-truncate"><%= member.season.title %></h5>
+            <% if member.season.description == "" %>
               <p class="card-text text-truncate">[No Description]</p>
             <% else %>
-              <p class="card-text text-truncate"><%= Season.where({ :id => member.seasons_id }).at(0).description %> </p>
+              <p class="card-text text-truncate"><%= member.season.description %> </p>
             <% end %>
-            <div class="text-center"><a class="btn btn-secondary stretched-link" href="/seasons/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s %>">Go to Season</a></div>
+            <div class="text-center"><a class="btn btn-secondary stretched-link" href="/seasons/<%= member.season.club.id.to_s + '/' + member.seasons_id.to_s %>">Go to Season</a></div>
           </div>
         </div>
       </div>

@@ -19,9 +19,9 @@
 #
 
 class Membership < ApplicationRecord
-  belongs_to :user
-  belongs_to :club
-  belongs_to :season
+  belongs_to :user, {:foreign_key => "users_id"}
+  belongs_to :club, {:foreign_key => "clubs_id"}
+  belongs_to :season, {:foreign_key => "seasons_id"}
   has_many :assets
 
   validates :users_id, uniqueness: {scope: [:goes_to, :clubs_id , :seasons_id ]}

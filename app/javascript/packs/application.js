@@ -6,6 +6,8 @@
 require("@rails/ujs").start()
 require("@rails/activestorage").start()
 
+
+
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
