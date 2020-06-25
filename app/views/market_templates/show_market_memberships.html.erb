@@ -36,14 +36,14 @@
     <!-- Fix formatting to make it tile based instead of table based -->
     <!-- This might technically be a bug. Make sure it's okay that there is no explicit exclusion of seasons that have no markets. -->
     <% @membership_rows.each do |member| %>
-      <% Season.where({ :id => member.seasons_id }).at(0).markets.each do |associated_market|%>
+      <% member.season.markets.each do |associated_market|%>
     <tr>
       <td>
-        <%= Season.where({ :id => member.seasons_id }).at(0).club.title %>
+        <%= member.season.club.title %>
       </td>
 
       <td>
-        <%= Season.where({ :id => member.seasons_id }).at(0).title %>
+        <%= member.season.title %>
       </td>
 
       <td>
@@ -55,7 +55,7 @@
       </td>
 
       <td>
-        <a class="btn btn-secondary" href="/markets/<%= Season.where({ :id => member.seasons_id }).at(0).club.id.to_s + '/' + member.seasons_id.to_s + "/" + associated_market.id.to_s %>">Go to Market</a>
+        <a class="btn btn-secondary" href="/markets/<%= member.season.club.id.to_s + '/' + member.seasons_id.to_s + "/" + associated_market.id.to_s %>">Go to Market</a>
       </td>
     </tr>
       <% end %>

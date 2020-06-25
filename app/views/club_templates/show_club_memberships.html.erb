@@ -8,19 +8,19 @@
 
 <h1 class="center_title">My Clubs</h1>
 <br>
-<!-- There's likely a better way to do this -->
+
 <% if @membership_rows.present? %>
   <div class="row row-cols-1 row-cols-md-4">
     <% @membership_rows.each do |member| %>
       <div class="col mb-4">
         <div class="card h-100">
-          <img src="<%= Club.where({ :id => member.clubs_id }).at(0).picture %>" class="card-img-top" alt="...">
+          <img src="<%= member.club.picture %>" class="card-img-top" alt="...">
           <div class="card-body">
-            <h5 class="card-title text-truncate"><%= Club.where({ :id => member.clubs_id }).at(0).title %></h5>
-            <% if Club.where({ :id => member.clubs_id }).at(0).description == "" %>
+            <h5 class="card-title text-truncate"><%= member.club.title %></h5>
+            <% if member.club.description == "" %>
               <p class="card-text text-truncate">[No Description]</p>
             <% else %>
-              <p class="card-text text-truncate"><%= Club.where({ :id => member.clubs_id }).at(0).description %> </p>
+              <p class="card-text text-truncate"><%= member.club.description %> </p>
             <% end %>
             <div class="text-center"><a class="btn btn-secondary stretched-link" href="/clubs/<%= member.clubs_id %>">Go to Club</a></div>
           </div>
