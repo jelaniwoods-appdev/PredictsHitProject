@@ -11,7 +11,15 @@ class ClubController < ApplicationController
     @club_row = Club.where({ :id => club_id }).at(0)
     @season_rows = Season.where({ :club_id => club_id})
     @membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
-    render({ :template => "club_templates/manage_club_page.html.erb" })
+    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
+    @owner_user_id = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
+
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to view this page."
+      redirect_to("/")
+    else
+      render({ :template => "club_templates/manage_club_page.html.erb" })
+    end
   end
 
   def update_club_details
@@ -43,11 +51,11 @@ class ClubController < ApplicationController
     if @membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")
+    else
+      #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
+      @owner_user_id = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
+      render({ :template => "club_templates/club_details.html.erb" })
     end
-
-    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
-    @owner_user_id = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
-    render({ :template => "club_templates/club_details.html.erb" })
   end
   
   def club_create_form

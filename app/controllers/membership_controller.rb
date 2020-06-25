@@ -32,7 +32,7 @@ class MembershipController < ApplicationController
     @member_id = params.fetch("member_id")
     @member_category = params.fetch("member_category")
     
-    #add validation check!
+    #add validation check!?
     
     #Create membership row for added user
     @new_membership = Membership.new
