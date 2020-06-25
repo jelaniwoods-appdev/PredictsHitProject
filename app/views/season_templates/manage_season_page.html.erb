@@ -43,7 +43,7 @@
           <select class="form-control" required="required" id="select_club_member" name="member_id"><option value="">Select member</option>
             <% @club_membership_rows.each do |club_member| %>
               <% if Membership.where({ :users_id => club_member.users_id, :clubs_id => club_member.clubs_id, :seasons_id => @season_row.id }).at(0) == nil %>
-                <option value="<%= club_member.users_id %>"><%= User.where({ :id => club_member.users_id }).at(0).username %></option>
+                <option value="<%= club_member.users_id %>"><%= club_member.user.username %></option>
               <% end %>
             <% end %>
           </select>
@@ -118,7 +118,7 @@
       <% @season_membership_rows.each do |member| %>
       <tr>
         <td>
-          <%= User.where({ :id => member.users_id}).at(0).username %>
+          <%= member.user.username %>
         </td>
         <td>
           <%= member.category %>
@@ -129,7 +129,7 @@
         </td>
 
         <td>
-          <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= User.where({ :id => member.users_id}).at(0).id %>" method="post">
+          <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= member.user.id %>" method="post">
             <div class="form-group">
               <input type="hidden" name="_method" value="patch">
               <input type="hidden" name="adjustment_factor" value="positive">
@@ -146,7 +146,7 @@
         </td>
 
         <td>
-          <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= User.where({ :id => member.users_id}).at(0).id %>" method="post">
+          <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= member.user.id %>" method="post">
             <div class="form-group">
               <input type="hidden" name="_method" value="patch">
               <input type="hidden" name="adjustment_factor" value="negative">
