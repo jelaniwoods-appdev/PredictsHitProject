@@ -1,39 +1,42 @@
-<div class="col-md-8 offset-md-2">
-  <div class="jumbotron">
-    <h1 class="center_title">Create a New Season</h1>
-    <br>
-      <form action="/create_new_season" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-          <!-- Change this to a dropdown of available clubs instead of text entry -->
-          <!-- If user does not have a club they can add season for then put msg that they need to create a club first and -->
-          <!-- Include some form of permission functionality where only members of each club who are designated owner or admin under category column can create season -->
-          <select class="form-control" required="required" id="select_club" name="associated_club_id"><option value="">Select Club</option>
-            <% @user_club_memberships.each do |club_option| %>
-            <option value="<%= club_option.clubs_id %>"><%= club_option.club.title %></option>
-            <% end %>
-          </select>
-          <br>
-          <label for="create_season_title">What is the title of your season?</label>
-          <input class="form-control" id="create_season_title" type="text" name="season_title" placeholder="Enter a title..." required="required">
-          <br>
-          <label for="create_season_description">What is the description of your season?</label>
-          <input class="form-control" id="create_season_description" type="text" name="season_description" placeholder="Enter a description...">
-          <br>
-          <label for="create_season_fund ">How much money do you want season participants to start with?</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text">$</span>
+<div class="row">   
+  <div class="col-6 offset-3">
+    <div class="col-md-8 offset-md-2">
+      <div class="jumbotron">
+        <h1 class="center_title">Create a New Season</h1>
+        <br>
+          <form action="/create_new_season" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <!-- Change this to a dropdown of available clubs instead of text entry -->
+              <!-- If user does not have a club they can add season for then put msg that they need to create a club first and -->
+              <!-- Include some form of permission functionality where only members of each club who are designated owner or admin under category column can create season -->
+              <select class="form-control" required="required" id="select_club" name="associated_club_id"><option value="">Select Club</option>
+                <% @user_club_memberships.each do |club_option| %>
+                <option value="<%= club_option.clubs_id %>"><%= club_option.club.title %></option>
+                <% end %>
+              </select>
+              <br>
+              <label for="create_season_title">What is the title of your season?</label>
+              <input class="form-control" id="create_season_title" type="text" name="season_title" placeholder="Enter a title..." required="required">
+              <br>
+              <label for="create_season_description">What is the description of your season?</label>
+              <input class="form-control" id="create_season_description" type="text" name="season_description" placeholder="Enter a description...">
+              <br>
+              <label for="create_season_fund ">How much money do you want season participants to start with?</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                  </div>
+                <input class="form-control" id="create_season_fund" name="season_fund" placeholder="Enter a positive amount..." type="number" min="0" step=".01">
               </div>
-            <input class="form-control" id="create_season_fund" name="season_fund" placeholder="Enter a positive amount..." type="number" min="0" step=".01">
-          </div>
-          <br>
-          <label for="create_season_picture">What picture would you like to set for your Season?</label>
-          <input type="file" id="create_season_picture" name="season_picture" class="form-control">
-          <!-- Add a password field in the future -->
-          <br>
-          <button class="btn btn-secondary btn-block">Create Season</button>
-        </div>
-      </form>
+              <br>
+              <label for="create_season_picture">What picture would you like to set for your Season?</label>
+              <input type="file" id="create_season_picture" name="season_picture" class="form-control">
+              <!-- Add a password field in the future -->
+              <br>
+              <button class="btn btn-secondary btn-block">Create Season</button>
+            </div>
+          </form>
+      </div>
+    </div>
   </div>
-</div>
-    
+</div>   

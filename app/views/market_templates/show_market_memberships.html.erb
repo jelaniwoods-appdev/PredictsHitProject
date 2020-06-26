@@ -1,71 +1,75 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
-    <li class="breadcrumb-item"><a href="/my_seasons">My Seasons</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/my_markets" style="color: black">My Markets</a></li>
-  </ol>
-</nav>
+<div class="row">   
+  <div class="col-6 offset-3"> 
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
+        <li class="breadcrumb-item"><a href="/my_seasons">My Seasons</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/my_markets" style="color: black">My Markets</a></li>
+      </ol>
+    </nav>
 
-<h1 class="center_title">My Markets</h1>
-<br>
-<% if @m_count > 0 %>
-  <table class="table table-hover table-striped">
-    <thead class="thead-dark">
-      <tr>
-        <th>
-          Club Title
-        </th>
+    <h1 class="center_title">My Markets</h1>
+    <br>
+    <% if @m_count > 0 %>
+      <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>
+              Club Title
+            </th>
 
-        <th>
-          Season Title
-        </th>
+            <th>
+              Season Title
+            </th>
 
-        <th>
-          Market Title
-        </th>
+            <th>
+              Market Title
+            </th>
 
-        <th>
-          Market Description
-        </th>
-      
-        <th></th>
-      </tr>
-    </thead>
+            <th>
+              Market Description
+            </th>
+          
+            <th></th>
+          </tr>
+        </thead>
 
-    <!-- There's likely a better way to do this -->
-    <!-- Fix formatting to make it tile based instead of table based -->
-    <!-- This might technically be a bug. Make sure it's okay that there is no explicit exclusion of seasons that have no markets. -->
-    <% @membership_rows.each do |member| %>
-      <% member.season.markets.each do |associated_market|%>
-    <tr>
-      <td>
-        <%= member.season.club.title %>
-      </td>
+        <!-- There's likely a better way to do this -->
+        <!-- Fix formatting to make it tile based instead of table based -->
+        <!-- This might technically be a bug. Make sure it's okay that there is no explicit exclusion of seasons that have no markets. -->
+        <% @membership_rows.each do |member| %>
+          <% member.season.markets.each do |associated_market|%>
+        <tr>
+          <td>
+            <%= member.season.club.title %>
+          </td>
 
-      <td>
-        <%= member.season.title %>
-      </td>
+          <td>
+            <%= member.season.title %>
+          </td>
 
-      <td>
-        <%= associated_market.title %>
-      </td>
+          <td>
+            <%= associated_market.title %>
+          </td>
 
-      <td>
-        <%= associated_market.description %>
-      </td>
+          <td>
+            <%= associated_market.description %>
+          </td>
 
-      <td>
-        <a class="btn btn-secondary" href="/markets/<%= member.season.club.id.to_s + '/' + member.seasons_id.to_s + "/" + associated_market.id.to_s %>">Go to Market</a>
-      </td>
-    </tr>
-      <% end %>
+          <td>
+            <a class="btn btn-secondary" href="/markets/<%= member.season.club.id.to_s + '/' + member.seasons_id.to_s + "/" + associated_market.id.to_s %>">Go to Market</a>
+          </td>
+        </tr>
+          <% end %>
+        <% end %>
+      </table>
+    <% else %>
+      <h2>
+        You do not belong to any Markets yet.
+        <br>
+        <br>
+        Ask a current Season owner to create a Market...or create your own!
+      </h2>
     <% end %>
-  </table>
-<% else %>
-  <h2>
-    You do not belong to any Markets yet.
-    <br>
-    <br>
-    Ask a current Season owner to create a Market...or create your own!
-  </h2>
-<% end %>
+  </div>
+</div>

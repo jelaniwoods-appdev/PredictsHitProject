@@ -1,38 +1,42 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/my_clubs" style="color: black">My Clubs</a></li>
-    <li class="breadcrumb-item"><a href="/my_seasons">My Seasons</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/my_markets">My Markets</a></li>
-  </ol>
-</nav>
+<div class="row">
+  <div class="col-6 offset-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/my_clubs" style="color: black">My Clubs</a></li>
+        <li class="breadcrumb-item"><a href="/my_seasons">My Seasons</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><a href="/my_markets">My Markets</a></li>
+      </ol>
+    </nav>
 
-<h1 class="center_title">My Clubs</h1>
-<br>
+    <h1 class="center_title">My Clubs</h1>
+    <br>
 
-<% if @membership_rows.present? %>
-  <div class="row row-cols-1 row-cols-md-4">
-    <% @membership_rows.each do |member| %>
-      <div class="col mb-4">
-        <div class="card h-100">
-          <img src="<%= member.club.picture %>" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title text-truncate"><%= member.club.title %></h5>
-            <% if member.club.description == "" %>
-              <p class="card-text text-truncate">[No Description]</p>
-            <% else %>
-              <p class="card-text text-truncate"><%= member.club.description %> </p>
-            <% end %>
-            <div class="text-center"><a class="btn btn-secondary stretched-link" href="/clubs/<%= member.clubs_id %>">Go to Club</a></div>
+    <% if @membership_rows.present? %>
+      <div class="row row-cols-1 row-cols-md-4">
+        <% @membership_rows.each do |member| %>
+          <div class="col mb-4">
+            <div class="card h-100">
+              <img src="<%= member.club.picture %>" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title text-truncate"><%= member.club.title %></h5>
+                <% if member.club.description == "" %>
+                  <p class="card-text text-truncate">[No Description]</p>
+                <% else %>
+                  <p class="card-text text-truncate"><%= member.club.description %> </p>
+                <% end %>
+                <div class="text-center"><a class="btn btn-secondary stretched-link" href="/clubs/<%= member.clubs_id %>">Go to Club</a></div>
+              </div>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
+    <% else %>
+      <h2>
+        You do not belong to any Clubs yet.
+        <br>
+        <br>
+        Ask a current Club owner to invite you to their Club...or create your own!
+      </h2>
     <% end %>
   </div>
-<% else %>
-  <h2>
-    You do not belong to any Clubs yet.
-    <br>
-    <br>
-    Ask a current Club owner to invite you to their Club...or create your own!
-  </h2>
-<% end %>
+</div>

@@ -1,27 +1,31 @@
-<div class="col-md-6 offset-md-3">
-    <div class="center_title"><a class="btn btn-secondary btn-block" href="/profile/<%= @profile_info.id %>">Return to Profile</a></div>
-</div>
-<br>
-  <h1 class="center_title">Manage Profile</h1>
-  
-  <div class="col-md-6 offset-md-3">
-    <div class="jumbotron">
-      <h1 class="center_title">Profile Details</h1>
-      <br>
-      <form action="/update_profile/<%= @profile_info.id %>" method="post" class="form-horizontal" enctype="multipart/form-data">
-        <div class="form-group">
-          <input type="hidden" name="_method" value="patch">
-          
-          <label for="update_profile_username">What username would you like to use?</label>
-          <input class="form-control" id="update_profile_username" type="text" name="updated_username" placeholder="Enter a username..." value="<%= @profile_info.username %>">
-          
-          <br>
-          <input type="file" id="prof_pic" name="prof_pic" class="form-control">
-          <br>
-          <button class="btn btn-secondary btn-block">Update Profile Details</button>
-        </div>
-      </form>
+<div class="row">   
+  <div class="col-6 offset-3">
+    <div class="col-md-6 offset-md-3">
+        <div class="center_title"><a class="btn btn-secondary btn-block" href="/profile/<%= @profile_info.id %>">Return to Profile</a></div>
+    </div>
+    <br>
+    <h1 class="center_title">Manage Profile</h1>
+      
+    <div class="col-md-6 offset-md-3">
+      <div class="jumbotron">
+        <h1 class="center_title">Profile Details</h1>
+        <br>
+        <form action="/update_profile/<%= @profile_info.id %>" method="post" class="form-horizontal" enctype="multipart/form-data">
+          <div class="form-group">
+            <input type="hidden" name="_method" value="patch">
+              
+            <label for="update_profile_username">What username would you like to use?</label>
+            <input class="form-control" id="update_profile_username" type="text" name="updated_username" placeholder="Enter a username..." value="<%= @profile_info.username %>">
+              
+            <br>
+            <input type="file" id="prof_pic" name="prof_pic" class="form-control">
+            <br>
+            <button class="btn btn-secondary btn-block">Update Profile Details</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
+</div>
 
 

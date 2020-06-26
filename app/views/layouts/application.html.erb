@@ -22,8 +22,12 @@
 
   <body>
     <%= render 'home_templates/navbar' %>
-    <br>
-    <div class="container">
+
+    <!-- Render relevant sidebars conditional on which page is being shown. 
+      <%= render 'club_templates/club_roster' if @show_club_roster %>
+    -->
+
+    <div class="container-fluid">
       <%= render 'home_templates/flash' %>
       <%= yield %>
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

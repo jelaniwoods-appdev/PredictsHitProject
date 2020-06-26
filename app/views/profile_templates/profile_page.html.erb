@@ -1,36 +1,40 @@
-<% if @profile_info.id == current_user.id %>
+<div class="row">   
+  <div class="col-6 offset-3">
+    <% if @profile_info.id == current_user.id %>
 
-<!-- Add edit form -->
-  <div class="col-md-6 offset-md-3">
-    <div class="jumbotron">
-      <h1 class="center_title">My Profile</h1>
-      <br>
-      <div>Username: <%= @profile_info.username %></div>
-      <br>
-      <div>Email Address: <%= @profile_info.email %></div>
-      <br>
-      <div>Current Profile Picture:</div>
-      <br>
-      <div><img src="<%= @profile_info.prof_pic %>" height = 200 class="img-responsive"></div>
-      <br>
-      <div class="center_title"><a class="btn btn-secondary btn-block" href="/profile/manage/<%= @profile_info.id %>">Manage Profile</a></div>
-      <br>
-    </div>
+    <!-- Add edit form -->
+      <div class="col-md-6 offset-md-3">
+        <div class="jumbotron">
+          <h1 class="center_title">My Profile</h1>
+          <br>
+          <div>Username: <%= @profile_info.username %></div>
+          <br>
+          <div>Email Address: <%= @profile_info.email %></div>
+          <br>
+          <div>Current Profile Picture:</div>
+          <br>
+          <div><img src="<%= @profile_info.prof_pic %>" height = 200 class="img-responsive"></div>
+          <br>
+          <div class="center_title"><a class="btn btn-secondary btn-block" href="/profile/manage/<%= @profile_info.id %>">Manage Profile</a></div>
+          <br>
+        </div>
+      </div>
+
+
+    <% else %>
+
+      <div class="col-md-6 offset-md-3">
+        <div class="jumbotron">
+          <h1 class="center_title">User Profile</h1>
+          <br>
+          <div>Username: <%= @profile_info.username %></div>
+          <br>
+          <div>Current Profile Picture:</div>
+          <br>
+          <div><img src="<%= @profile_info.prof_pic %>" height = 200></div>   
+        </div>
+      </div>
+
+    <% end %>
   </div>
-
-
-<% else %>
-
-  <div class="col-md-6 offset-md-3">
-    <div class="jumbotron">
-      <h1 class="center_title">User Profile</h1>
-      <br>
-      <div>Username: <%= @profile_info.username %></div>
-      <br>
-      <div>Current Profile Picture:</div>
-      <br>
-      <div><img src="<%= @profile_info.prof_pic %>" height = 200></div>   
-    </div>
-  </div>
-
-<% end %>
+</div>

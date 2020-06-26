@@ -1,37 +1,41 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
-    <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
-    <li class="breadcrumb-item"><a href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>"><%= @season_row.title %></a></li>
-    <li class="breadcrumb-item"><a href="/markets/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>"><%= @market_row.title %></a></li>
-    <li class="breadcrumb-item"><a href="/contracts/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= @contract_row.id %>"><%= @contract_row.title %></a></li>
-    <li class="breadcrumb-item active" aria-current="page">Manage Contract</li>
-  </ol>
-</nav>
+<div class="row">
+  <div class="col-6 offset-3">   
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
+        <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
+        <li class="breadcrumb-item"><a href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>"><%= @season_row.title %></a></li>
+        <li class="breadcrumb-item"><a href="/markets/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>"><%= @market_row.title %></a></li>
+        <li class="breadcrumb-item"><a href="/contracts/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= @contract_row.id %>"><%= @contract_row.title %></a></li>
+        <li class="breadcrumb-item active" aria-current="page">Manage Contract</li>
+      </ol>
+    </nav>
 
-<h1 class="center_title">Manage Contract</h1>
+    <h1 class="center_title">Manage Contract</h1>
 
-<div class="col-md-6 offset-md-3">
-  <div class="jumbotron">
-    <h2 class="center_title">Contract Details</h2>
-      <br>
-      <form action="/update_contract_details/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= @contract_row.id %>" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-          <input type="hidden" name="_method" value="patch">
-          <label for="update_contract_title">What is the new title of this contract?</label>
-          <input class="form-control" id="update_contract_title" type="text" name="updated_contract_title" placeholder="Enter a title..." value="<%= @contract_row.title %>" required>
+    <div class="col-md-6 offset-md-3">
+      <div class="jumbotron">
+        <h2 class="center_title">Contract Details</h2>
           <br>
-          <label for="update_contract_description">What is the new description of this contract?</label>
-          <input class="form-control" id="update_contract_description" type="text" name="updated_contract_description" placeholder="Enter a description..." value="<%= @contract_row.description %>">
-          <br>
-          <label for="update_contract_picture">What is new picture of this contract?</label>
-          <input type="file" id="update_contract_picture" name="updated_contract_picture" class="form-control">
-          <br>
-          <br>
-          <button class="btn btn-secondary btn-block">Update Contract Details</button>
-        </div>
-      </form>
+          <form action="/update_contract_details/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= @contract_row.id %>" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <input type="hidden" name="_method" value="patch">
+              <label for="update_contract_title">What is the new title of this contract?</label>
+              <input class="form-control" id="update_contract_title" type="text" name="updated_contract_title" placeholder="Enter a title..." value="<%= @contract_row.title %>" required>
+              <br>
+              <label for="update_contract_description">What is the new description of this contract?</label>
+              <input class="form-control" id="update_contract_description" type="text" name="updated_contract_description" placeholder="Enter a description..." value="<%= @contract_row.description %>">
+              <br>
+              <label for="update_contract_picture">What is new picture of this contract?</label>
+              <input type="file" id="update_contract_picture" name="updated_contract_picture" class="form-control">
+              <br>
+              <br>
+              <button class="btn btn-secondary btn-block">Update Contract Details</button>
+            </div>
+          </form>
+      </div>
+    </div>
   </div>
 </div>
-<br>
+
 <!-- Add delete and/or change status to deactive functionality -->

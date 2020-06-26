@@ -1,109 +1,113 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
-    <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
-    <li class="breadcrumb-item"><a href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>"><%= @season_row.title %></a></li>
-    <li class="breadcrumb-item"><a href="/markets/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>"><%= @market_row.title %></a></li>
-    <li class="breadcrumb-item"><a href="/markets/manage/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>">Manage Market</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Close Market</li>
-  </ol>
-</nav>
+<div class="row">   
+  <div class="col-6 offset-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
+        <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
+        <li class="breadcrumb-item"><a href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>"><%= @season_row.title %></a></li>
+        <li class="breadcrumb-item"><a href="/markets/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>"><%= @market_row.title %></a></li>
+        <li class="breadcrumb-item"><a href="/markets/manage/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>">Manage Market</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Close Market</li>
+      </ol>
+    </nav>
 
-<h1 class="center_title">Close Market</h1>
+    <h1 class="center_title">Close Market</h1>
 
-<div class="col-md-8 offset-md-2">
-  <div class="jumbotron">
-    <% if @contract_rows.present? %>
-      <h2 class="center_title">Final Contract Outcomes</h2>
-      <form action="/close_market/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+    <div class="col-md-8 offset-md-2">
+      <div class="jumbotron">
+        <% if @contract_rows.present? %>
+          <h2 class="center_title">Final Contract Outcomes</h2>
+          <form action="/close_market/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+            <table class="table table-hover table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>
+                    Contract Title
+                  </th>
+
+                  <th>
+                    Contract Description
+                  </th>
+
+                  <th>
+                    Final Outcome
+                  </th>
+
+                  <th></th>
+                </tr>
+              </thead>
+              <% @contract_rows.each do |contract| %>
+                <tr>
+                  <td>
+                    <%= contract.title %>
+                  </td>
+
+                  <td>
+                    <%= contract.description %>
+                  </td>
+
+                  <td>
+                    <div class="center_title">
+                      <input type="hidden"  name="<%= contract.id %>" value="no">
+                      <input id="outcome_checkbox" type="checkbox" name="<%= contract.id %>" value="yes">
+                    </div>
+                  </td>
+
+                  <td>
+                    <a class="btn btn-secondary" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>">Go to Contract</a>
+                  </td>
+                </tr>
+              <% end %>
+            
+            </table>
+          <br>
+          <br>
+          <button class="btn btn-secondary btn-block">Close Market</button>
+        </form>
+        <% else %>
+        <h2>There are no active contracts in this Market.</h2>
+        <% end %>
+      </div>
+    </div>
+
+    <br>
+    <div class="col-md-8 offset-md-2">
+      <div class="jumbotron">
+        <h2 class="center_title">Users currently in <%= @market_row.title %></h2>
         <table class="table table-hover table-striped">
           <thead class="thead-dark">
             <tr>
               <th>
-                Contract Title
+                Username
               </th>
 
               <th>
-                Contract Description
+                Role
               </th>
 
               <th>
-                Final Outcome
+                View Profile
               </th>
-
-              <th></th>
             </tr>
           </thead>
-          <% @contract_rows.each do |contract| %>
-            <tr>
-              <td>
-                <%= contract.title %>
-              </td>
 
-              <td>
-                <%= contract.description %>
-              </td>
-
-              <td>
-                <div class="center_title">
-                  <input type="hidden"  name="<%= contract.id %>" value="no">
-                  <input id="outcome_checkbox" type="checkbox" name="<%= contract.id %>" value="yes">
-                </div>
-              </td>
-
-              <td>
-                <a class="btn btn-secondary" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>">Go to Contract</a>
-              </td>
-            </tr>
-          <% end %>
-        
-        </table>
-      <br>
-      <br>
-      <button class="btn btn-secondary btn-block">Close Market</button>
-    </form>
-    <% else %>
-    <h2>There are no active contracts in this Market.</h2>
-    <% end %>
-  </div>
-</div>
-
-<br>
-<div class="col-md-8 offset-md-2">
-  <div class="jumbotron">
-    <h2 class="center_title">Users currently in <%= @market_row.title %></h2>
-    <table class="table table-hover table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th>
-            Username
-          </th>
-
-          <th>
-            Role
-          </th>
-
-          <th>
-            View Profile
-          </th>
-        </tr>
-      </thead>
-
-      <% @membership_rows.each do |member| %>
-      <tr>
-        <td>
-          <%= member.user.username %>
-        </td>
-        <td>
-          <%= member.category %>
-        </td>
+          <% @membership_rows.each do |member| %>
+          <tr>
+            <td>
+              <%= member.user.username %>
+            </td>
+            <td>
+              <%= member.category %>
+            </td>
+              
+            <td>
+              <a class="nav-link btn btn-secondary" href="/profile/<%= member.users_id %>">User Profile</a>
+            </td>
+          </tr>
           
-        <td>
-          <a class="nav-link btn btn-secondary" href="/profile/<%= member.users_id %>">User Profile</a>
-        </td>
-      </tr>
-      
-      <% end %>
-    </table>
+          <% end %>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

@@ -44,6 +44,9 @@ class ClubController < ApplicationController
   end
 
   def view_club
+    #set variable for club roster partial (consider deleting if not using this method anymore)
+    #@show_club_roster = true
+    
     club_id = params.fetch("club_id")
     @club_row = Club.where({ :id => club_id }).at(0)
     @season_rows = Season.where({ :club_id => club_id}).order({ :id => :desc })
