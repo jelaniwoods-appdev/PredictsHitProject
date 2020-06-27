@@ -71,29 +71,29 @@
     <br>
 
     <% if @contract_rows.present? %>
-    <h2 class="center_title">Contracts available in <%= @market_row.title %></h2>
+    <h2 class="center_title">Contracts in Play</h2>
     <div>
       
       <table class="table table-hover table-striped table-control">
         <thead class="thead-dark">
           <tr class="d-flex">
-            <th class="col-4">
-              Contract Title
+            <th class="col-6">
+              Contract
             </th>
 
-            <th class="col-2">
-              Contracts Owned
+            <th class="col-1 center_title">
+              Owned
             </th>
 
-            <th class="col-2">
+            <th class="col-1 center_title">
               Price
             </th>
 
-            <th class="col-2">
+            <th class="col-2 center_title">
               Buy Yes
             </th>
 
-            <th class="col-2">
+            <th class="col-2 center_title">
               Sell Yes
             </th>
 
@@ -110,7 +110,7 @@
         </thead>
         <% @contract_rows.each do |contract| %>
         <tr class="d-flex">
-          <td class="col-4">
+          <td class="col-6">
             <div class="media text-truncate">
               <a style="color: black" class="stretched-link" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>"><img class="mr-3" src="<%= contract.contractpic %>" alt="Generic placeholder image" style="max-height: 50px;"></a>
               <div class="media-body">
@@ -120,7 +120,7 @@
             </div>
           </td>
 
-          <td class="col-2">
+          <td class="col-1 center_title">
             <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity"}).at(0) == nil %>
               0
             <% else %>
@@ -128,10 +128,10 @@
             <% end %>
           </td>
 
-          <td class="col-2">
+          <td class="col-1 center_title">
             <%= number_to_currency(contract.price) %>
           </td>
-          <td class="col-2">
+          <td class="col-2 center_title">
             <div class="container">
               <div class="row">
                   <div class="col-12">
@@ -159,7 +159,7 @@
             </div>
           </td>
 
-          <td class="col-2">
+          <td class="col-2 center_title">
             <div class="container">
               <div class="row">
                   <div class="col-12">
@@ -174,9 +174,9 @@
                             <form action='/sell_yes_contract/<%= contract.id %>' method='post'>
                               <div class='form-group center_title'>
                                 <label for='quantity_sell_yes_contract'>How many contracts do you want to sell?</label>
-                                <input class='form-control w-50 center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' required>
+                                <input class='form-control center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' required>
                                 <br>
-                                <button class='btn btn-secondary w-50'>Sell</button>
+                                <button class='btn btn-secondary btn-block'>Sell</button>
                               </div>
                             </form>">
                       Sell
