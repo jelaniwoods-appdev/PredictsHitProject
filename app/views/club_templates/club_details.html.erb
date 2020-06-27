@@ -22,10 +22,10 @@
 
           <% @membership_rows.each do |member| %>
           <tr class="d-flex">
-            <td class="w-50 text-center">
+            <td class="w-50 text-center px-5">
               <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
             </td>
-            <td class="w-50 text-center">
+            <td class="w-50 text-center px-5">
               <%= member.category %>
             </td>
           </tr>
