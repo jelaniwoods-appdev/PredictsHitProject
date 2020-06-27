@@ -15,7 +15,7 @@
         <table class="table table-hover table-striped sortable table-bordered">
           <thead class="thead-dark">
             <tr class="d-flex">
-              <th class="col-4 text-center pr-5" >
+              <th class="col-4 text-center pr-5">
                 Username
               </th>
 
@@ -72,154 +72,148 @@
 
     <% if @contract_rows.present? %>
     <h2 class="center_title">Contracts available in <%= @market_row.title %></h2>
-    <table class="table table-hover table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th>
-            Contract Title
-          </th>
-
-          <th>
-            Contracts Owned
-          </th>
-
-          <th>
-            Price
-          </th>
-
-          <th>
-            Buy Yes
-          </th>
-
-          <th>
-            Sell Yes
-          </th>
-
-    <!-- Fill in later to allow buying and selling no to each contract
-          <th>
-            Buy No
-          </th>
-
-          <th>
-            Sell No
-          </th>
-    -->
-          <th></th>
-        </tr>
-      </thead>
-      <% @contract_rows.each do |contract| %>
-      <tr>
-        <td>
-          <div class="card mb-3" style="max-width: 400px;">
-            <div class="row no-gutters">
-              <div class="col-md-4">
-                <img src="<%= contract.contractpic %>" class="card-img">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title text-truncate"><%= contract.title %></h5>
-                  <p class="card-text text-truncate"><%= contract.description %></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
-
-        <td>
-          <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity"}).at(0) == nil %>
-            0
-          <% else %>
-            <%= Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity"}).at(0).quantity.to_i  %>
-          <% end %>
-        </td>
-
-        <td>
-          <%= number_to_currency(contract.price) %>
-        </td>
-        <td>
-          <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div>
-                  <span
-                          class="editable btn btn-secondary btn-block"
-                          data-toggle="popover"
-                          data-container="body"
-                          data-title="Buy"
-                          data-content=
-                          "
-                          <form action='/buy_yes_contract/<%= contract.id %>' method='post'>
-                            <div class='form-group'>
-                              <label for='quantity_buy_yes_contract'>How many contracts do you want to buy?</label>
-                              <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' required>
-                              <br>
-                              <button class='btn btn-secondary btn-block'>Buy</button>
-                            </div>
-                          </form>">
-                    Buy
-                  </span>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </td>
-
-        <td>
-          <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div>
-                  <span
-                          class="editable btn btn-secondary btn-block"
-                          data-toggle="popover"
-                          data-container="body"
-                          data-title="Sell"
-                          data-content=
-                          "
-                          <form action='/sell_yes_contract/<%= contract.id %>' method='post'>
-                            <div class='form-group'>
-                              <label for='quantity_sell_yes_contract'>How many contracts do you want to sell?</label>
-                              <input class='form-control w-50 center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' required>
-                              <br>
-                              <button class='btn btn-secondary w-50'>Sell</button>
-                            </div>
-                          </form>">
-                    Sell
-                  </span>
-                    </div>
-                </div>
-            </div>
-          </div>
-        </td>
-
-    <!-- Fill in later to allow yes and no for same contract
-        <td>
-          <form action="/buy_no_contract/<%= contract.id %>" method="post">
-            <div class="form-group">
-              <label for="quantity_buy_no_contract"></label>
-              <input class="form-control w-50 center_title" id="quantity_buy_no_contract" type="number" min="1" step="1" max="9999" name="quantity_buy_no" required>
-              <button class="btn btn-secondary w-50">Buy</button>
-            </div>
-          </form>
-        </td>
-
-        <td>
-          <form action="/sell_no_contract/<%= contract.id %>" method="post">
-            <div class="form-group">
-              <label for="quantity_sell_no_contract"></label>
-              <input class="form-control w-50 center_title" id="quantity_sell_no_contract" type="number" min="1" step="1" max="9999" name="quantity_sell_no" required>
-              <button class="btn btn-secondary w-50">Sell</button>
-            </div>
-          </form>
-        </td>
-    -->
-        <td>
-          <a class="btn btn-secondary" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>">View Contract</a>
-        </td>
-      </tr>
+    <div class="table-responsive">
       
-      <% end %>
-    </table>
+      <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+          <tr class="d-flex">
+            <th class="col-4">
+              Contract Title
+            </th>
+
+            <th class="col-2">
+              Contracts Owned
+            </th>
+
+            <th class="col-2">
+              Price
+            </th>
+
+            <th class="col-2">
+              Buy Yes
+            </th>
+
+            <th class="col-2">
+              Sell Yes
+            </th>
+
+      <!-- Fill in later to allow buying and selling no to each contract
+            <th>
+              Buy No
+            </th>
+
+            <th>
+              Sell No
+            </th>
+      -->
+          </tr>
+        </thead>
+        <% @contract_rows.each do |contract| %>
+        <tr class="d-flex">
+          <td class="col-4">
+            <div class="media text-truncate">
+              <a style="color: black" class="stretched-link" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>"><img class="mr-3" src="<%= contract.contractpic %>" alt="Generic placeholder image" style="max-height: 50px;"></a>
+              <div class="media-body">
+                <h5 class="mt-0"><%= contract.title %></h5>
+                <div><%= contract.description %></div>
+              </div>
+            </div>
+          </td>
+
+          <td class="col-2">
+            <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity"}).at(0) == nil %>
+              0
+            <% else %>
+              <%= Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity"}).at(0).quantity.to_i  %>
+            <% end %>
+          </td>
+
+          <td class="col-2">
+            <%= number_to_currency(contract.price) %>
+          </td>
+          <td class="col-2">
+            <div class="container">
+              <div class="row">
+                  <div class="col-12">
+                      <div>
+                    <span
+                            class="editable btn btn-secondary btn-block"
+                            data-toggle="popover"
+                            data-container="body"
+                            data-title="Buy"
+                            data-content=
+                            "
+                            <form action='/buy_yes_contract/<%= contract.id %>' method='post'>
+                              <div class='form-group'>
+                                <label for='quantity_buy_yes_contract'>How many contracts do you want to buy?</label>
+                                <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' required>
+                                <br>
+                                <button class='btn btn-secondary btn-block'>Buy</button>
+                              </div>
+                            </form>">
+                      Buy
+                    </span>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </td>
+
+          <td class="col-2">
+            <div class="container">
+              <div class="row">
+                  <div class="col-12">
+                      <div>
+                    <span
+                            class="editable btn btn-secondary btn-block"
+                            data-toggle="popover"
+                            data-container="body"
+                            data-title="Sell"
+                            data-content=
+                            "
+                            <form action='/sell_yes_contract/<%= contract.id %>' method='post'>
+                              <div class='form-group'>
+                                <label for='quantity_sell_yes_contract'>How many contracts do you want to sell?</label>
+                                <input class='form-control w-50 center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' required>
+                                <br>
+                                <button class='btn btn-secondary w-50'>Sell</button>
+                              </div>
+                            </form>">
+                      Sell
+                    </span>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </td>
+
+      <!-- Fill in later to allow yes and no for same contract
+          <td>
+            <form action="/buy_no_contract/<%= contract.id %>" method="post">
+              <div class="form-group">
+                <label for="quantity_buy_no_contract"></label>
+                <input class="form-control w-50 center_title" id="quantity_buy_no_contract" type="number" min="1" step="1" max="9999" name="quantity_buy_no" required>
+                <button class="btn btn-secondary w-50">Buy</button>
+              </div>
+            </form>
+          </td>
+
+          <td>
+            <form action="/sell_no_contract/<%= contract.id %>" method="post">
+              <div class="form-group">
+                <label for="quantity_sell_no_contract"></label>
+                <input class="form-control w-50 center_title" id="quantity_sell_no_contract" type="number" min="1" step="1" max="9999" name="quantity_sell_no" required>
+                <button class="btn btn-secondary w-50">Sell</button>
+              </div>
+            </form>
+          </td>
+      -->
+
+        </tr>
+        
+        <% end %>
+      </table>
+    </div>
     <% else %>
     <h2>
       There are no contracts currently available in <%= @market_row.title %>.
