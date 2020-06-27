@@ -1,37 +1,48 @@
 <div class="row">
-  <div class="col-2 offset-1 position-fixed" id="sticky-sidebar">
-            <div class="nav flex-column flex-nowrap vh-100 overflow-auto p-2">
-                <h2 class="center_title">Club Roster</h2>
-                <table class="table table-hover table-striped sortable table-bordered">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th class="w-50 text-center" >
-                        Username
-                      </th>
+  <div class="col-1">
+  </div>
+  <div>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <h2 class="center_title">Club Roster</h2>
+        <table class="table table-hover table-striped sortable table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th class="w-50 text-center" >
+                Username
+              </th>
 
-                      <th class="w-50 text-center">
-                        Role
-                      </th>
+              <th class="w-50 text-center">
+                Role
+              </th>
 
-                    </tr>
-                  </thead>
+            </tr>
+          </thead>
 
-                  <% @membership_rows.each do |member| %>
-                  <tr>
-                    <td class="text-center">
-                      <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
-                    </td>
-                    <td class="text-center">
-                      <%= member.category %>
-                    </td>
-                  </tr>
-                  
-                  <% end %>
-                </table>
-            </div>
-        </div>
+          <% @membership_rows.each do |member| %>
+          <tr>
+            <td class="text-center">
+              <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+            </td>
+            <td class="text-center">
+              <%= member.category %>
+            </td>
+          </tr>
+                    
+          <% end %>
+        </table>
+      </div>
+      <!-- /#sidebar-wrapper -->
 
-  <div class="col-6 offset-3">
+    </div>
+    <!-- /#wrapper -->
+  </div>
+
+
+
+
+  <div class="col-6 offset-2">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
@@ -46,6 +57,10 @@
     <br>
     <div class="center_title">
       <img src="<%= @club_row.picture %>" height = 200 class="img-responsive">
+    </div>
+    <br>
+    <div class="center_title">
+      <button class="btn btn-outline-secondary" id="menu-toggle">View Roster</button>
     </div>
     <br>
     <% if @season_rows.present? %>
@@ -92,3 +107,10 @@
     <% end %>
   </div>
 </div>
+
+<script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
