@@ -4,31 +4,24 @@
     <table class="table table-hover table-striped sortable table-bordered">
       <thead class="thead-dark">
         <tr>
-          <th>
+          <th class="w-50" >
             Username
           </th>
 
-          <th>
+          <th class="w-50">
             Role
           </th>
 
-          <th class="sorttable_nosort">
-            
-          </th>
         </tr>
       </thead>
 
       <% @membership_rows.each do |member| %>
       <tr>
         <td>
-          <%= member.user.username %>
+          <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
         </td>
         <td>
           <%= member.category %>
-        </td>
-          
-        <td>
-          <a class="btn btn-secondary" class="nav-link" href="/profile/<%= member.users_id %>">User Profile</a>
         </td>
       </tr>
       
