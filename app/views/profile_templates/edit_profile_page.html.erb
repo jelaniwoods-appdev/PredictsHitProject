@@ -15,7 +15,7 @@
             <input type="hidden" name="_method" value="patch">
               
             <label for="update_profile_username">What username would you like to use?</label>
-            <input class="form-control" id="update_profile_username" type="text" name="updated_username" placeholder="Enter a username..." value="<%= @profile_info.username %>">
+            <input class="form-control" id="update_profile_username" type="text" name="updated_username" maxlength="15" placeholder="Enter a username..." value="<%= @profile_info.username %>" required>
               
             <br>
             <input type="file" id="prof_pic" name="prof_pic" class="form-control">
