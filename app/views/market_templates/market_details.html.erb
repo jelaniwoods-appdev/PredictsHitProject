@@ -72,9 +72,9 @@
 
     <% if @contract_rows.present? %>
     <h2 class="center_title">Contracts available in <%= @market_row.title %></h2>
-    <div class="table-responsive">
+    <div>
       
-      <table class="table table-hover table-striped">
+      <table class="table table-hover table-striped table-control">
         <thead class="thead-dark">
           <tr class="d-flex">
             <th class="col-4">
@@ -140,11 +140,11 @@
                             class="editable btn btn-secondary btn-block"
                             data-toggle="popover"
                             data-container="body"
-                            data-title="Buy"
+                            data-title="Buy <%= contract.title %>"
                             data-content=
                             "
                             <form action='/buy_yes_contract/<%= contract.id %>' method='post'>
-                              <div class='form-group'>
+                              <div class='form-group center_title'>
                                 <label for='quantity_buy_yes_contract'>How many contracts do you want to buy?</label>
                                 <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' required>
                                 <br>
@@ -168,11 +168,11 @@
                             class="editable btn btn-secondary btn-block"
                             data-toggle="popover"
                             data-container="body"
-                            data-title="Sell"
+                            data-title="Sell  <%= contract.title %>"
                             data-content=
                             "
                             <form action='/sell_yes_contract/<%= contract.id %>' method='post'>
-                              <div class='form-group'>
+                              <div class='form-group center_title'>
                                 <label for='quantity_sell_yes_contract'>How many contracts do you want to sell?</label>
                                 <input class='form-control w-50 center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' required>
                                 <br>
