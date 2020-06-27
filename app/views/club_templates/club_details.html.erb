@@ -8,12 +8,12 @@
         <h2 class="center_title">Club Roster</h2>
         <table class="table table-hover table-striped sortable table-bordered">
           <thead class="thead-dark">
-            <tr>
-              <th class="w-50 text-center" >
+            <tr class="d-flex">
+              <th class="w-50 text-center px-5" >
                 Username
               </th>
 
-              <th class="w-50 text-center">
+              <th class="w-50 text-center px-5">
                 Role
               </th>
 
@@ -21,11 +21,11 @@
           </thead>
 
           <% @membership_rows.each do |member| %>
-          <tr>
-            <td class="text-center">
+          <tr class="d-flex">
+            <td class="w-50 text-center">
               <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
             </td>
-            <td class="text-center">
+            <td class="w-50 text-center">
               <%= member.category %>
             </td>
           </tr>
