@@ -26,6 +26,7 @@ gem "cloudinary"
 gem 'simple_form', '~> 5.0', '>= 5.0.2'
 gem 'finishing_moves'
 gem 'sortable-rails'
+gem 'bootstrap-editable-rails'
 
 
 group :development do
