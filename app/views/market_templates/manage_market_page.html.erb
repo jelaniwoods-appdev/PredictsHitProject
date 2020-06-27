@@ -1,5 +1,62 @@
 <div class="row">   
-  <div class="col-6 offset-3"> 
+  <div class="col-1">
+    <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="menu-toggle">Season Standings</button></div>
+    <br>
+    <% if @owner_user_id == current_user.id %>
+      <div class="center_title"><a class="btn btn-outline-secondary btn-block" href="/markets/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>">View Market</a></div>
+      <br>
+    <% end %>
+    <% if @market_row.status == "active" %>
+      <div class="center_title"><a class="btn btn-outline-secondary btn-block" href="/markets/manage/close/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>">Close Market</a></div>
+    <% end %>
+  </div>
+  <div>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <h2 class="center_title">Season Standings</h2>
+        <table class="table table-hover table-striped sortable table-bordered">
+          <thead class="thead-dark">
+            <tr class="d-flex">
+              <th class="col-4 text-center pr-5">
+                Username
+              </th>
+
+              <th class="col-4 text-center pr-5">
+                Role
+              </th>
+
+              <th class="col-4 text-center pr-5">
+                Funds
+              </th>
+
+            </tr>
+          </thead>
+
+          <% @membership_rows.each do |member| %>
+          <tr class="d-flex">
+            <td class="col-4 text-center pr-5">
+              <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+            </td>
+            <td class="col-4 text-center pr-5">
+              <%= member.category %>
+            </td>
+            <td class="col-4 text-center pr-5">
+              $<%= member.assets.where({ :category => "season_fund"}).at(0).quantity %>
+            </td>
+          </tr>
+                    
+          <% end %>
+        </table>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+  </div>
+  
+  
+  <div class="col-6 offset-2"> 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
@@ -110,55 +167,12 @@
           </form>
       </div>
     </div>
-
-    <br>
-    <div class="col-md-8 offset-md-2">
-      <div class="jumbotron">
-        <h2 class="center_title">Users currently in <%= @market_row.title %></h2>
-        <table class="table table-hover table-striped">
-          <thead class="thead-dark">
-            <tr>
-              <th>
-                Username
-              </th>
-
-              <th>
-                Role
-              </th>
-
-              <th>
-                View Profile
-              </th>
-            </tr>
-          </thead>
-
-          <% @membership_rows.each do |member| %>
-          <tr>
-            <td>
-              <%= member.user.username %>
-            </td>
-            <td>
-              <%= member.category %>
-            </td>
-              
-            <td>
-              <a class="nav-link btn btn-secondary" href="/profile/<%= member.users_id %>">User Profile</a>
-            </td>
-          </tr>
-          
-          <% end %>
-        </table>
-      </div>
-    </div>
-
-    <% if @market_row.status == "active" %>
-    <br>
-    <br>
-    <div class="col-md-8 offset-md-2">
-      <div class="jumbotron">
-        <div class="center_title"><a class="btn btn-secondary btn-block" href="/markets/manage/close/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>">Close Market</a></div>
-      </div>
-    </div>
-    <% end %>
   </div>
 </div>
+
+<script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+</script>

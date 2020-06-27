@@ -1,5 +1,59 @@
 <div class="row">
-  <div class="col-6 offset-3">
+
+  <div class="col-1">
+    <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="menu-toggle">Season Standings</button></div>
+    <br>
+    <% if @owner_user_id == current_user.id %>
+        <div class="center_title"><a class="btn btn-outline-secondary btn-block" href="/contracts/manage/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= @contract_row.id %>">Manage Contract</a></div>
+      <br>
+    <% end %>
+  </div>
+  <div>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+        <h2 class="center_title">Season Standings</h2>
+        <table class="table table-hover table-striped sortable table-bordered">
+          <thead class="thead-dark">
+            <tr class="d-flex">
+              <th class="col-4 text-center pr-5" >
+                Username
+              </th>
+
+              <th class="col-4 text-center pr-5">
+                Role
+              </th>
+
+              <th class="col-4 text-center pr-5">
+                Funds
+              </th>
+
+            </tr>
+          </thead>
+
+          <% @membership_rows.each do |member| %>
+          <tr class="d-flex">
+            <td class="col-4 text-center pr-5">
+              <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+            </td>
+            <td class="col-4 text-center pr-5">
+              <%= member.category %>
+            </td>
+            <td class="col-4 text-center pr-5">
+              $<%= member.assets.where({ :category => "season_fund"}).at(0).quantity %>
+            </td>
+          </tr>
+                    
+          <% end %>
+        </table>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+  </div>
+
+  <div class="col-6 offset-2">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
@@ -27,3 +81,9 @@
   </div>
 </div>
 
+<script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+</script>
