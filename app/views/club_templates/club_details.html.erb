@@ -39,10 +39,12 @@
     <!-- /#wrapper -->
   </div>
 
+  <div class="col-1">
+    <button class="btn btn-outline-secondary" id="menu-toggle">View Roster</button>
+  </div>
 
 
-
-  <div class="col-6 offset-2">
+  <div class="col-6 offset-1">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
@@ -57,10 +59,6 @@
     <br>
     <div class="center_title">
       <img src="<%= @club_row.picture %>" height = 200 class="img-responsive">
-    </div>
-    <br>
-    <div class="center_title">
-      <button class="btn btn-outline-secondary" id="menu-toggle">View Roster</button>
     </div>
     <br>
     <% if @season_rows.present? %>
