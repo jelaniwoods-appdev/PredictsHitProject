@@ -1,0 +1,72 @@
+<!-- Manage Market Details modal html -->
+<div class="modal fade" id="manage_market_details" tabindex="-1" role="dialog" aria-labelledby="manage_market_detailsLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="manage_market_detailsLabel">Edit Market Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/update_market_details/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="hidden" name="_method" value="patch">
+            <label for="update_market_title">What is the new title of this Meason?</label>
+            <input class="form-control" id="update_market_title" type="text" name="updated_market_title" placeholder="Enter a title..." value="<%= @market_row.title %>" required>
+            <br>
+            <label for="update_market_description">What is the new description of this Market?</label>
+            <input class="form-control" id="update_market_description" type="text" name="updated_market_description" placeholder="Enter a description..." value="<%= @market_row.description %>">
+            <br>
+            <label for="update_market_picture">What picture would you like to set for this Market?</label>
+            <input type="file" id="update_market_picture" name="updated_market_picture" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-block">Update Market Details</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Create Contract modal html -->
+<div class="modal fade" id="add_contract" tabindex="-1" role="dialog" aria-labelledby="add_contractLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add_contractLabel">Add Contract</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/add_market_contract/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <!-- Include some form of permission functionality where only members of each season who are designated owner or admin under category column can create contract -->
+            <label for="new_contract_title">What is the title of this Contract?</label>
+            <input class="form-control" id="new_contract_title" type="text" name="contract_title" placeholder="Enter a title..." required>
+            <br>
+            <label for="new_contract_description">What is the description of this Contract?</label>
+            <input class="form-control" id="new_contract_description" type="text" name="contract_description" placeholder="Enter a description...">
+            <br>
+            <label for="new_contract_starting_price">What price would you like to set this contract at initially? <br>Note: Must be a number between $0.00 and $1.00.</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input class="form-control" id="new_contract_starting_price" type="number" name="contract_starting_price" min="0.01" step=".01" max="0.99" placeholder="Enter a price between $0.00 and $1.00, exclusive..." required>
+            </div>
+            <br>
+            <label for="create_contract_picture">What picture would you like to set for this Contract?</label>
+            <input type="file" id="create_contract_picture" name="contract_picture" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-block">Add Contract</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

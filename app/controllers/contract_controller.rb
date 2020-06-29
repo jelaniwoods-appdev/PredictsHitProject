@@ -19,14 +19,14 @@ class ContractController < ApplicationController
     if @new_contract.valid?
       @new_contract.save
       flash[:notice] = "Contract successfully created!" 
-      redirect_to("/markets/manage/" + @club_id + "/" + @season_id + "/" + @market_id)
+      redirect_to("/markets/" + @club_id + "/" + @season_id + "/" + @market_id)
     else
       if params.fetch("contract_title").present?
         flash[:alert] = "Contract creation was unsuccessful. Please ensure the initial contract price is between $0.00 and $1.00 (Note: $0.00 and $1.00 are not valid)."
       else
         flash[:alert] = "Contract creation was unsuccessful. Please enter a title."
       end
-      redirect_to("/markets/manage/" + @club_id + "/" + @season_id + "/" + @market_id)
+      redirect_to("/markets/" + @club_id + "/" + @season_id + "/" + @market_id)
     end
   end
 

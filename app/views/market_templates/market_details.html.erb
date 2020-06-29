@@ -3,54 +3,17 @@
     <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="menu-toggle">Season Standings</button></div>
     <br>
     <% if @owner_user_id == current_user.id %>
-        <div class="center_title"><a class="btn btn-outline-secondary btn-block" href="/markets/manage/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>">Manage Market</a></div>
+      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_market_details">
+          Edit Market Details
+      </button>
       <br>
+      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#add_contract">
+          Add Contract
+      </button>
     <% end %>
   </div>
-  <div>
-    <div class="d-flex" id="wrapper">
-      <!-- Sidebar -->
-      <div id="sidebar-wrapper">
-        <h2 class="center_title">Season Standings</h2>
-        <table class="table table-hover table-striped sortable table-bordered">
-          <thead class="thead-dark">
-            <tr class="d-flex">
-              <th class="col-4 text-center pr-5">
-                Username
-              </th>
 
-              <th class="col-4 text-center pr-5">
-                Role
-              </th>
-
-              <th class="col-4 text-center pr-5">
-                Funds
-              </th>
-
-            </tr>
-          </thead>
-
-          <% @membership_rows.each do |member| %>
-          <tr class="d-flex">
-            <td class="col-4 text-center pr-5">
-              <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
-            </td>
-            <td class="col-4 text-center pr-5">
-              <%= member.category %>
-            </td>
-            <td class="col-4 text-center pr-5">
-              $<%= member.assets.where({ :category => "season_fund"}).at(0).quantity %>
-            </td>
-          </tr>
-                    
-          <% end %>
-        </table>
-      </div>
-      <!-- /#sidebar-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-  </div>
+  <%= render 'season_templates/season_standings' %>
   
   <div class="col-6 offset-2">
     <nav aria-label="breadcrumb">
@@ -66,7 +29,7 @@
     <div class="center_title"><%= @market_row.description %></div>
     <br>
     <div class="center_title">
-      <img src="<%= @market_row.picture %>" height = 200 class="img-responsive">
+      <img src="<%= @market_row.picture %>" height="180" width="240" class="img-responsive">
     </div>
     <br>
 
@@ -112,7 +75,7 @@
         <tr class="d-flex">
           <td class="col-6">
             <div class="media text-truncate">
-              <a style="color: black" class="stretched-link" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>"><img class="mr-3" src="<%= contract.contractpic %>" alt="Generic placeholder image" style="max-height: 50px;"></a>
+              <a style="color: black" class="stretched-link" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>"><img class="mr-3" src="<%= contract.contractpic %>" alt="Generic placeholder image" height="75" width="100"></a>
               <div class="media-body">
                 <h5 class="mt-0"><%= contract.title %></h5>
                 <div><%= contract.description %></div>
@@ -227,6 +190,8 @@
     <% end %>
   </div>
 </div>
+
+<%= render 'market_templates/market_modals' %>
 
 <script>
   $("div > .editable").popover({

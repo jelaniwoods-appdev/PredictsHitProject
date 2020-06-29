@@ -120,10 +120,10 @@ class MarketController < ApplicationController
       updated_market_details.save
 
       flash[:notice] = "Market details were successfully updated!"
-      redirect_to("/markets/manage/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
+      redirect_to("/markets/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
     else
       flash[:alert] = "Market details were not updated. Please include a title."
-      redirect_to("/markets/manage/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
+      redirect_to("/markets/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
     end
     
   end
@@ -137,9 +137,9 @@ class MarketController < ApplicationController
     @season_row = Season.where({ :id => @season_id}).at(0)
     @market_row = Market.where({ :id => @market_id}).at(0)
     @contract_rows = @market_row.contracts
-    @membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+    @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
-    if @membership_rows.where({ :users_id => current_user.id}).empty?
+    if @season_membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")
     else
