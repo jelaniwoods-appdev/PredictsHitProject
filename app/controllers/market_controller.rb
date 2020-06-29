@@ -100,7 +100,7 @@ class MarketController < ApplicationController
 
 
     flash[:notice] = "Market has been successfully closed!"
-    redirect_to("/markets/manage/" + club_id.to_s + "/" + season_id.to_s + "/" + market_id.to_s)
+    redirect_to("/markets/" + club_id.to_s + "/" + season_id.to_s + "/" + market_id.to_s)
   end
 
   def update_market_details
