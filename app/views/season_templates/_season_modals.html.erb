@@ -1,0 +1,220 @@
+<!-- Manage Season Details modal html -->
+<div class="modal fade" id="manage_season_details" tabindex="-1" role="dialog" aria-labelledby="manage_season_detailsLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="manage_season_detailsLabel">Edit Season Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/update_season_details/<%= @club_row.id %>/<%= @season_row.id %>" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="hidden" name="_method" value="patch">
+            <label for="update_season_title">What is the new title of this Season?</label>
+            <input class="form-control" id="update_season_title" type="text" name="updated_season_title" placeholder="Enter a title..." value="<%= @season_row.title %>" required="required">
+            <br>
+            <label for="update_season_description">What is the new description of this Season?</label>
+            <input class="form-control" id="update_season_description" type="text" name="updated_season_description" placeholder="Enter a description..." value="<%= @season_row.description %>">
+            <br>
+            <label for="update_season_picture">What picture would you like to set for this Season?</label>
+            <input type="file" id="update_season_picture" name="updated_season_picture" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-block">Update Season Details</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Season Member modal html -->
+<div class="modal fade" id="add_season_member" tabindex="-1" role="dialog" aria-labelledby="add_season_memberLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add_season_memberLabel">Add Season Member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/add_season_memberships/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+            <!-- Update to involve search -->
+            <label for="select_club_member">Select a member to add from the Club associated with this Season:</label>
+              <select class="form-control" required="required" id="select_club_member" name="member_id"><option value="">Select member</option>
+                <% @club_membership_rows.each do |club_member| %>
+                  <% if Membership.where({ :users_id => club_member.users_id, :clubs_id => club_member.clubs_id, :seasons_id => @season_row.id }).at(0) == nil %>
+                    <option value="<%= club_member.users_id %>"><%= club_member.user.username %></option>
+                  <% end %>
+                <% end %>
+              </select>
+            <br>
+            <select class="form-control" required="required" id="select_member_category" name="member_category"><option value="">Select role for this new Season member</option>
+              <option value="member">Member</option>
+              <option value="admin">Admin</option>
+            </select>   
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-block">Add Season Member</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Manage User Funds modal html -->
+<div class="modal fade" id="manage_user_funds" tabindex="-1" role="dialog" aria-labelledby="manage_user_fundsLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="manage_user_fundsLabel">Manage User Funds</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Add (or Remove) Funds for all Users in Season</h5>
+        <form action="/update_season_funds/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
+          <div class="form-group">
+            <input type="hidden" name="_method" value="patch">
+            <label for="update_season_fund">How much would you like to add to (or subtract from) the season fund?<br><br>(Amount currently in Season Fund: <%= number_to_currency(@season_row.fund) %>)</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input class="form-control" id="update_season_fund" name="amount_added" placeholder="Enter a dollar amount..." type="number" step=".01" required="required">
+            </div>
+            <br>
+            <button class="btn btn-secondary btn-block">Add (or Remove) Funds</button>
+            <br>
+          </div>
+        </form>
+        <br>
+        <br>
+        <h5>Change Individual User Funds</h5>
+        <table class="table table-hover table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>
+                Username
+              </th>
+
+              <th>
+                Funds
+              </th>
+
+              <th>
+                Add Funds
+              </th>
+
+              <th>
+                Remove Funds
+              </th>
+
+            </tr>
+          </thead>
+          <% @season_membership_rows.each do |member| %>
+          <tr>
+            <td>
+              <%= member.user.username %>
+            </td>
+
+            <td>
+              $<%= member.assets.where({ :category => "season_fund"}).at(0).quantity %>
+            </td>
+
+            <td>
+              <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= member.user.id %>" method="post">
+                <div class="form-group">
+                  <input type="hidden" name="_method" value="patch">
+                  <input type="hidden" name="adjustment_factor" value="positive">
+                  <label for="adjust_user_funds"></label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                  <input class="form-control center_title" id="adjust_user_funds" type="number" name="fund_amount" required>
+                  </div>
+                  <button class="btn btn-secondary w-100">Add</button>
+                </div>
+              </form>
+            </td>
+
+            <td>
+              <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= member.user.id %>" method="post">
+                <div class="form-group">
+                  <input type="hidden" name="_method" value="patch">
+                  <input type="hidden" name="adjustment_factor" value="negative">
+                  <label for="adjust_user_funds"></label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                  <input class="form-control center_title" id="adjust_user_funds" type="number" name="fund_amount" required>
+                  </div>
+                  <button class="btn btn-secondary w-100">Remove</button>
+                </div>
+              </form>
+            </td>
+          </tr>
+          
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Market modal html -->
+<div class="modal fade" id="create_market" tabindex="-1" role="dialog" aria-labelledby="create_marketLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="create_marketLabel">Create a New Market</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/create_new_market" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <!-- Include some form of permission functionality where only members of each season who are designated owner or admin under category column can create market -->
+            <label for="selected_season">Create a Market for the following Season:</label>
+            <input id="selected_season" name="associated_season_title" class="form-control" type="text" placeholder="<%= @season_row.title %>" readonly>
+            <input type="hidden" id="hidden_season_id" name="associated_season_id" value="<%= @season_row.id %>">
+            <br>
+            <label for="create_market_title">What is the title of this Market?</label>
+            <input class="form-control" id="create_market_title" type="text" name="market_title" placeholder="Enter a title..." required>
+            <br>
+            <label for="create_market_description">What is the description of this Market?</label>
+            <input class="form-control" id="create_market_description" type="text" name="market_description" placeholder="Enter a description...">
+            <!-- Consider adding in future functionality that allows giving season participants more money when a market is created and/or some quantity of contracts
+                      <label for="create_market_price">How much money do you want market participants to start with?</label>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">$</span>
+                        </div>
+                        <input class="form-control" id="create_market_price" type="text" name="market_price" placeholder="Enter a dollar amount...">
+                      </div>
+                      <br>
+                      <label for="create_market_quantity">For each contract in your market, how many assets do you want your market participants to start with?</label>
+                      <input class="form-control" id="create_market_quantity" type="text" name="market_quantity" placeholder="Enter a quantity...">
+                    -->
+            <br>
+            <label for="create_market_picture">What picture would you like to set for this Market?</label>
+            <input type="file" id="create_market_picture" name="market_picture" class="form-control">
+            <br>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-block">Create Market</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -3,56 +3,25 @@
     <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="menu-toggle">Season Standings</button></div>
     <br>
     <% if @owner_user_id == current_user.id %>
-        <div class="center_title"><a class="btn btn-outline-secondary btn-block" href="/seasons/manage/<%= @club_row.id %>/<%= @season_row.id %>">Manage Season</a></div>
+      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_season_details">
+          Edit Season Details
+      </button>
       <br>
+      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#add_season_member">
+        Add Season Members
+      </button>
+      <br>
+      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_user_funds">
+        Manage User Funds
+      </button>
+      <br>
+      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#create_market">
+        Create Market
+      </button>
     <% end %>
   </div>
-  <div>
-    <div class="d-flex" id="wrapper">
-      <!-- Sidebar -->
-      <div id="sidebar-wrapper">
-        <h2 class="center_title">Season Standings</h2>
-        <table class="table table-hover table-striped sortable table-bordered">
-          <thead class="thead-dark">
-            <tr class="d-flex">
-              <th class="col-4 text-center pr-5" >
-                Username
-              </th>
-
-              <th class="col-4 text-center pr-5">
-                Role
-              </th>
-
-              <th class="col-4 text-center pr-5">
-                Funds
-              </th>
-
-            </tr>
-          </thead>
-
-          <% @membership_rows.each do |member| %>
-          <tr class="d-flex">
-            <td class="col-4 text-center pr-5">
-              <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
-            </td>
-            <td class="col-4 text-center pr-5">
-              <%= member.category %>
-            </td>
-            <td class="col-4 text-center pr-5">
-              $<%= member.assets.where({ :category => "season_fund"}).at(0).quantity %>
-            </td>
-          </tr>
-                    
-          <% end %>
-        </table>
-      </div>
-      <!-- /#sidebar-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
-  </div>
   
-  
+  <%= render 'season_templates/season_standings' %>
   
   <div class="col-6 offset-2">
     <nav aria-label="breadcrumb">
@@ -107,9 +76,8 @@
   </div>
 </div>
 
-<script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
+
+<%= render 'season_templates/season_modals' %>
+
+<script src="/javascript_files/screenpopout.js">
 </script>

@@ -39,7 +39,7 @@ class SeasonController < ApplicationController
     updated_season_details.save
 
     flash[:notice] = "Season Details were successfully updated!"
-    redirect_to("/seasons/manage/" + @club_id.to_s + "/"+ @season_id.to_s)
+    redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
   end
 
   def view_season
@@ -48,9 +48,10 @@ class SeasonController < ApplicationController
     @club_row = Club.where({ :id => club_id }).at(0)
     @season_row = Season.where({ :id => season_id}).at(0)
     @market_rows = @season_row.markets
-    @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"}) 
+    @season_membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+    @club_membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
 
-    if @membership_rows.where({ :users_id => current_user.id}).empty?
+    if @season_membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")
     else

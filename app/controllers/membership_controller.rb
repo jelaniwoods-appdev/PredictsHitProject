@@ -56,6 +56,6 @@ class MembershipController < ApplicationController
 
     flash[:notice] = "Season Member was successfully added!" 
 
-    redirect_to("/seasons/manage/" + @club_id.to_s + "/" + @season_id.to_s)
+    redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
   end
 end
