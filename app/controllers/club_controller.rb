@@ -36,10 +36,10 @@ class ClubController < ApplicationController
     if updated_club_details.valid?
       updated_club_details.save
       flash[:notice] = "Club details were successfully updated!"
-      redirect_to("/clubs/manage/" + @club_id.to_s)
+      redirect_to("/clubs/" + @club_id.to_s)
     else
       flash[:alert] = "Club details were not updated. Please include a title."
-      redirect_to("/clubs/manage/" + @club_id.to_s)
+      redirect_to("/clubs/" + @club_id.to_s)
     end
   end
 

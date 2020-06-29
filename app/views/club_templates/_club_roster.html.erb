@@ -1,81 +1,36 @@
-<div >
-  <h2 class="center_title">Club Roster</h2>
-  <table class="table table-hover table-striped">
-    <thead class="thead-dark">
-      <tr>
-        <th>
-          Username
-        </th>
+<div>
+  <div class="d-flex" id="wrapper">
+      <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <h2 class="center_title">Club Roster</h2>
+      <table class="table table-hover table-striped sortable table-bordered">
+        <thead class="thead-dark">
+          <tr class="d-flex">
+            <th class="col-6 pr-5" >
+              Username
+            </th>
 
-        <th>
-          Role
-        </th>
+            <th class="col-6 pr-5">
+              Role
+            </th>
 
-        <th>
-          View Profile
-        </th>
-      </tr>
-    </thead>
+          </tr>
+        </thead>
 
-    <% @membership_rows.each do |member| %>
-    <tr>
-      <td>
-        <%= member.user.username %>
-      </td>
-      <td>
-        <%= member.category %>
-      </td>
-        
-      <td>
-        <a class="btn btn-secondary" class="nav-link" href="/profile/<%= member.users_id %>">User Profile</a>
-      </td>
-    </tr>
-    
-    <% end %>
-  </table>
-</div>
-
-<div class="c-sidebar c-sidebar-dark c-sidebar-show">
-  <ul class="c-sidebar-nav">
-    <li class="c-sidebar-nav-title">Nav Title</li>
-    <li class="c-sidebar-nav-item">
-      <a class="c-sidebar-nav-link" href="#">
-        <i class="c-sidebar-nav-icon cil-speedometer"></i> Nav item
-      </a>
-    </li>
-    <li class="c-sidebar-nav-item">
-      <a class="c-sidebar-nav-link" href="#">
-        <i class="c-sidebar-nav-icon cil-speedometer"></i> With badge
-        <span class="badge badge-primary">NEW</span>
-      </a>
-    </li>
-    <li class="c-sidebar-nav-item nav-dropdown">
-      <a class="c-sidebar-nav-link nav-dropdown-toggle" href="#">
-        <i class="c-sidebar-nav-icon cil-puzzle"></i> Nav dropdown
-      </a>
-      <ul class="c-sidebar-nav-dropdown-items">
-        <li class="c-sidebar-nav-item">
-          <a class="c-sidebar-nav-link" href="#">
-            <i class="c-sidebar-nav-icon cil-puzzle"></i> Nav dropdown item
-          </a>
-        </li>
-        <li class="c-sidebar-nav-item">
-          <a class="c-sidebar-nav-link" href="#">
-            <i class="c-sidebar-nav-icon cil-puzzle"></i> Nav dropdown item
-          </a>
-        </li>
-      </ul>
-    </li>
-    <li class="c-sidebar-nav-item mt-auto">
-      <a class="c-sidebar-nav-link c-sidebar-nav-link-success" href="https://coreui.io">
-        <i class="c-sidebar-nav-icon cil-cloud-download"></i> Download CoreUI</a>
-    </li>
-    <li class="c-sidebar-nav-item">
-      <a class="c-sidebar-nav-link c-sidebar-nav-link-danger" href="https://coreui.io/pro/">
-        <i class="c-sidebar-nav-icon cil-layers"></i> Try CoreUI
-        <strong>PRO</strong>
-      </a>
-    </li>
-  </ul>
-  <button class="c-sidebar-minimizer c-brand-minimizer" type="button"></button>
+        <% @membership_rows.each do |member| %>
+        <tr class="d-flex">
+          <td class="col-6 pr-5">
+            <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+          </td>
+          <td class="col-6 pr-5">
+            <%= member.category %>
+          </td>
+        </tr>
+                    
+        <% end %>
+      </table>
+    </div>
+    <!-- /#sidebar-wrapper -->
+  </div>
+  <!-- /#wrapper -->
 </div>

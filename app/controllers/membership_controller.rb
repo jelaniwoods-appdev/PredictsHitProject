@@ -22,7 +22,7 @@ class MembershipController < ApplicationController
     else 
       flash[:alert] = "There was an issue adding this member to your Club. Please confirm you entered the correct username."
     end
-    redirect_to("/clubs/manage/" + @club_id.to_s)
+    redirect_to("/clubs/" + @club_id.to_s)
   end
 
 
