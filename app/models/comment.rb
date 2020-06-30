@@ -28,5 +28,7 @@ class Comment < ApplicationRecord
   belongs_to :club, {:foreign_key => "clubs_id"}
   belongs_to :season, {:foreign_key => "seasons_id"}
   belongs_to :market, {:foreign_key => "markets_id"}
+
+  acts_as_tree order: 'created_at DESC'
   
 end

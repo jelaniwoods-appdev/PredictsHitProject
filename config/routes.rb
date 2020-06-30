@@ -70,8 +70,8 @@ Rails.application.routes.draw do
   #comments
   
   get("/comments", { :controller => "comment", :action => "index" })
-  get("/comments/new", { :controller => "comment", :action => "new" })
-  post("/comments/create", { :controller => "comment", :action => "create" })
+  get("/comments/new/(:parent_id)", { :controller => "comment", :action => "new" })
+  post("/comments/create/:user_id", { :controller => "comment", :action => "create" })
 
   
 end

@@ -5,7 +5,10 @@ class CommentController < ApplicationController
   end
 
   def new
-    @comment = Comment.new
+    @comment = Comment.new(parent_id: params[:parent_id])
+    if params[:parent_id].present?
+      @parent_id = params.fetch("parent_id")
+    end
     render({ :template => "comments/new.html.erb" })
   end
 
@@ -14,6 +17,9 @@ class CommentController < ApplicationController
     @comment.title = params.fetch("title")
     @comment.users_id = params.fetch("user_id")
     @comment.body = params.fetch("body")
+    if params[:parent_id].present?
+      @comment.parent_id = params.fetch("parent_id")
+    end
 
     if @comment.valid?
       @comment.save
@@ -21,7 +27,7 @@ class CommentController < ApplicationController
       redirect_to("/comments")
     else
       flash[:alert] = 'Your comment was NOT added!'
-      redirect_to("/comments/new")
+      redirect_to("/comments")
     end
   end
 end

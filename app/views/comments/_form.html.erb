@@ -1,15 +1,15 @@
-<form action="/comments/create" method="post" enctype="multipart/form-data">
+<form action="/comments/create/<%= current_user.id %>" method="post" enctype="multipart/form-data">
   <div class="form-group">
+    <% if @parent_id.present? %>
+      <input type="hidden" id="hidden_parent_id" name="parent_id" value="<%= @parent_id %>">
+    <% end%>
     <label for="comment_title">What is the title of this comment?</label>
     <input class="form-control" id="comment_title" type="text" name="title" placeholder="Enter the title of your comment...">
-    <br>
-    <label for="comment_user_id">What is the new description of this Club?</label>
-    <input class="form-control" id="comment_user_id" type="text" name="user_id" placeholder="Enter a user ID...">
     <br>
     <label for="comment_body">What is the body text of your comment?</label>
     <input class="form-control" id="comment_body" type="text" name="body" placeholder="Enter the body of your comment">
     <br>
     <br>
-    <button class="btn btn-secondary">Update Club Details</button>
+    <button class="btn btn-secondary">Submit Comment</button>
   </div>
 </form>
