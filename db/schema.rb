@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_22_205516) do
+ActiveRecord::Schema.define(version: 2020_06_29_233518) do
 
   create_table "assets", force: :cascade do |t|
     t.string "category"
@@ -32,6 +32,24 @@ ActiveRecord::Schema.define(version: 2020_06_22_205516) do
     t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "title"
+    t.string "status"
+    t.text "body"
+    t.integer "comment_index"
+    t.string "goes_to"
+    t.integer "users_id"
+    t.integer "clubs_id"
+    t.integer "seasons_id"
+    t.integer "markets_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["clubs_id"], name: "index_comments_on_clubs_id"
+    t.index ["markets_id"], name: "index_comments_on_markets_id"
+    t.index ["seasons_id"], name: "index_comments_on_seasons_id"
+    t.index ["users_id"], name: "index_comments_on_users_id"
   end
 
   create_table "contracts", force: :cascade do |t|

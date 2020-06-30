@@ -33,8 +33,11 @@ class User < ApplicationRecord
   
 
   has_many :memberships
+  has_many :comments
+  
   has_many :clubs, :through => :memberships
   has_many :seasons, :through => :memberships
+  has_many :markets, :through => :comments
 
   mount_uploader :prof_pic, ProfPicUploader
 end
