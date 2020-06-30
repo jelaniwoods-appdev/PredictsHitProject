@@ -1,6 +1,7 @@
 class CommentController < ApplicationController
   def index
     @comments = Comment.all
+    @comments_tree = Comment.hash_tree(:limit_depth => 2)
     render({ :template => "comments/index.html.erb" })
   end
 

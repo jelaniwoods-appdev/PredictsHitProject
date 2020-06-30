@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_30_161106) do
+ActiveRecord::Schema.define(version: 2020_06_30_204027) do
 
   create_table "assets", force: :cascade do |t|
     t.string "category"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_161106) do
     t.integer "ancestor_id", null: false
     t.integer "descendant_id", null: false
     t.integer "generations", null: false
-    t.index ["ancestor_id", "descendant_id", "generations"], name: "comment_anc_desc_udx", unique: true
+    t.index ["ancestor_id", "descendant_id", "generations"], name: "comment_anc_desc_idx", unique: true
     t.index ["descendant_id"], name: "comment_desc_idx"
   end
 
