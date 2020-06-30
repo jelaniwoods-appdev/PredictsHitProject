@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2020_06_29_233518) do
     t.string "title"
     t.string "status"
     t.text "body"
-    t.integer "comment_index"
+    t.integer "parent_id"
     t.string "goes_to"
     t.integer "users_id"
     t.integer "clubs_id"

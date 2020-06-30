@@ -90,4 +90,5 @@ class ClubController < ApplicationController
       redirect_to("/new_club")
     end
   end
+
 end

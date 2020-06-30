@@ -2,18 +2,18 @@
 #
 # Table name: comments
 #
-#  id            :integer          not null, primary key
-#  body          :text
-#  comment_index :integer
-#  goes_to       :string
-#  status        :string
-#  title         :string
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  clubs_id      :integer
-#  markets_id    :integer
-#  seasons_id    :integer
-#  users_id      :integer
+#  id         :integer          not null, primary key
+#  body       :text
+#  goes_to    :string
+#  status     :string
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  clubs_id   :integer
+#  markets_id :integer
+#  parent_id  :integer
+#  seasons_id :integer
+#  users_id   :integer
 #
 # Indexes
 #

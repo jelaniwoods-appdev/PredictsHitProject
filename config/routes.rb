@@ -67,4 +67,11 @@ Rails.application.routes.draw do
     #season memberships
   post("/add_season_memberships/:club_id/:season_id", { :controller => "membership", :action => "add_season_member"})
 
+  #comments
+  
+  get("/comments", { :controller => "comment", :action => "index" })
+  get("/comments/new", { :controller => "comment", :action => "new" })
+  post("/comments/create", { :controller => "comment", :action => "create" })
+
+  
 end

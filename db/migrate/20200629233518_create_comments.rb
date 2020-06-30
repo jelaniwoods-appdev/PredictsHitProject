@@ -4,7 +4,7 @@ class CreateComments < ActiveRecord::Migration[6.0]
       t.string :title
       t.string :status
       t.text :body
-      t.integer :comment_index
+      t.integer :parent_id
       t.string :goes_to
       t.belongs_to :users
       t.belongs_to :clubs
