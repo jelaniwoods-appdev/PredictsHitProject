@@ -21,7 +21,7 @@
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
               Reply
             </button>
-            <form class="dropdown-menu p-4" action="/comments/club/create/<%= comment.club.id %>/<%= comment.user.id %>/<%= comment.id %>" method="post" style="min-width: 400px;">
+            <form class="dropdown-menu p-4" action="/comments/club/create/<%= comment.club.id %>/<%= comment.user.id %>/<%= comment.id %>" method="post" style="min-width: 500px;">
               <div class="form-group">
                 <label for="club_comment_reply"></label>
                 <textarea class="form-control" id="club_comment_reply" name="body" placeholder="Continue the disussion..."></textarea>

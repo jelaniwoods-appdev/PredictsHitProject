@@ -69,8 +69,6 @@ Rails.application.routes.draw do
 
   #comments
   post("/comments/club/create/:club_id/:user_id/(:parent_id)", { :controller => "comment", :action => "create_club_comment" })
-  post("/clubs/comments/club/create/:club_id/:user_id/(:parent_id)", { :controller => "comment", :action => "create_club_comment" })
-
 
   # get("/comments", { :controller => "comment", :action => "index" })
   # get("/comments/new/(:parent_id)", { :controller => "comment", :action => "new" })
