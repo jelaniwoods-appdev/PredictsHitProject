@@ -92,13 +92,12 @@
           </form>
         </p>
       </div>
+      <div class="container">
+        <%= comments_tree_for @club_comments %>
+      </div>
     </div>
   </div>
 </div>
-
-
-<%= comments_tree_for @club_comments %>
-
 
 <%= render 'club_templates/club_modals' %>
 
