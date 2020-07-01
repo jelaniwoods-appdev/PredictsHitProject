@@ -3,11 +3,8 @@
     <% if @parent_id.present? %>
       <input type="hidden" id="hidden_parent_id" name="parent_id" value="<%= @parent_id %>">
     <% end%>
-    <label for="comment_title">What is the title of this comment?</label>
-    <input class="form-control" id="comment_title" type="text" name="title" placeholder="Enter the title of your comment...">
-    <br>
-    <label for="comment_body">What is the body text of your comment?</label>
-    <input class="form-control" id="comment_body" type="text" name="body" placeholder="Enter the body of your comment">
+    <label for="comment_body">What would you like to say?</label>
+    <input class="form-control" id="comment_body" type="text" name="body" placeholder="Have something on your mind?">
     <br>
     <br>
     <button class="btn btn-secondary">Submit Comment</button>

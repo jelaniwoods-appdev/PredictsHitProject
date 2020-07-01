@@ -77,6 +77,38 @@
 
 
 <div class="row">
+  <div class="col-6 offset-3">
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Club Discussion Board</h1>
+        <p>
+          <form action="/comments/club/create/<%= @club_row.id %>/<%= current_user.id %>" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="comment_body"></label>
+              <textarea class="form-control" id="comment_body" name="body" placeholder="Have something on your mind?" rows="4"></textarea>
+              <br>
+              <button class="btn btn-secondary">Submit Comment</button>
+            </div>
+          </form>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<%= comments_tree_for @club_comments %>
+
+
+<%= render 'club_templates/club_modals' %>
+
+<script src="/javascript_files/screenpopout.js">
+</script>
+
+
+
+<!-- temp reference 
+<div class="row">
   <div class="col-6 offset-2">
     <h1>Comments</h1>
     <br>
@@ -105,8 +137,4 @@
     </div>
   </div>
 </div>
-
-<%= render 'club_templates/club_modals' %>
-
-<script src="/javascript_files/screenpopout.js">
-</script>
+-->
