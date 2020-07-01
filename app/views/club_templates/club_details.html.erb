@@ -1,3 +1,14 @@
+<div class="row">   
+  <div class="col-6 offset-3">    
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @club_row.title %></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-1">
     <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="menu-toggle">View Roster</button></div>
@@ -21,13 +32,6 @@
 
 
   <div class="col-6 offset-2">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
-        <li class="breadcrumb-item active" aria-current="page"><%= @club_row.title %></li>
-      </ol>
-    </nav>
-
     <h1 class="center_title"><%= @club_row.title %></h1>
     <div class="center_title">
       <%= @club_row.description %>
@@ -72,9 +76,6 @@
     <% end %>
   </div>
 </div>
-<!-- Add new comments -->
-<!-- Display comments and permit replies -->
-
 
 <div class="row">
   <div class="col-6 offset-3">

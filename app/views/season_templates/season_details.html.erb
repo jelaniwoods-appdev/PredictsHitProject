@@ -1,4 +1,16 @@
 <div class="row">   
+  <div class="col-6 offset-3">    
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
+        <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @season_row.title %></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">   
   <div class="col-1">
     <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="menu-toggle">Season Standings</button></div>
     <br>
@@ -24,14 +36,6 @@
   <%= render 'season_templates/season_standings' %>
   
   <div class="col-6 offset-2">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
-        <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><%= @season_row.title %></li>
-      </ol>
-    </nav>
-
     <h1 class="center_title"><%= @season_row.title %></h1>
     <div class="center_title"><%= @season_row.description %></div>
     <br>
@@ -73,6 +77,29 @@
         Ask the Season owner to create a Market in this Season!
       <% end %>
     <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Season Discussion Board</h1>
+        <p>
+          <form action="/comments/season/create/<%= @season_row.id %>/<%= current_user.id %>" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="comment_body"></label>
+              <textarea class="form-control" id="comment_body" name="body" placeholder="Have something on your mind?" rows="4"></textarea>
+              <br>
+              <button class="btn btn-secondary">Submit Comment</button>
+            </div>
+          </form>
+        </p>
+      </div>
+      <div class="container">
+        <%= comments_tree_for @season_comments %>
+      </div>
+    </div>
   </div>
 </div>
 

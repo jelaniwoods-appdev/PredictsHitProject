@@ -6,6 +6,7 @@ class CreateComments < ActiveRecord::Migration[6.0]
       t.text :body
       t.integer :parent_id
       t.string :goes_to
+      t.integer :goes_to_id
       t.belongs_to :users
       t.belongs_to :clubs
       t.belongs_to :seasons

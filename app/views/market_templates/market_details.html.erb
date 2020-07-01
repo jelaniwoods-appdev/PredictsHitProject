@@ -1,6 +1,21 @@
 <div class="row">   
+  <div class="col-6 offset-3">    
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
+        <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
+        <li class="breadcrumb-item"><a href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>"><%= @season_row.title %></a></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @market_row.title %></li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="row">   
   <div class="col-1">
-    <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="menu-toggle">Season Standings</button></div>
+    <div class="center_title">
+      <button class="btn btn-outline-secondary btn-block" id="menu-toggle">Season Standings</button>
+    </div>
     <br>
     <% if @owner_user_id == current_user.id %>
       <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_market_details">
@@ -20,15 +35,6 @@
   <%= render 'season_templates/season_standings' %>
   
   <div class="col-6 offset-2">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
-        <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
-        <li class="breadcrumb-item"><a href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>"><%= @season_row.title %></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><%= @market_row.title %></li>
-      </ol>
-    </nav>
-
     <h1 class="center_title"><%= @market_row.title %></h1>
     <div class="center_title"><%= @market_row.description %></div>
     <br>
@@ -69,7 +75,7 @@
         <% @contract_rows.each_with_index do |contract, index| %>
           <div class="card">
             <div class="card-header" id="headingOne">
-            <div class="row">
+              <div class="row">
                 <div class="mb-0 col-6">
                   <div class="media text-truncate">
                     <a style="color: black" class="stretched-link" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>"><img class="mr-3" src="<%= contract.contractpic %>" alt="Generic placeholder image" height="75" width="100"></a>
@@ -96,30 +102,31 @@
                 </div>
               </div>
             </div>
-          <div id="heading_<%= index %>" class="collapse" aria-labelledby="heading_<%= index %>" data-parent="#accordion">
-            <div class="row">
-              <div class="card-body col-6">
-                <form action='/buy_yes_contract/<%= contract.id %>' method='post'>
-                  <div class='form-group center_title'>
-                    <label for='quantity_buy_yes_contract'>How many contracts do you want to buy?</label>
-                    <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' required>
-                    <br>
-                    <button class='btn btn-secondary btn-block'>Buy</button>
-                  </div>
-                </form>
-              </div>
+            <div id="heading_<%= index %>" class="collapse" aria-labelledby="heading_<%= index %>" data-parent="#accordion">
+              <div class="row">
+                <div class="card-body col-6">
+                  <form action='/buy_yes_contract/<%= contract.id %>' method='post'>
+                    <div class='form-group center_title'>
+                      <label for='quantity_buy_yes_contract'>How many contracts do you want to buy?</label>
+                      <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' required>
+                      <br>
+                      <button class='btn btn-secondary btn-block'>Buy</button>
+                    </div>
+                  </form>
+                </div>
 
-              <div class="card-body col-6">
-                <form action='/sell_yes_contract/<%= contract.id %>' method='post'>
-                  <div class='form-group center_title'>
-                    <label for='quantity_sell_yes_contract'>How many contracts do you want to sell?</label>
-                    <input class='form-control center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' required>
-                    <br>
-                    <button class='btn btn-secondary btn-block'>Sell</button>
-                  </div>
-                </form>
-              </div>
+                <div class="card-body col-6">
+                  <form action='/sell_yes_contract/<%= contract.id %>' method='post'>
+                    <div class='form-group center_title'>
+                      <label for='quantity_sell_yes_contract'>How many contracts do you want to sell?</label>
+                      <input class='form-control center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' required>
+                      <br>
+                      <button class='btn btn-secondary btn-block'>Sell</button>
+                    </div>
+                  </form>
+                </div>
 
+              </div>
             </div>
           </div>
         <% end %>
@@ -139,7 +146,28 @@
   </div>
 </div>
 
-
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Market Discussion Board</h1>
+        <p>
+          <form action="/comments/market/create/<%= @market_row.id %>/<%= current_user.id %>" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="comment_body"></label>
+              <textarea class="form-control" id="comment_body" name="body" placeholder="Have something on your mind?" rows="4"></textarea>
+              <br>
+              <button class="btn btn-secondary">Submit Comment</button>
+            </div>
+          </form>
+        </p>
+      </div>
+      <div class="container">
+        <%= comments_tree_for @market_comments %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%= render 'market_templates/market_modals' %>
 

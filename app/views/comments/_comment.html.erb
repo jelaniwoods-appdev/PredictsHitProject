@@ -8,7 +8,7 @@
           </div>
           <div class="float-left meta">
             <div class="title h5">
-              <a href="#"><b><%= comment.user.username %></b></a>
+              <a href="/profile/<%= comment.users_id %>"><b><%= comment.user.username %></b></a>
             </div>
             <h6 class="text-muted time"><%= time_ago_in_words(comment.created_at) %></h6>
           </div>
@@ -21,7 +21,7 @@
             <button type="button" class="btn" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
               Reply
             </button>
-            <form class="dropdown-menu p-4" action="/comments/club/create/<%= comment.club.id %>/<%= comment.user.id %>/<%= comment.id %>" method="post" style="min-width: 500px;">
+            <form class="dropdown-menu p-4" action="/comments/<%= comment.goes_to %>/create/<%= comment.goes_to_id %>/<%= comment.user.id %>/<%= comment.id %>" method="post" style="min-width: 500px;">
               <div class="form-group">
                 <label for="club_comment_reply"></label>
                 <textarea class="form-control" id="club_comment_reply" name="body" placeholder="Continue the disussion..."></textarea>

@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_204027) do
     t.text "body"
     t.integer "parent_id"
     t.string "goes_to"
+    t.integer "goes_to_id"
     t.integer "users_id"
     t.integer "clubs_id"
     t.integer "seasons_id"

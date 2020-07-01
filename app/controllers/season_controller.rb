@@ -51,6 +51,9 @@ class SeasonController < ApplicationController
     @season_membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
     @club_membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
 
+    #relevant comments
+    @season_comments = Comment.where({ :seasons_id => season_id, :goes_to => "season" }).hash_tree
+
     if @season_membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")

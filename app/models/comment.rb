@@ -10,6 +10,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  clubs_id   :integer
+#  goes_to_id :integer
 #  markets_id :integer
 #  parent_id  :integer
 #  seasons_id :integer

@@ -139,6 +139,10 @@ class MarketController < ApplicationController
     @contract_rows = @market_row.contracts
     @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
+
+    #relevant comments
+    @market_comments = Comment.where({ :markets_id => @market_id, :goes_to => "market" }).hash_tree
+
     if @season_membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")
