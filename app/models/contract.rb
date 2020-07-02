@@ -6,6 +6,7 @@
 #  contractpic :string
 #  description :text
 #  price       :decimal(, )
+#  quantity    :integer
 #  status      :string
 #  title       :string
 #  created_at  :datetime         not null

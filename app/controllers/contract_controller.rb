@@ -10,6 +10,7 @@ class ContractController < ApplicationController
     @new_contract.title =  params.fetch("contract_title")
     @new_contract.description = params.fetch("contract_description")
     @new_contract.price = params.fetch("contract_starting_price")
+    @new_contract.quantity = 0
     @new_contract.status = "active"
     if params[:contract_picture].present?
       @new_contract.contractpic = params.fetch("contract_picture")
@@ -151,6 +152,44 @@ class ContractController < ApplicationController
     #add variable to track contract_asset_row now that we know it must exist:
     @contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
     
+    #pull in variables for algorithm (C= b * ln(e^(q1/b) + e^(q2/b)))
+    #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
+    liquidity_param = 2 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
+    number_of_contracts = @contract_row.market.contracts.count
+    
+    #set contract contribution sum from before purchase to 0 to start
+    contract_contribution_sum_pre = 0
+    @contract_row.market.contracts.each do |contract_calc|
+      contract_contibution = Math.exp(contract_calc.quantity / liquidity_param)
+      contract_contribution_sum_pre = contract_contribution_sum_pre + contract_contibution
+    end
+    cost_function_pre = liquidity_param * Math.log(contract_contribution_sum_pre)
+
+    #update contract quantities to reflect purchase.
+    @contract_row.quantity = @contract_row.quantity + @number_of_contracts.to_i
+    @contract_row.save
+
+    @contract_row_post = Contract.where({ :id => @contract_id }).at(0)
+
+    #set contract contribution sum for after purchase to 0 to start
+    contract_contribution_sum_post = 0
+    @contract_row_post.market.contracts.each do |contract_calc|
+      contract_contibution = Math.exp(contract_calc.quantity / liquidity_param)
+      contract_contribution_sum_post = contract_contribution_sum_post + contract_contibution
+    end
+    cost_function_post = liquidity_param * Math.log(contract_contribution_sum_post)
+
+    #old
+    #contract_id_looper = @contract_row.market.contracts.at(0).id
+    #tester = Asset.where({ :contract_id => contract_id_looper }).sum(:quantity)
+    tester_pre = cost_function_pre.to_s
+    tester_post = cost_function_post.to_s
+    tester = (cost_function_post - cost_function_pre)
+    
+    
+    
+
+
     #set trackers and counters
     asset_quantity_counter = 0
     asset_remaining_tracker = @number_of_contracts.to_i
@@ -197,17 +236,19 @@ class ContractController < ApplicationController
       @user_season_funds_row.quantity = funds_remaining_tracker
       @user_season_funds_row.save
 
-      #update contract quantity to reflect new purchase
+      #update contract quantity in assets table to reflect new purchase
       @contract_asset_row.quantity = @contract_asset_row.quantity + asset_quantity_counter
       @contract_asset_row.save
         
+      #update overall contract quantity in contract table
       #update contract price based on accumulated new price based on current algo.
       #Consider issues with multiple purchases in quick sucession. Better/safer way to do this?
+      @contract_row.quantity = @contract_row.quantity + asset_quantity_counter
       @contract_row.price = asset_price_tracker
       @contract_row.save
 
     if asset_remaining_tracker == 0
-      flash[:notice] = "Yay! All " + asset_quantity_counter.to_s + " contract(s) were sucessfully purchased!"
+      flash[:notice] = "Yay! All " + asset_quantity_counter.to_s + " contract(s) were sucessfully purchased!" + " Test parameter pre: " + tester_pre.to_s + " Test parameter post: " + tester_post.to_s
     else
       flash[:notice] = "Your order has partially completed. You only had sufficient funds to purchase " + asset_quantity_counter.to_s + " contract(s)."
     end
@@ -300,12 +341,14 @@ class ContractController < ApplicationController
       @user_season_funds_row.quantity = funds_remaining_tracker
       @user_season_funds_row.save
 
-      #update contract quantity to reflect sale of contracts
+      #update contract quantity in assets table to reflect sale of contracts
       @contract_asset_row.quantity = contracts_remaining_tracker
       @contract_asset_row.save
-        
+      
+      #update overall contract quantity in contract table
       #update contract price based on accumulated new price based on current algo.
       #Consider issues with multiple purchases in quick sucession. Better/safer way to do this?
+      @contract_row.quantity = @contract_row.quantity - asset_quantity_counter
       @contract_row.price = asset_price_tracker
       @contract_row.save
 
