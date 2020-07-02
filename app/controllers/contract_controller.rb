@@ -154,106 +154,125 @@ class ContractController < ApplicationController
     
     #pull in variables for algorithm (C= b * ln(e^(q1/b) + e^(q2/b)))
     #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
-    liquidity_param = 2 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
-    number_of_contracts = @contract_row.market.contracts.count
+    liquidity_param = 10 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
+    
     
     #set contract contribution sum from before purchase to 0 to start
     contract_contribution_sum_pre = 0
+
+    #calculate contract contribution sum total from before purchase
     @contract_row.market.contracts.each do |contract_calc|
-      contract_contibution = Math.exp(contract_calc.quantity / liquidity_param)
+      contract_contibution = Math.exp((contract_calc.quantity.to_f / liquidity_param))
       contract_contribution_sum_pre = contract_contribution_sum_pre + contract_contibution
     end
+    #calculate cost function for # of original outstanding shares
     cost_function_pre = liquidity_param * Math.log(contract_contribution_sum_pre)
 
-    #update contract quantities to reflect purchase.
-    @contract_row.quantity = @contract_row.quantity + @number_of_contracts.to_i
-    @contract_row.save
-
-    @contract_row_post = Contract.where({ :id => @contract_id }).at(0)
-
-    #set contract contribution sum for after purchase to 0 to start
+    #set contract contribution sum from after purchase to 0
     contract_contribution_sum_post = 0
-    @contract_row_post.market.contracts.each do |contract_calc|
-      contract_contibution = Math.exp(contract_calc.quantity / liquidity_param)
+    #calculate contract contribution sum from after purchase for all contract except for the relevant contract
+    @contract_row.market.contracts.where.not({ :id => @contract_id }).each do |contract_calc|
+      contract_contibution = Math.exp((contract_calc.quantity.to_f / liquidity_param))
       contract_contribution_sum_post = contract_contribution_sum_post + contract_contibution
     end
+
+    #add quantity user wants to purchase to the quantity for contract that user wants to purchase
+    
+    contract_contribution_sum_post = contract_contribution_sum_post + Math.exp(((@contract_row.quantity.to_f + @number_of_contracts.to_f) / liquidity_param))
+
+    #calculate cost function for desired # of new outstanding shares
+
     cost_function_post = liquidity_param * Math.log(contract_contribution_sum_post)
 
+    #calculate total cost for purchase by subtracting the cost function post by the cost function pre
+    total_cost = cost_function_post - cost_function_pre
+    
+    #(1) remove accumulated funds from user's season_funds, (2) add contract asset (3) later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
+    #Update tables based on actions above.
+
+    # remove accumulated funds from user's season_funds. Consider updating method to be based on subtraction from current amount instead of current way.
+    @user_season_funds_row.quantity = @user_season_funds_row.quantity - total_cost
+    @user_season_funds_row.save
+
+    #update contract quantity in assets table to reflect new purchase
+    @contract_asset_row.quantity = @contract_asset_row.quantity + @number_of_contracts.to_i
+    @contract_asset_row.save
+
+    #update contract quantity in contracts table to reflect new outstanding balance
+    @contract_row.quantity = @contract_row.quantity + @number_of_contracts.to_i
+    @contract_row.save
+        
+    flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
+
+    redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+
+    
     #old
     #contract_id_looper = @contract_row.market.contracts.at(0).id
     #tester = Asset.where({ :contract_id => contract_id_looper }).sum(:quantity)
-    tester_pre = cost_function_pre.to_s
-    tester_post = cost_function_post.to_s
-    tester = (cost_function_post - cost_function_pre)
     
-    
-    
+    # #set trackers and counters
+    # asset_quantity_counter = 0
+    # asset_remaining_tracker = @number_of_contracts.to_i
+    # looper = asset_remaining_tracker
+    # funds_remaining_tracker = @user_starting_season_funds
+    # asset_price_tracker = @starting_contract_price
 
-
-    #set trackers and counters
-    asset_quantity_counter = 0
-    asset_remaining_tracker = @number_of_contracts.to_i
-    looper = asset_remaining_tracker
-    funds_remaining_tracker = @user_starting_season_funds
-    asset_price_tracker = @starting_contract_price
-
-    #check if user has sufficient funds to buy one contract. If not, return them to the screen and alert them of insufficient funds.
-    if @user_starting_season_funds < @starting_contract_price
-      flash[:alert] = "Insufficient funds. Sell some assets or request more money from Season owner."
-      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
-      return
-    else
-      while looper > 0 
-        if funds_remaining_tracker > asset_price_tracker
+    # #check if user has sufficient funds to buy one contract. If not, return them to the screen and alert them of insufficient funds.
+    # if @user_starting_season_funds < @starting_contract_price
+    #   flash[:alert] = "Insufficient funds. Sell some assets or request more money from Season owner."
+    #   redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+    #   return
+    # else
+    #   while looper > 0 
+    #     if funds_remaining_tracker > asset_price_tracker
           
-          #reduce season funds by amount of current contract price
-          funds_remaining_tracker = funds_remaining_tracker - asset_price_tracker
+    #       #reduce season funds by amount of current contract price
+    #       funds_remaining_tracker = funds_remaining_tracker - asset_price_tracker
 
-          #update asset quantity counter to reflect number of assets accumulated
-          asset_quantity_counter = asset_quantity_counter + 1
+    #       #update asset quantity counter to reflect number of assets accumulated
+    #       asset_quantity_counter = asset_quantity_counter + 1
 
-          #update contract price based on algorithm. Start with simple algorithm that only adds 0.005 to contract price each time one is purchased.
-          if asset_price_tracker < 1.000
-            asset_price_tracker = asset_price_tracker + 0.005
-          end
+    #       #update contract price based on algorithm. Start with simple algorithm that only adds 0.005 to contract price each time one is purchased.
+    #       if asset_price_tracker < 1.000
+    #         asset_price_tracker = asset_price_tracker + 0.005
+    #       end
 
-          #update asset_remaining_tracker to reflect number of assets remaining to be fufilled
-          asset_remaining_tracker = asset_remaining_tracker - 1
+    #       #update asset_remaining_tracker to reflect number of assets remaining to be fufilled
+    #       asset_remaining_tracker = asset_remaining_tracker - 1
 
-        end
+    #     end
 
-        #update looper to remove one loop count
-        looper = looper - 1
+    #     #update looper to remove one loop count
+    #     looper = looper - 1
 
-      end
+    #   end
 
-    end
+    # end
 
-    #(1) remove accumulated funds from user's season_funds, (2) add contract asset, (3) update contract price based on algorithm, (4)later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
-      #Update tables based on actions above.
+    # #(1) remove accumulated funds from user's season_funds, (2) add contract asset, (3) update contract price based on algorithm, (4)later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
+    #   #Update tables based on actions above.
 
-      #remove accumulated funds from user's season_funds. Consider updating method to be based on subtraction from current amount instead of current way.
-      @user_season_funds_row.quantity = funds_remaining_tracker
-      @user_season_funds_row.save
+    #   #remove accumulated funds from user's season_funds. Consider updating method to be based on subtraction from current amount instead of current way.
+    #   @user_season_funds_row.quantity = funds_remaining_tracker
+    #   @user_season_funds_row.save
 
-      #update contract quantity in assets table to reflect new purchase
-      @contract_asset_row.quantity = @contract_asset_row.quantity + asset_quantity_counter
-      @contract_asset_row.save
+    #   #update contract quantity in assets table to reflect new purchase
+    #   @contract_asset_row.quantity = @contract_asset_row.quantity + asset_quantity_counter
+    #   @contract_asset_row.save
         
-      #update overall contract quantity in contract table
-      #update contract price based on accumulated new price based on current algo.
-      #Consider issues with multiple purchases in quick sucession. Better/safer way to do this?
-      @contract_row.quantity = @contract_row.quantity + asset_quantity_counter
-      @contract_row.price = asset_price_tracker
-      @contract_row.save
+    #   #update overall contract quantity in contract table
+    #   #update contract price based on accumulated new price based on current algo.
+    #   #Consider issues with multiple purchases in quick sucession. Better/safer way to do this?
+    #   @contract_row.price = asset_price_tracker
+    #   @contract_row.save
 
-    if asset_remaining_tracker == 0
-      flash[:notice] = "Yay! All " + asset_quantity_counter.to_s + " contract(s) were sucessfully purchased!" + " Test parameter pre: " + tester_pre.to_s + " Test parameter post: " + tester_post.to_s
-    else
-      flash[:notice] = "Your order has partially completed. You only had sufficient funds to purchase " + asset_quantity_counter.to_s + " contract(s)."
-    end
+    # if asset_remaining_tracker == 0
+    #   flash[:notice] = "Yay! All " + asset_quantity_counter.to_s + " contract(s) were sucessfully purchased!" + " Test parameter pre: " + tester_pre.to_s + " Test parameter post: " + tester_post.to_s
+    # else
+    #   flash[:notice] = "Your order has partially completed. You only had sufficient funds to purchase " + asset_quantity_counter.to_s + " contract(s)."
+    # end
 
-    redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
   end
 
   

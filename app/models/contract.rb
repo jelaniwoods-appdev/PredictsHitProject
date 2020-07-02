@@ -22,7 +22,9 @@ class Contract < ApplicationRecord
   belongs_to :market
   
   validates_presence_of :title
-  validates :price, :numericality => {:greater_than => 0, :less_than => 1}
+  validates :price, :numericality => {:greater_than_or_equal_to => 0, :less_than_or_equal_to => 1}
 
   mount_uploader :contractpic, ContractpicUploader
+
+  #add contract price method that shows price for buying one share at given quantities available
 end
