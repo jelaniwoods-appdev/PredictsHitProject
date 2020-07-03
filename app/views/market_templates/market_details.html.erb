@@ -93,7 +93,7 @@
                   <% end %>
                 </div>
                 <div class="mb-0 col-2">
-                    <%= number_to_currency(contract.price) %>
+                    <%= number_to_currency(contract.price_check(contract.id, 10, 1)) %>
                 </div>
                 <div class="mb-0 col-2">
                   <button class="btn btn-secondary btn-block stretched-link" data-toggle="collapse" data-target="#heading_<%= index %>" aria-expanded="false" aria-controls="heading_<%= index %>">
