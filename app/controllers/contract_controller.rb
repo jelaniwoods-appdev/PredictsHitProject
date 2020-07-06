@@ -521,7 +521,7 @@ class ContractController < ApplicationController
 
         total_cost = total_cost * -1
       elsif @contract_row.category == "Independent"
-        total_cost = @contract_row.price_check(@contract_id, liquidity_param, positive_number_of_contracts, "no")
+        total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "no")
       end
       
       #(1) remove accumulated funds from user's season_funds, (2) add contract asset (3) later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
