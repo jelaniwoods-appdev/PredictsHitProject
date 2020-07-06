@@ -68,12 +68,27 @@ class MarketController < ApplicationController
     @contract_rows.each do |contract_x|
       contract_outcome =  params.fetch(contract_x.id.to_s)
       if contract_outcome == "no"
+        #determine rows in asset table associated with this contract (no)
+        asset_rows = Asset.where({ :contract_id => contract_x.id, :category => "contract_quantity_b"})
+
+        #run loop on each relevant asset row to 1) determine quantity associated with each membership and then 2) to add to season fund to the relevant membership
+        asset_rows.each do |payout_contract|
+          amount = payout_contract.quantity #for now assume always 1 to 1 relationship. Can always add factor to adjust quantity if necessary
+
+          #find associated season_fund row for this membership
+          season_fund_row = Asset.where({ :membership_id => payout_contract.membership_id, :category => "season_fund"}).at(0)
+
+          #Add amount associated with contract to season_fund for each relevant membership
+          season_fund_row.quantity = season_fund_row.quantity + amount
+          season_fund_row.save
+        end
+
         contract_x.status = "closed"
         contract_x.save
         
       elsif contract_outcome == "yes" #consider adding 'and' conditional that contract is active to prevent potential double counting/erros
-        #determine rows in asset table associated with this contract
-        asset_rows = Asset.where({ :contract_id => contract_x.id, :category => "contract_quantity"})
+        #determine rows in asset table associated with this contract (yes)
+        asset_rows = Asset.where({ :contract_id => contract_x.id, :category => "contract_quantity_a"})
 
         #run loop on each relevant asset row to 1) determine quantity associated with each membership and then 2) to add to season fund to the relevant membership
         asset_rows.each do |payout_contract|

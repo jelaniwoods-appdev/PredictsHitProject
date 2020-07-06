@@ -108,7 +108,6 @@ class ContractController < ApplicationController
   end
 
   #buy/sell contracts 
-  #currently only allow buying/selling one at a time. Update later to allow number entry
   #later update so the buy/sell/yes/no are separate controllers which inherit from one?
 
   def buy_yes_contracts
@@ -154,7 +153,7 @@ class ContractController < ApplicationController
     liquidity_param = 10 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
 
     #calculate price/cost by running price_check algo
-    total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts)
+    total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "yes")
     
     #(1) remove accumulated funds from user's season_funds, (2) add contract asset (3) later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
     #Update tables based on actions above.
@@ -291,7 +290,7 @@ class ContractController < ApplicationController
       liquidity_param = 10 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
 
       #calculate price/cost by running price_check algo
-      total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts)
+      total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "yes")
       
       #(1) remove accumulated funds from user's season_funds, (2) add contract asset (3) later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
       #Update tables based on actions above.
@@ -387,15 +386,142 @@ class ContractController < ApplicationController
 
   # end
 
-  # #Add in once allowing for buying and selling of no for each contract
-  # #def buy_no_contracts
-  # #  @number_of_contracts = params.fetch("quantity_buy_no")
-
   # #end
 
-  # #def sell_no_contracts
-  # #  @number_of_contracts = params.fetch("quantity_sell_no")
 
-  # #end
+    def buy_no_contracts
+    #set variables
+    @contract_id = params.fetch("contract_id")
+    @contract_row = Contract.where({ :id => @contract_id }).at(0)
+    @market_id = @contract_row.market.id
+    @season_id = @contract_row.market.season.id
+    @club_id = @contract_row.market.season.club.id
+    
+    @number_of_contracts = params.fetch("quantity_buy_no")
+    @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
+    @user_asset_rows = @membership_row.assets
+    @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
+    @user_starting_season_funds = @user_season_funds_row.quantity
+    @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_b"}).at(0) #membership_row.id is probably unnecessary.
+    
+    #Confirm number is a positive integer.
+    if @number_of_contracts.to_i < 1 || @number_of_contracts.include?(".")
+      flash[:alert] = "There was an error processing your request."
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      return
+    end
 
+    #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity_b").
+    #If user does, skip step, otherwise, if user does not, create a new asset with a quantity of 0.
+    if @starting_contract_asset_row.present?
+    else
+      new_asset = Asset.new
+      new_asset.membership_id = @membership_row.id
+      new_asset.season_id = @season_id
+      new_asset.contract_id = @contract_id
+      new_asset.category = "contract_quantity_b"
+      new_asset.quantity = 0
+      new_asset.save
+    end
+
+    #add variable to track contract_asset_row now that we know it must exist:
+    @contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_b"}).at(0) #membership_row.id is probably unnecessary.
+    
+    #algorithm (C= b * ln(e^(q1/b) + e^(q2/b)...))
+    #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
+    liquidity_param = 10 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
+
+    #calculate price/cost by running price_check algo
+    total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "no")
+    
+    #(1) remove accumulated funds from user's season_funds, (2) add contract asset (3) later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
+    #Update tables based on actions above.
+
+    # remove accumulated funds from user's season_funds. Consider updating method to be based on subtraction from current amount instead of current way.
+    @user_season_funds_row.quantity = @user_season_funds_row.quantity - total_cost
+    @user_season_funds_row.save
+
+    #update contract quantity in assets table to reflect new purchase
+    @contract_asset_row.quantity = @contract_asset_row.quantity + @number_of_contracts.to_i
+    @contract_asset_row.save
+
+    #update contract quantity in contracts table to reflect new outstanding balance
+    @contract_row.quantity_b = @contract_row.quantity_b + @number_of_contracts.to_i
+    @contract_row.save
+        
+    flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
+
+    redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+
+  end
+
+  
+
+  def sell_no_contracts
+    #set variables
+    @contract_id = params.fetch("contract_id")
+    @contract_row = Contract.where({ :id => @contract_id }).at(0)
+    @market_id = @contract_row.market.id
+    @season_id = @contract_row.market.season.id
+    @club_id = @contract_row.market.season.club.id
+    
+    @number_of_contracts = (params.fetch("quantity_sell_no").to_i * -1).to_s
+    @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
+    @user_asset_rows = @membership_row.assets
+    @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
+    @user_starting_season_funds = @user_season_funds_row.quantity
+    @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_b"}).at(0) #membership_row.id is probably unnecessary.
+    
+    #Confirm number is a positive integer.
+    if @number_of_contracts.to_i > 1 || @number_of_contracts.include?(".")
+      flash[:alert] = "There was an error processing your request."
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      return
+    end
+
+    #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity_b").
+    #If user does, continue, otherwise, display error saying that user needs to purchase assets before they can sell.
+    if @starting_contract_asset_row.present?
+    else
+      flash[:alert] = "It looks like you don't have any of " + @contract_row.title + " to sell. You'll need to buy some contracts before you can sell them."
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      return
+    end
+
+    #add variable to track contract_asset_row now that we know it must exist:
+    @contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_b"}).at(0) #membership_row.id is probably unnecessary.
+    
+    #check if they have any contracts to sell
+    if @contract_asset_row.quantity < 1
+      flash[:alert] = "It looks like you don't have any of " + @contract_row.title + " to sell. You'll need to buy some contracts before you can sell them."
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      return
+    else
+      #algorithm (C= b * ln(e^(q1/b) + e^(q2/b)...))
+      #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
+      liquidity_param = 10 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
+
+      #calculate price/cost by running price_check algo
+      total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "no")
+      
+      #(1) remove accumulated funds from user's season_funds, (2) add contract asset (3) later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
+      #Update tables based on actions above.
+
+      # remove accumulated funds from user's season_funds. Consider updating method to be based on subtraction from current amount instead of current way.
+      @user_season_funds_row.quantity = @user_season_funds_row.quantity - total_cost
+      @user_season_funds_row.save
+
+      #update contract quantity in assets table to reflect new purchase
+      @contract_asset_row.quantity = @contract_asset_row.quantity + @number_of_contracts.to_i
+      @contract_asset_row.save
+
+      #update contract quantity in contracts table to reflect new outstanding balance
+      @contract_row.quantity_b = @contract_row.quantity_b + @number_of_contracts.to_i
+      @contract_row.save
+          
+      flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"
+
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+    end
+  end
 end

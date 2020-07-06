@@ -50,6 +50,8 @@ Rails.application.routes.draw do
     #Trade contracts
     post("/buy_yes_contract/:contract_id", { :controller => "contract", :action => "buy_yes_contracts"})
     post("/sell_yes_contract/:contract_id", { :controller => "contract", :action => "sell_yes_contracts"})
+    post("/buy_no_contract/:contract_id", { :controller => "contract", :action => "buy_no_contracts"})
+    post("/sell_no_contract/:contract_id", { :controller => "contract", :action => "sell_no_contracts"})
     
     #add in once allowing for buying/selling of no for each contract
     #post("/buy_no_contract/:contract_id", { :controller => "contract", :action => "buy_no_contracts"})
