@@ -3,6 +3,7 @@
 # Table name: markets
 #
 #  id          :integer          not null, primary key
+#  category    :string
 #  description :text
 #  password    :string
 #  picture     :string

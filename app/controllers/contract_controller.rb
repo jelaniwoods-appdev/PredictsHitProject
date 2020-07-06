@@ -7,26 +7,24 @@ class ContractController < ApplicationController
     @market_id = params.fetch("market_id")
 
     @new_contract = Contract.new
+    @new_contract.market_id = @market_id
     @new_contract.title =  params.fetch("contract_title")
     @new_contract.description = params.fetch("contract_description")
-    @new_contract.price = params.fetch("contract_starting_price")
-    @new_contract.quantity = 0
+    @new_contract.quantity_a = 0
+    @new_contract.quantity_b = 0
+    @new_contract.category = @new_contract.market.category
     @new_contract.status = "active"
     if params[:contract_picture].present?
       @new_contract.contractpic = params.fetch("contract_picture")
     end
-    @new_contract.market_id = @market_id
+    
     
     if @new_contract.valid?
       @new_contract.save
       flash[:notice] = "Contract successfully created!" 
       redirect_to("/markets/" + @club_id + "/" + @season_id + "/" + @market_id)
     else
-      if params.fetch("contract_title").present?
-        flash[:alert] = "Contract creation was unsuccessful. Please ensure the initial contract price is between $0.00 and $1.00 (Note: $0.00 and $1.00 are not valid)."
-      else
-        flash[:alert] = "Contract creation was unsuccessful. Please enter a title."
-      end
+      flash[:alert] = "Contract creation was unsuccessful. Please enter a title."
       redirect_to("/markets/" + @club_id + "/" + @season_id + "/" + @market_id)
     end
   end
@@ -122,12 +120,11 @@ class ContractController < ApplicationController
     @club_id = @contract_row.market.season.club.id
     
     @number_of_contracts = params.fetch("quantity_buy_yes")
-    @starting_contract_price = @contract_row.price
     @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
     @user_asset_rows = @membership_row.assets
     @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
     @user_starting_season_funds = @user_season_funds_row.quantity
-    @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
+    @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_a"}).at(0) #membership_row.id is probably unnecessary.
     
     #Confirm number is a positive integer.
     if @number_of_contracts.to_i < 1 || @number_of_contracts.include?(".")
@@ -136,7 +133,7 @@ class ContractController < ApplicationController
       return
     end
 
-    #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity").
+    #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity_a").
     #If user does, skip step, otherwise, if user does not, create a new asset with a quantity of 0.
     if @starting_contract_asset_row.present?
     else
@@ -144,13 +141,13 @@ class ContractController < ApplicationController
       new_asset.membership_id = @membership_row.id
       new_asset.season_id = @season_id
       new_asset.contract_id = @contract_id
-      new_asset.category = "contract_quantity"
+      new_asset.category = "contract_quantity_a"
       new_asset.quantity = 0
       new_asset.save
     end
 
     #add variable to track contract_asset_row now that we know it must exist:
-    @contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
+    @contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_a"}).at(0) #membership_row.id is probably unnecessary.
     
     #algorithm (C= b * ln(e^(q1/b) + e^(q2/b)...))
     #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
@@ -171,7 +168,7 @@ class ContractController < ApplicationController
     @contract_asset_row.save
 
     #update contract quantity in contracts table to reflect new outstanding balance
-    @contract_row.quantity = @contract_row.quantity + @number_of_contracts.to_i
+    @contract_row.quantity_a = @contract_row.quantity_a + @number_of_contracts.to_i
     @contract_row.save
         
     flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
@@ -258,12 +255,11 @@ class ContractController < ApplicationController
     @club_id = @contract_row.market.season.club.id
     
     @number_of_contracts = (params.fetch("quantity_sell_yes").to_i * -1).to_s
-    @starting_contract_price = @contract_row.price
     @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
     @user_asset_rows = @membership_row.assets
     @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
     @user_starting_season_funds = @user_season_funds_row.quantity
-    @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
+    @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_a"}).at(0) #membership_row.id is probably unnecessary.
     
     #Confirm number is a positive integer.
     if @number_of_contracts.to_i > 1 || @number_of_contracts.include?(".")
@@ -272,7 +268,7 @@ class ContractController < ApplicationController
       return
     end
 
-    #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity").
+    #check if user already has an asset row associated with this contract (contract id matches and category is "contract_quantity_a").
     #If user does, continue, otherwise, display error saying that user needs to purchase assets before they can sell.
     if @starting_contract_asset_row.present?
     else
@@ -282,7 +278,7 @@ class ContractController < ApplicationController
     end
 
     #add variable to track contract_asset_row now that we know it must exist:
-    @contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity"}).at(0) #membership_row.id is probably unnecessary.
+    @contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_a"}).at(0) #membership_row.id is probably unnecessary.
     
     #check if they have any contracts to sell
     if @contract_asset_row.quantity < 1
@@ -309,7 +305,7 @@ class ContractController < ApplicationController
       @contract_asset_row.save
 
       #update contract quantity in contracts table to reflect new outstanding balance
-      @contract_row.quantity = @contract_row.quantity + @number_of_contracts.to_i
+      @contract_row.quantity_a = @contract_row.quantity_a + @number_of_contracts.to_i
       @contract_row.save
           
       flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"

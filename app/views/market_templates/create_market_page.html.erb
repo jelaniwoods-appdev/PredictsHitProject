@@ -6,7 +6,6 @@
         <br>
           <form action="/create_new_market" method="post" enctype="multipart/form-data">
             <div class="form-group">
-              <!-- Change this to a dropdown of available clubs & seasons instead of text entry -->
               <!-- If user does not have a club and season they can add a market for then put msg that they need to create a club/season first and -->
               <!-- Include some form of permission functionality where only members of each season who are designated owner or admin under category column can create market -->
               <select class="form-control" required="required" id="select_season" name="associated_season_id"><option value="">Select (Club | Season)</option>
@@ -20,6 +19,12 @@
               <br>
               <label for="create_market_description">What is the description of your market?</label>
               <input class="form-control" id="create_market_description" type="text" name="market_description" placeholder="Enter a description...">
+              <br>
+              <label for="market_type">What kind of market would you like to create?<br>Note: If you are unsure which type is best, it is recommended to stick with the Standard Market.</label>
+              <select class="form-control" required="required" id="market_type" name="market_category">
+                <option value="Independent">Standard Market</option>
+                <option value="Classical">Special Market with Mutually Exclusive Contracts</option>
+              </select>
                     <!-- Consider adding in future functionality that allows giving season participants more money when a market is created and/or some quantity of contracts
                       <label for="create_market_price">How much money do you want market participants to start with?</label>
                       <div class="input-group mb-3">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_02_161401) do
+ActiveRecord::Schema.define(version: 2020_07_06_181356) do
 
   create_table "assets", force: :cascade do |t|
     t.string "category"
@@ -70,7 +70,9 @@ ActiveRecord::Schema.define(version: 2020_07_02_161401) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "contractpic"
-    t.integer "quantity"
+    t.integer "quantity_a"
+    t.integer "quantity_b"
+    t.string "category"
     t.index ["market_id"], name: "index_contracts_on_market_id"
   end
 
@@ -85,6 +87,7 @@ ActiveRecord::Schema.define(version: 2020_07_02_161401) do
     t.integer "season_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "category"
     t.index ["season_id"], name: "index_markets_on_season_id"
   end
 
