@@ -446,8 +446,16 @@ class ContractController < ApplicationController
     @contract_asset_row.save
 
     #update contract quantity in contracts table to reflect new outstanding balance
-    @contract_row.quantity_b = @contract_row.quantity_b + @number_of_contracts.to_i
-    @contract_row.save
+    #if market is a 'Classical' category, then instead of adding a no contract, add a yes contract for every other contract...at least for now.
+    if @contract_row.category == "Classical"
+      @contract_row.market.contracts.where.not({ :id => @contract_row.id }).each do |add_contract|
+        add_contract.quantity_a = add_contract.quantity_a + @number_of_contracts.to_i
+        add_contract.save
+      end
+    elsif @contract_row.category == "Independent"
+      @contract_row.quantity_b = @contract_row.quantity_b + @number_of_contracts.to_i
+      @contract_row.save
+    end
         
     flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
 
@@ -516,8 +524,18 @@ class ContractController < ApplicationController
       @contract_asset_row.save
 
       #update contract quantity in contracts table to reflect new outstanding balance
-      @contract_row.quantity_b = @contract_row.quantity_b + @number_of_contracts.to_i
-      @contract_row.save
+      #if market is a 'Classical' category, then instead of adding a no contract, add a yes contract for every other contract...at least for now.
+      if @contract_row.category == "Classical"
+        @contract_row.market.contracts.where.not({ :id => @contract_row.id }).each do |add_contract|
+          add_contract.quantity_a = add_contract.quantity_a + @number_of_contracts.to_i
+          add_contract.save
+        end
+      elsif @contract_row.category == "Independent"
+        @contract_row.quantity_b = @contract_row.quantity_b + @number_of_contracts.to_i
+        @contract_row.save
+      end
+        
+      
           
       flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"
 
