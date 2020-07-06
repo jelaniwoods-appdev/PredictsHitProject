@@ -150,7 +150,7 @@ class ContractController < ApplicationController
     
     #algorithm (C= b * ln(e^(q1/b) + e^(q2/b)...))
     #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
-    liquidity_param = 10 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
+    liquidity_param = 50 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
 
     #calculate price/cost by running price_check algo
     total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "yes")
@@ -287,7 +287,7 @@ class ContractController < ApplicationController
     else
       #algorithm (C= b * ln(e^(q1/b) + e^(q2/b)...))
       #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
-      liquidity_param = 10 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
+      liquidity_param = 50 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
 
       #calculate price/cost by running price_check algo
       total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "yes")
@@ -429,7 +429,7 @@ class ContractController < ApplicationController
     
     #algorithm (C= b * ln(e^(q1/b) + e^(q2/b)...))
     #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
-    liquidity_param = 10 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
+    liquidity_param = 50 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
 
     #calculate price/cost by running price_check algo
     total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "no")
@@ -507,7 +507,7 @@ class ContractController < ApplicationController
     else
       #algorithm (C= b * ln(e^(q1/b) + e^(q2/b)...))
       #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
-      liquidity_param = 10 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
+      liquidity_param = 50 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
 
       #calculate price/cost by running price_check algo
       total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "no")
@@ -535,8 +535,6 @@ class ContractController < ApplicationController
         @contract_row.save
       end
         
-      
-          
       flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"
 
       redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)

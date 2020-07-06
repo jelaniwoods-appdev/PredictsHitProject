@@ -99,7 +99,7 @@
                   <% end %>
                 </div>
                 <div class="mb-0 col-1">
-                    <%= number_to_currency(contract.price_check(contract.id, 10, 1, "yes")) %>
+                    <%= number_to_currency(contract.price_check(contract.id, 50, 1, "yes")) %>
                 </div>
                 <div class="mb-0 col-1">
                   <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_b"}).at(0) == nil %>
@@ -109,7 +109,7 @@
                   <% end %>
                 </div>
                 <div class="mb-0 col-1">
-                    <%= number_to_currency(contract.price_check(contract.id, 10, 1, "no")) %>
+                    <%= number_to_currency(contract.price_check(contract.id, 50, 1, "no")) %>
                 </div>
                 <div class="mb-0 col-2">
                   <button class="btn btn-secondary btn-block stretched-link" data-toggle="collapse" data-target="#heading_<%= index %>" aria-expanded="false" aria-controls="heading_<%= index %>">
