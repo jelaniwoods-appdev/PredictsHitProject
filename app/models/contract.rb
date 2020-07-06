@@ -71,9 +71,9 @@ class Contract < ApplicationRecord
       
       #set price equal to 1-price of yes if choice is no
       elsif choice == "no"
-
-        price = 1 - price_check(contract_id, liquidity_param, quant, "yes")
         
+        price = quant.to_i - price_check(contract_id, liquidity_param, quant, "yes")
+
         return price
 
       end

@@ -457,7 +457,7 @@ class ContractController < ApplicationController
       @contract_row.save
     end
         
-    flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
+    flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"  + "Total cost: " + total_cost.to_s
 
     redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
 
@@ -510,7 +510,19 @@ class ContractController < ApplicationController
       liquidity_param = 50 #set liquidity parameter (b) for now. Later might allow custommization or make b variable.
 
       #calculate price/cost by running price_check algo
-      total_cost = @contract_row.price_check(@contract_id, liquidity_param, @number_of_contracts, "no")
+      #convert quantity of contracts back to positive number for purposes of price_check calculation
+      
+      if @contract_row.category == "Classical"
+        positive_number_of_contracts = (@number_of_contracts.to_i * -1).to_s
+      
+        total_cost = @contract_row.price_check(@contract_id, liquidity_param, positive_number_of_contracts, "no")
+      
+        #convert total cost to negative to calculate 'price' paid
+
+        total_cost = total_cost * -1
+      elsif @contract_row.category == "Independent"
+        total_cost = @contract_row.price_check(@contract_id, liquidity_param, positive_number_of_contracts, "no")
+      end
       
       #(1) remove accumulated funds from user's season_funds, (2) add contract asset (3) later, make it so this is reflected in transaction table(probably in a first step and base everything off transaction)
       #Update tables based on actions above.
@@ -535,7 +547,7 @@ class ContractController < ApplicationController
         @contract_row.save
       end
         
-      flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"
+      flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"  + "Total cost: " + total_cost.to_s
 
       redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
     end
