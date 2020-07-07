@@ -30,7 +30,7 @@
             <%= member.category %>
           </td>
           <td class="col-4 text-center pr-5">
-           $<%= member.assets.where({ :category => "season_fund"}).at(0).quantity %>
+           <%= number_to_currency(member.assets.where({ :category => "season_fund"}).at(0).quantity) %>
           </td>
         </tr>
                     

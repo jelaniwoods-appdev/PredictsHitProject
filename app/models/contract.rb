@@ -65,7 +65,7 @@ class Contract < ApplicationRecord
         cost_function_post = liquidity_param * Math.log(contract_contribution_sum_post)
 
         #calculate pricefor purchase by subtracting the cost function post by the cost function pre
-        price = cost_function_post - cost_function_pre
+        price = (cost_function_post - cost_function_pre).ceil(2)
 
         return price
       
@@ -77,7 +77,7 @@ class Contract < ApplicationRecord
           total_price = total_price + price_check(calculate_price.id, liquidity_param, quant, "yes")
         end
 
-        price = total_price
+        price = total_price.ceil(2)
 
         return price
 
@@ -95,7 +95,7 @@ class Contract < ApplicationRecord
       elsif choice == "no"
         cost_function_post = liquidity_param * Math.log((Math.exp(((contract_row.quantity_a.to_f)/ liquidity_param)) + Math.exp(((contract_row.quantity_b.to_f  + quant.to_f) / liquidity_param))))
       end
-      price = cost_function_post - cost_function_pre
+      price = (cost_function_post - cost_function_pre).ceil(2)
       return price
     end
 
