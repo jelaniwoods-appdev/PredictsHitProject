@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get("/", { :controller => "home", :action => "show_homepage" })
   get("/about", { :controller => "home", :action => "show_about" })
   get("/support", { :controller => "home", :action => "show_support" })
+  get("/global_markets", { :controller => "home", :action => "show_global_markets" })
+  get("/getting_started", { :controller => "home", :action => "show_getting_started" })
   get("/test_page", { :controller => "test", :action => "test_mailgun" })
 
   #profile routes
