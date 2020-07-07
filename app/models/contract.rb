@@ -70,9 +70,14 @@ class Contract < ApplicationRecord
         return price
       
       #set price equal to 1-price of yes if choice is no
+      #needs to be fixed so that cannot make infinite money
       elsif choice == "no"
-        
-        price = quant.to_i - price_check(contract_id, liquidity_param, quant, "yes")
+        total_price = 0
+        contract_row.market.contracts.where.not({ :id => contract_row.id }).each do |calculate_price|
+          total_price = total_price + price_check(calculate_price.id, liquidity_param, quant, "yes")
+        end
+
+        price = total_price
 
         return price
 

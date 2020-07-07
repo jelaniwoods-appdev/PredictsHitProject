@@ -457,7 +457,7 @@ class ContractController < ApplicationController
       @contract_row.save
     end
         
-    flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"  + "Total cost: " + total_cost.to_s
+    flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
 
     redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
 
@@ -547,7 +547,7 @@ class ContractController < ApplicationController
         @contract_row.save
       end
         
-      flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"  + "Total cost: " + total_cost.to_s
+      flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"
 
       redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
     end
