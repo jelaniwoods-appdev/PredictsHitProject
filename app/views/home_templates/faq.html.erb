@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-6 offset-3">
+    <h1 class="center_title">Frequently Asked Questions</h1>
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="accordion" id="faq">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="color: black">
+              <b>What is a prediction market?</b>
+            </button>
+          </h2>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#faq">
+          <div class="card-body">
+            A prediction market is...
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: black">
+              <b>What is the difference between Clubs, Seasons, and Markets and why do they all exist?</b>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faq">
+          <div class="card-body">
+            A Club is... A Season is... A Market is...
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="color: black">
+              <b>Do I need to use real money?</b>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faq">
+          <div class="card-body">
+            No! There is absolutely no money involved and this website is completely free to use. We personally do not think that real money is necessary to have fun with prediction markets...but obviously we cannot control whether you and your friends decide to bet money on the side.
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingFour">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="color: black">
+              <b>How are the prices in each market determined?</b>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faq">
+          <div class="card-body">
+            The short answer: 
+            <br>
+            The prices are determined by an algorithm that determines a price based on the shares currently outstanding. In essence, when a contract is in high demand its price will increase and when it is in low demand its price will decrease.
+            <br>
+            <br>
+            The long answer:
+            <br>
+            There are two market types to choose from which calculate the price uniquely, but both rely on a 'logarithmic market scoring rule' that adjusts prices based on current shares outstanding. Specifically, the formula utilized is...
+            On each transaction, the formula rounds up the price to the nearest cent which is intended to partially counteract the fact that the algorithm is 
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" id="headingFive">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" style="color: black">
+              <b>The price says it is $0.XX but when I purchase multiple contracts the price goes up...what gives?</b>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#faq">
+          <div class="card-body">
+            This is a result of the algorithm that is being used to calculate the price. The price initially shown for each contract is assuming you only are buying 1 contract. The more contracts you buy simultanouesly, the more you increase the demand for the contract, thus translating to a higher price as a result of the algorithm described above. So it's not that the price of the first contract is increasing, it's just that each incremental contract you want to buy might come at a higher cost than originally posted. This is similar to how standard markets work where only a certain number of shares might be posted at the asking price and if you want to buy more than that number of shares you will have to pay more for those additional shares.
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" id="headingSix">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix" style="color: black">
+              <b>The total funds of all users in the season is different from what we started with...what happened?</b>
+            </button>
+          </h2>
+        </div>
+        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#faq">
+          <div class="card-body">
+            This is a result of the algorithm that is being used in these markets. We designed Predicts Hit to enable the simplest possible way to participate in prediction markets. A big advantage of the algorithm that determines a contract price is that you don't need to find another interested party who is willing to buy or sell a given contract at the right price when you want it. This allows for markets with a low number of participants to still feel lively and responsive. However, this also means that the markets are not insulated to just the human players because the alorithm is acting as an intermediary that buys and sells contracts on demand. For more specific details on the algorithm see the section above about how the prices are determined. Basically, the algorithm accepts any deal but actively adjusts the pricing it is willing to accept and rounds up to the nearest penny to limit its exposure and minimize the effect you are noticing.
+            <br>
+            <br>
+            We think its worth noting that some additional tools to address this are currently in progress. Specifically, we are working on a tool that allows a season manager to calculate a normalized fund amount so that the overall funds necessarily match up to the original total. For example, if overall your season members have more than they started with, then everyone's funds will be adjusted downwards. We are also working on enabling customization of the algorithm to allow for users who wish to fine tune it for their specific needs. As well, we are developing a market type that involves independent contracts (i.e. more than one outcome can occur) but with user-inputted starting prices so that each contract starts at a price closer to the 'right' initial price. Lastly, we are working on enabling a traditional marketplace that scraps the algorithm but still feels fun and easy to use.
+            <br>
+            <br>
+            If you aren't happy with how this currently works please let us know by submitting an email through the Support page. We are actively working on fine tuning the algorithm and would love to hear your thoughts or suggestions.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

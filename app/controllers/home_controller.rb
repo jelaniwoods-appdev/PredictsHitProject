@@ -4,6 +4,10 @@ class HomeController < ApplicationController
     render({ :template => "home_templates/index.html.erb" })
   end
 
+  def show_faq
+    render({ :template => "home_templates/faq.html.erb" })
+  end
+
   def show_about
     render({ :template => "home_templates/about.html.erb" })
   end
