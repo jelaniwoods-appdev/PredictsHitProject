@@ -169,10 +169,16 @@ class ContractController < ApplicationController
     #update contract quantity in contracts table to reflect new outstanding balance
     @contract_row.quantity_a = @contract_row.quantity_a + @number_of_contracts.to_i
     @contract_row.save
-        
-    flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
 
-    redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+    @contract_rows = @contract_row.market.contracts
+        
+    respond_to do |format|
+      format.js { render :js => 'contract_templates/buy_yes_contracts.js.erb' }
+    end
+
+    # flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
+
+    # redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
 
     
     #old algorithm

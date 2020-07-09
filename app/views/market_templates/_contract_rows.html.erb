@@ -1,0 +1,94 @@
+
+<div id="contracts">
+  <% @contract_rows.each_with_index do |contract, index| %>
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <div class="row">
+                <div class="mb-0 col-6">
+                  <div class="media text-truncate">
+                    <a style="color: black" class="stretched-link" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>"><img class="mr-3" src="<%= contract.contractpic %>" alt="Generic placeholder image" height="75" width="100"></a>
+                    <div class="media-body">
+                      <h5 class="mt-0"><%= contract.title %></h5>
+                      <div><%= contract.description %></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-0 col-1">
+                  <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_a"}).at(0) == nil %>
+                    0
+                  <% else %>
+                    <%= Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_a"}).at(0).quantity.to_i  %>
+                  <% end %>
+                </div>
+                <div class="mb-0 col-1">
+                    <%= number_to_currency(contract.price_check(contract.id, 50, 1, "yes")) %>
+                </div>
+                <div class="mb-0 col-1">
+                  <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_b"}).at(0) == nil %>
+                    0
+                  <% else %>
+                    <%= Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_b"}).at(0).quantity.to_i  %>
+                  <% end %>
+                </div>
+                <div class="mb-0 col-1">
+                    <%= number_to_currency(contract.price_check(contract.id, 50, 1, "no")) %>
+                </div>
+                <div class="mb-0 col-2">
+                  <button class="btn btn-secondary btn-block stretched-link" data-toggle="collapse" data-target="#heading_<%= index %>" aria-expanded="false" aria-controls="heading_<%= index %>">
+                    Trade
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div id="heading_<%= index %>" class="collapse" aria-labelledby="heading_<%= index %>" data-parent="#accordion">
+              <div class="row">
+                
+                <div class="card-body col-3">
+                  <form action='/buy_yes_contract/<%= contract.id %>' method='post' data-remote="true">
+                    <div class='form-group center_title'>
+                      <label for='quantity_buy_yes_contract'>How many 'yes' contracts do you want to buy?</label>
+                      <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' required>
+                      <br>
+                      <button class='btn btn-secondary btn-block'>Buy Yes</button>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="card-body col-3">
+                  <form action='/sell_yes_contract/<%= contract.id %>' method='post'>
+                    <div class='form-group center_title'>
+                      <label for='quantity_sell_yes_contract'>How many 'yes' contracts do you want to sell?</label>
+                      <input class='form-control center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' required>
+                      <br>
+                      <button class='btn btn-secondary btn-block'>Sell Yes</button>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="card-body col-3">
+                  <form action='/buy_no_contract/<%= contract.id %>' method='post'>
+                    <div class='form-group center_title'>
+                      <label for='quantity_buy_no_contract'>How many 'no' contracts do you want to buy?</label>
+                      <input class='form-control center_title' id='quantity_buy_no_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_no' required>
+                      <br>
+                      <button class='btn btn-secondary btn-block'>Buy No</button>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="card-body col-3">
+                  <form action='/sell_no_contract/<%= contract.id %>' method='post'>
+                    <div class='form-group center_title'>
+                      <label for='quantity_sell_no_contract'>How many 'no' contracts do you want to sell?</label>
+                      <input class='form-control center_title' id='quantity_sell_no_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_no' required>
+                      <br>
+                      <button class='btn btn-secondary btn-block'>Sell No</button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        <% end %>
+</div>
