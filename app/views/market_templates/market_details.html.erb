@@ -1,17 +1,4 @@
 <div class="row">   
-  <div class="col-6 offset-3">    
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/my_clubs">My Clubs</a></li>
-        <li class="breadcrumb-item"><a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></li>
-        <li class="breadcrumb-item"><a href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>"><%= @season_row.title %></a></li>
-        <li class="breadcrumb-item active" aria-current="page"><%= @market_row.title %></li>
-      </ol>
-    </nav>
-  </div>
-</div>
-
-<div class="row">   
   <div class="col-1" style="min-width: 150px;">
     <div class="center_title">
       <button class="btn btn-outline-secondary btn-block" id="menu-toggle">Season Standings</button>
@@ -37,6 +24,9 @@
   <div class="col-6 offset-2">
     <h1 class="center_title"><%= @market_row.title %></h1>
     <div class="center_title"><%= @market_row.description %></div>
+    <br>
+    <div class="center_title">Go back to Season: <a href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>"><%= @season_row.title %></a></div>
+    <div class="center_title">Go back to Club: <a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></div>
     <br>
     <div class="center_title">
       <img src="<%= @market_row.picture %>" height="180" width="240" class="img-responsive">
