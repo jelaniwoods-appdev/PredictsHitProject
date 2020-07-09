@@ -151,7 +151,7 @@ class MarketController < ApplicationController
     @club_row = Club.where({ :id => @club_id }).at(0)
     @season_row = Season.where({ :id => @season_id}).at(0)
     @market_row = Market.where({ :id => @market_id}).at(0)
-    @contract_rows = @market_row.contracts
+    @contract_rows = @market_row.contracts.order({ :created_at => :asc })
     @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
 
