@@ -38,50 +38,50 @@
 /* general custom css end*/
 
 /* sidebar popout css start */
-.cw-table-list{
-    margin:0px !important;
-    table-layout:fixed;  
-  }
-  .cw-table-list td{
-    padding-bottom: 0px !important;  
-    overflow:hidden;
-  }
+// .cw-table-list{
+//     margin:0px !important;
+//     table-layout:fixed;  
+//   }
+//   .cw-table-list td{
+//     padding-bottom: 0px !important;  
+//     overflow:hidden;
+//   }
 
 
-   #wrapper {
-    overflow-x: hidden;
- }
+//    #wrapper {
+//     overflow-x: hidden;
+//  }
 
-#sidebar-wrapper {
-  min-height: 100vh;
-  margin-left: -45rem;
-  -webkit-transition: margin .25s ease-out;
-  -moz-transition: margin .25s ease-out;
-  -o-transition: margin .25s ease-out;
-  transition: margin .25s ease-out;
-}
+// #sidebar-wrapper {
+//   min-height: 100vh;
+//   margin-left: -45rem;
+//   -webkit-transition: margin .25s ease-out;
+//   -moz-transition: margin .25s ease-out;
+//   -o-transition: margin .25s ease-out;
+//   transition: margin .25s ease-out;
+// }
 
-#sidebar-wrapper .sidebar-heading {
-  padding: 0.875rem 1.25rem;
-  font-size: 1.2rem;
-}
+// #sidebar-wrapper .sidebar-heading {
+//   padding: 0.875rem 1.25rem;
+//   font-size: 1.2rem;
+// }
 
-#sidebar-wrapper .list-group {
-  width: 45rem;
-}
+// #sidebar-wrapper .list-group {
+//   width: 45rem;
+// }
 
-#page-content-wrapper {
-  min-width: 100vw;
-}
+// #page-content-wrapper {
+//   min-width: 100vw;
+// }
 
-#wrapper.toggled #sidebar-wrapper {
-  margin-left: 0;
-}
+// #wrapper.toggled #sidebar-wrapper {
+//   margin-left: 0;
+// }
 
-.table-control {
-  table-layout:fixed;
-  width:100%;
-}
+// .table-control {
+//   table-layout:fixed;
+//   width:100%;
+// }
 
 /* sidebar popout css end */
 
@@ -198,3 +198,24 @@
 .replies {margin-left: 50px;}
 .replies .replies {margin-left: 0;}
 /* closure_tree css end */
+
+
+/* Right sidebar css start */
+.scrolly {
+  overflow-y: scroll;
+}
+
+#sidebar-test {
+  min-height: 100vh;
+  margin-left: -45rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#sidebar-test {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+/* Right sidebar css end */
