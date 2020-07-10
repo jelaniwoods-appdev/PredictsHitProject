@@ -203,6 +203,12 @@
 /* Right sidebar css start */
 .scrolly {
   overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrolly::-webkit-scrollbar {
+  display: none;
 }
 
 #sidebar-test {
