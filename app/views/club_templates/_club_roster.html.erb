@@ -1,36 +1,140 @@
 <div>
-  <div class="d-flex" id="wrapper">
-      <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-      <h2 class="center_title">Club Roster</h2>
-      <table class="table table-hover table-striped sortable table-bordered">
-        <thead class="thead-dark">
-          <tr class="d-flex">
-            <th class="col-6 pr-5" >
-              Username
-            </th>
+  <h2 class="center_title">Club Roster</h2>
+  <table class="table table-hover table-striped sortable table-bordered">
+    <thead class="thead-dark">
+      <tr class="d-flex">
+        <th class="col-6 pr-5" >
+          Username
+        </th>
 
-            <th class="col-6 pr-5">
-              Role
-            </th>
+        <th class="col-6 pr-5">
+          Role
+        </th>
 
-          </tr>
-        </thead>
+      </tr>
+    </thead>
 
-        <% @membership_rows.each do |member| %>
-        <tr class="d-flex">
-          <td class="col-6 pr-5">
-            <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
-          </td>
-          <td class="col-6 pr-5">
-            <%= member.category %>
-          </td>
-        </tr>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
                     
-        <% end %>
-      </table>
-    </div>
-    <!-- /#sidebar-wrapper -->
-  </div>
-  <!-- /#wrapper -->
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    <% @membership_rows.each do |member| %>
+    <tr class="d-flex">
+      <td class="col-6 pr-5">
+        <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+      </td>
+      <td class="col-6 pr-5">
+        <%= member.category %>
+      </td>
+    </tr>
+                    
+    <% end %>
+    
+  </table>
 </div>

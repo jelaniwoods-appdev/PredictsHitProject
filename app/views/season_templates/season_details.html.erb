@@ -1,6 +1,6 @@
 <div class="row">   
-  <div class="col-1" style="min-width: 150px;">
-    <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="menu-toggle">Season Standings</button></div>
+  <div class="col-1 position-fixed" style="min-width: 150px;">
+    <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="standings-toggle">Season Standings</button></div>
     <br>
     <% if @owner_user_id == current_user.id %>
       <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_season_details">
@@ -21,9 +21,7 @@
     <% end %>
   </div>
   
-  <%= render 'season_templates/season_standings' %>
-  
-  <div class="col-6 offset-2">
+  <div class="col-6 offset-3">
     <h1 class="center_title"><%= @season_row.title %></h1>
     <div class="center_title"><%= @season_row.description %></div>
     <br>
@@ -68,7 +66,25 @@
       <% end %>
     <% end %>
   </div>
+
+  <div class="col-1">
+  </div>
+  <div id="season_standings" style="display: none">
+    <div class="col-12 position-fixed h-75 d-flex">
+      <div class="sidebar-right scrolly">
+        <div class="sidebar">
+          <div>
+            <%= render 'season_templates/season_standings' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
 </div>
+
 
 <div class="row">
   <div class="col-6 offset-3">
@@ -96,5 +112,14 @@
 
 <%= render 'season_templates/season_modals' %>
 
-<script src="/javascript_files/screenpopout.js">
+<script>
+$(document).ready(function() {
+
+ $('#season_standings').hide();
+
+  $('#standings-toggle').click(function() {
+   $('#season_standings').toggle();
+
+   });
+ });
 </script>

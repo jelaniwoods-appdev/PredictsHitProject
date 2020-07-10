@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-1 position-fixed" style="min-width: 150px;">
-    <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="roster-toggle">View Roster</button></div>
+    <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="roster-toggle">Club Roster</button></div>
     <br>
     <% if @owner_user_id == current_user.id %>
         <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_club_details">
@@ -64,12 +64,12 @@
   
   <div class="col-1">
   </div>
-  <div id="roster_test">
+  <div id="club_roster" style="display: none">
     <div class="col-12 position-fixed h-75 d-flex">
       <div class="sidebar-right scrolly">
         <div class="sidebar">
           <div>
-            <%= render 'club_templates/club_roster_partial' %>
+            <%= render 'club_templates/club_roster' %>
           </div>
         </div>
       </div>
@@ -107,16 +107,13 @@
 
 <%= render 'club_templates/club_modals' %>
 
-<script src="/javascript_files/screenpopout.js">
-</script>
-
 <script>
 $(document).ready(function() {
 
- $('#roster_test').show();
+ $('#club_roster').hide();
 
   $('#roster-toggle').click(function() {
-   $('#roster_test').toggle();
+   $('#club_roster').toggle();
 
    });
  });
