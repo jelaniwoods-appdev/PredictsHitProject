@@ -1,5 +1,7 @@
 <div class="row">   
   <div class="col-1 position-fixed" style="min-width: 150px;">
+    <div class="center_title"><a class="btn btn-outline-secondary btn-block" id="return" href="/clubs/<%= @club_row.id %>">Return to Club</a></div>
+    <br>
     <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="standings-toggle">Season Standings</button></div>
     <br>
     <% if @owner_user_id == current_user.id %>
@@ -24,8 +26,6 @@
   <div class="col-6 offset-3">
     <h1 class="center_title"><%= @season_row.title %></h1>
     <div class="center_title"><%= @season_row.description %></div>
-    <br>
-    <div class="center_title">Go back to Club: <a href="/clubs/<%= @club_row.id %>"><%= @club_row.title %></a></div>
     <br>
     <div class="center_title">
       <img src="<%= @season_row.picture %>" height="180" width="240" class="img-responsive">
