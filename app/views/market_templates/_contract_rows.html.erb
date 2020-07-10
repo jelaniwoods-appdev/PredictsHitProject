@@ -48,6 +48,13 @@
                     <div class='form-group center_title'>
                       <label for='quantity_buy_yes_contract'>How many 'yes' contracts do you want to buy?</label>
                       <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' required>
+                      <!-- 
+                      <div> 
+                        <div class="text-justify">Total price: <%= number_to_currency(contract.price_check(contract.id, 50, 10, "yes")) %></div>
+                        <div class="text-justify">Average price: <%= number_to_currency(contract.price_check(contract.id, 50, 10, "yes")/10) %></div>
+                        <div id="mirror">Test Text</div>
+                      </div>
+                      -->
                       <br>
                       <button class='btn btn-secondary btn-block'>Buy Yes</button>
                     </div>
@@ -92,3 +99,15 @@
           </div>
         <% end %>
 </div>
+
+
+<!-- 
+<%# <script>
+$(function() {
+  $(document).on('change', '#quantity_buy_yes_contract', function() {
+    x = $('#mirror').text($('#quantity_buy_yes_contract').val());
+  });
+});
+</script> %>
+
+-->
