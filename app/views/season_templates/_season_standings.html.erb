@@ -1,17 +1,13 @@
-<div>
+<div id="season_standings">
       <h2 class="center_title">Season Standings</h2>
       <table class="table table-hover table-striped sortable table-bordered">
         <thead class="thead-dark">
           <tr class="d-flex">
-            <th class="col-4 text-center pr-5" >
+            <th class="col-6 text-center pr-5" >
               Username
             </th>
 
-            <th class="col-4 text-center pr-5">
-              Role
-            </th>
-
-            <th class="col-4 text-center pr-5">
+            <th class="col-6 text-center pr-5">
               Funds
             </th>
 
@@ -20,13 +16,10 @@
 
         <% @season_membership_rows.each do |member| %>
         <tr class="d-flex">
-          <td class="col-4 text-center pr-5">
+          <td class="col-6 text-center pr-5">
             <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
           </td>
-          <td class="col-4 text-center pr-5">
-            <%= member.category %>
-          </td>
-          <td class="col-4 text-center pr-5">
+          <td class="col-6 text-center pr-5">
            <%= number_to_currency(member.assets.where({ :category => "season_fund"}).at(0).quantity) %>
           </td>
         </tr>

@@ -170,8 +170,11 @@ class ContractController < ApplicationController
     @contract_row.quantity_a = @contract_row.quantity_a + @number_of_contracts.to_i
     @contract_row.save
 
+
+    #add instance variables needed for partials that are refreshed
     @contract_rows = @contract_row.market.contracts
     @membership_id = @membership_row.id
+    @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
         
     respond_to do |format|
       format.js { render 'contract_templates/render_contracts.js.erb', layout: false }
@@ -314,9 +317,10 @@ class ContractController < ApplicationController
       @contract_row.quantity_a = @contract_row.quantity_a + @number_of_contracts.to_i
       @contract_row.save
        
-      
+      #add instance variables needed for partials that are refreshed
       @contract_rows = @contract_row.market.contracts
       @membership_id = @membership_row.id
+      @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
       respond_to do |format|
         format.js { render 'contract_templates/render_contracts.js.erb', layout: false }
@@ -472,9 +476,10 @@ class ContractController < ApplicationController
       @contract_row.save
     end
      
-
+    #add instance variables needed for partials that are refreshed
     @contract_rows = @contract_row.market.contracts
     @membership_id = @membership_row.id
+    @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
     respond_to do |format|
       format.js { render 'contract_templates/render_contracts.js.erb', layout: false }
@@ -568,9 +573,11 @@ class ContractController < ApplicationController
         @contract_row.quantity_b = @contract_row.quantity_b + @number_of_contracts.to_i
         @contract_row.save
       end
-       
+      
+      #add instance variables needed for partials that are refreshed
       @contract_rows = @contract_row.market.contracts
       @membership_id = @membership_row.id
+      @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
       respond_to do |format|
         format.js { render 'contract_templates/render_contracts.js.erb', layout: false }
