@@ -20,10 +20,11 @@
             <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
           </td>
           <td class="col-6 text-center pr-5">
-           <%= number_to_currency(member.assets.where({ :category => "season_fund"}).at(0).quantity) %>
+           <%= number_to_currency(member.assets.where({ :category => "season_fund"}).at(0).quantity) %><br>(<%= member.assets.where("category = ? OR category =?", "contract_quantity_a", "contract_quantity_b").sum(:quantity).to_i %>)
           </td>
         </tr>
                     
         <% end %>
       </table>
 </div>
+
