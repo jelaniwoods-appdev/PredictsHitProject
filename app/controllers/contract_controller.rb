@@ -174,7 +174,7 @@ class ContractController < ApplicationController
     @membership_id = @membership_row.id
         
     respond_to do |format|
-      format.js { render 'contract_templates/buy_yes_contracts.js.erb', layout: false }
+      format.js { render 'contract_templates/render_contracts.js.erb', layout: false }
     end
 
     # flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
@@ -313,10 +313,18 @@ class ContractController < ApplicationController
       #update contract quantity in contracts table to reflect new outstanding balance
       @contract_row.quantity_a = @contract_row.quantity_a + @number_of_contracts.to_i
       @contract_row.save
-          
-      flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"
+       
+      
+      @contract_rows = @contract_row.market.contracts
+      @membership_id = @membership_row.id
 
-      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      respond_to do |format|
+        format.js { render 'contract_templates/render_contracts.js.erb', layout: false }
+      end
+
+      # flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"
+
+      # redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
     end
   end
 
@@ -463,10 +471,17 @@ class ContractController < ApplicationController
       @contract_row.quantity_b = @contract_row.quantity_b + @number_of_contracts.to_i
       @contract_row.save
     end
-        
-    flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
+     
 
-    redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+    @contract_rows = @contract_row.market.contracts
+    @membership_id = @membership_row.id
+
+    respond_to do |format|
+      format.js { render 'contract_templates/render_contracts.js.erb', layout: false }
+    end
+    # flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
+
+    # redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
 
   end
 
@@ -553,10 +568,16 @@ class ContractController < ApplicationController
         @contract_row.quantity_b = @contract_row.quantity_b + @number_of_contracts.to_i
         @contract_row.save
       end
-        
-      flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"
+       
+      @contract_rows = @contract_row.market.contracts
+      @membership_id = @membership_row.id
 
-      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      respond_to do |format|
+        format.js { render 'contract_templates/render_contracts.js.erb', layout: false }
+      end
+      # flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully sold!"
+
+      # redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
     end
   end
 end
