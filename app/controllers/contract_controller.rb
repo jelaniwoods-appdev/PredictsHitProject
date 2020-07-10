@@ -171,9 +171,10 @@ class ContractController < ApplicationController
     @contract_row.save
 
     @contract_rows = @contract_row.market.contracts
+    @membership_id = @membership_row.id
         
     respond_to do |format|
-      format.js { render :js => 'contract_templates/buy_yes_contracts.js.erb' }
+      format.js { render 'contract_templates/buy_yes_contracts.js.erb', layout: false }
     end
 
     # flash[:notice] = "Yay! All " + @number_of_contracts.to_s + " contract(s) were sucessfully purchased!"
