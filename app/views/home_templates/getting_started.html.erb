@@ -1,4 +1,4 @@
-<div class="row bg-white py-2">
+<div class="row bg-white">
   <div class="col-6 offset-3">
     <div class="jumbotron jumbotron-fluid bg-white">
       <div class="container">
@@ -17,9 +17,10 @@
               Create a <b>Market</b> for your Season: <p>A Market is what most people think of when they hear of a prediction market. You'll likely spend most of your time viewing the market as that is where the action actually takes place. Each Market is meant to encapsulate an upcoming event. Going back to the reality TV example, you might set a Market each week that asks who will win (or lose) that episode. Markets within the same Season are related to each other in that you have an overall amount of funds in your Season that you can spread across multiple Markets. If you do well in one Market, you'll be able to bet more on the next Market. There's no need to create more than one market within a Season, but the option is there if you want to see how your friends stack up to each other over time.</p>
             </li>
             <li>
-              Create a <b>Contract</b> for your Market: <p>Lastly, you'll need at least one contract in every Market you create. A contract needs to be set up such that it either happens or it does not happen...there's no room for grey area. Back to reality TV, a contract for a market about who will be kicked off might be as simple as a contestant's name. Either that contestant will be kicked off or they won't be kicked off. An example of a contract/market that might cause trouble for your group would be something vague like a market that is 'Who will be the most annoying contenstant this week?' and contracts that list each contestant's name. The fact that who is 'most annoying' is debatable means you might have trouble actually closing the market without controversy. Of course, there are ways around this like setting an arbiter who isn't participating in the market or utilizing a third party writes about who is most annoying every week.</p>
+              Create a <b>Contract</b> for your Market: <p>Lastly, you'll need at least one contract in every Market you create. A contract needs to be set up such that it either happens or it does not happen...there's no room for grey area. Back to reality TV, a contract for a market about who will be kicked off might be as simple as a contestant's name. Either that contestant will be kicked off or they won't be kicked off. An example of a contract/market that might cause trouble for your group would be something vague like a market that is 'Who will be the most annoying contenstant this week?' and contracts that list each contestant's name. The fact that who is 'most annoying' is debatable means you might have trouble actually closing the market without controversy. Of course, there are ways around this like setting an arbiter who isn't participating in the market or utilizing a third party that 'decides' who is most annoying every week.</p>
             </li>
           </ol>
+           You'll be able to create the bare bones of everything you need for your first market on this page but you can always add details, users, and additional Clubs/Seasons/Markets/Contracts later.
         </p>
       </div>
     </div>
@@ -29,20 +30,23 @@
 <div class="row">
   <div class="col-6 offset-3">
     <div class="jumbotron">
-      <h1 class="center_title">Create a New Club</h1>
+      <h1 class="center_title">Create your First Market</h1>
       <br>
-        <form action="/create_new_club" method="post" enctype="multipart/form-data">
+        <form action="/getting_started/form" method="post" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="create_club_title">What is the title of your club?</label>
-            <input class="form-control" id="create_club_title" type="text" name="club_title" placeholder="Enter a title..." required="required">
+            <label for="create_club_title">What is the name of your Club?</label>
+            <input class="form-control" id="create_club_title" type="text" name="club_title" placeholder="Enter a name..." required="required">
             <br>
-            <label for="create_club_description">What is the description of your club?</label>
-            <input class="form-control" id="create_club_description" type="text" name="club_description" placeholder="Enter a description...">
+            <label for="create_season_title">What is the name of your Season?</label>
+            <input class="form-control" id="create_season_title" type="text" name="season_title" placeholder="Enter a name..." required="required">
             <br>
-            <label for="create_club_picture">What picture would you like to set for your Club?</label>
-            <input type="file" id="create_club_picture" name="club_picture" class="form-control">
+            <label for="create_market_title">What is the name of your Market?</label>
+            <input class="form-control" id="create_market_title" type="text" name="market_title" placeholder="Enter a name..." required="required">
             <br>
-            <button class="btn btn-secondary btn-block">Create Club</button>
+            <label for="create_contract_title">What is the name of your Contract?</label>
+            <input class="form-control" id="create_contract_title" type="text" name="contract_title" placeholder="Enter a name..." required="required">
+            <br>
+            <button class="btn btn-secondary btn-block">Create First Market</button>
           </div>
         </form>
     </div>
