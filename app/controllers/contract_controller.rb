@@ -183,7 +183,7 @@ class ContractController < ApplicationController
     end
 
       #add instance variables needed for partials that are refreshed
-      @contract_rows = @contract_row.market.contracts
+      @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
       @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
       
@@ -335,7 +335,7 @@ class ContractController < ApplicationController
     end
 
     #add instance variables needed for partials that are refreshed
-    @contract_rows = @contract_row.market.contracts
+    @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
     @membership_id = @membership_row.id
     @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
@@ -498,7 +498,7 @@ class ContractController < ApplicationController
     end
     
     #add instance variables needed for partials that are refreshed
-    @contract_rows = @contract_row.market.contracts
+    @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
     @membership_id = @membership_row.id
     @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
@@ -593,7 +593,7 @@ class ContractController < ApplicationController
       end
     end
       #add instance variables needed for partials that are refreshed
-      @contract_rows = @contract_row.market.contracts
+      @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
       @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
