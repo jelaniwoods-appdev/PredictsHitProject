@@ -1,1 +1,50 @@
-<h1>Work in progress!</h1>
+<div class="row bg-white py-2">
+  <div class="col-6 offset-3">
+    <div class="jumbotron jumbotron-fluid bg-white">
+      <div class="container">
+        <h2 class="display-4">Getting Started</h2>
+        <p class="lead">
+          New to Predicts Hit? Let's set you up with your first market! You'll need to do 4 things:
+          <br>
+          <ol>
+            <li>
+              Create a <b>Club</b>: <p>A Club is the starting point. It's basically just a landing zone for you and your friends. You'll invite your friends to the Club so that they can access this first market and also be ready to participate going forward.</p>
+            </li>
+            <li>
+              Create a <b>Season</b> for your Club: <p>A Season is where things start to get interesting. This is where you'll keep track of who is hitting their predictions over time. Let's say you want to predict what happens throughout a season of a reality tv show. You'll create a Season that keeps track of performance for all of the markets you set during that reality tv season. If you only want to compete over one market, you'll still need a Season but you can just create one Market within that Season. Seasons are independent from each other and you can create as many Seasons as you want within your Club.</p>
+            </li>
+            <li>
+              Create a <b>Market</b> for your Season: <p>A Market is what most people think of when they hear of a prediction market. You'll likely spend most of your time viewing the market as that is where the action actually takes place. Each Market is meant to encapsulate an upcoming event. Going back to the reality TV example, you might set a Market each week that asks who will win (or lose) that episode. Markets within the same Season are related to each other in that you have an overall amount of funds in your Season that you can spread across multiple Markets. If you do well in one Market, you'll be able to bet more on the next Market. There's no need to create more than one market within a Season, but the option is there if you want to see how your friends stack up to each other over time.</p>
+            </li>
+            <li>
+              Create a <b>Contract</b> for your Market: <p>Lastly, you'll need at least one contract in every Market you create. A contract needs to be set up such that it either happens or it does not happen...there's no room for grey area. Back to reality TV, a contract for a market about who will be kicked off might be as simple as a contestant's name. Either that contestant will be kicked off or they won't be kicked off. An example of a contract/market that might cause trouble for your group would be something vague like a market that is 'Who will be the most annoying contenstant this week?' and contracts that list each contestant's name. The fact that who is 'most annoying' is debatable means you might have trouble actually closing the market without controversy. Of course, there are ways around this like setting an arbiter who isn't participating in the market or utilizing a third party writes about who is most annoying every week.</p>
+            </li>
+          </ol>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="jumbotron">
+      <h1 class="center_title">Create a New Club</h1>
+      <br>
+        <form action="/create_new_club" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="create_club_title">What is the title of your club?</label>
+            <input class="form-control" id="create_club_title" type="text" name="club_title" placeholder="Enter a title..." required="required">
+            <br>
+            <label for="create_club_description">What is the description of your club?</label>
+            <input class="form-control" id="create_club_description" type="text" name="club_description" placeholder="Enter a description...">
+            <br>
+            <label for="create_club_picture">What picture would you like to set for your Club?</label>
+            <input type="file" id="create_club_picture" name="club_picture" class="form-control">
+            <br>
+            <button class="btn btn-secondary btn-block">Create Club</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
