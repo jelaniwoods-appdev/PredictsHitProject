@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get("/support", { :controller => "home", :action => "show_support" })
   get("/global_markets", { :controller => "home", :action => "show_global_markets" })
   get("/getting_started", { :controller => "home", :action => "show_getting_started" })
+  post("/getting_started_action", { :controller => "home", :action => "create_starter_market" })
   get("/faq", { :controller => "home", :action => "show_faq" })
   get("/test_page", { :controller => "test", :action => "test_mailgun" })
 
