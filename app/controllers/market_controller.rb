@@ -166,6 +166,7 @@ class MarketController < ApplicationController
       @membership_id = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id }).at(0).id
       #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets.
       @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+      @club_owner_user_id = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
 
       render({ :template => "market_templates/market_details.html.erb" })
     end

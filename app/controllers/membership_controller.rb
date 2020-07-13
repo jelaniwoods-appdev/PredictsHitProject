@@ -58,4 +58,64 @@ class MembershipController < ApplicationController
 
     redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
   end
+
+  def add_market_member
+    @club_id = params.fetch("club_id")
+    @season_id = params.fetch("season_id")
+    @market_id = params.fetch("market_id")
+    @member_username = params.fetch("username")
+    @user_row = User.where({ :username => @member_username }).at(0)
+    
+    #add validation check!?
+    
+    #Create club membership row for added user
+    if @user_row.present?
+
+      @new_club_membership = Membership.new
+      @new_club_membership.users_id = @user_row.id
+      @new_club_membership.clubs_id = @club_id
+      @new_club_membership.goes_to = "clubs_table"
+      @new_club_membership.category = "member"
+      if @new_club_membership.valid?
+        @new_club_membership.save
+      end
+
+      #Create season membership row for added user
+      @new_season_membership = Membership.new
+      @new_season_membership.users_id = @user_row.id
+      @new_season_membership.clubs_id = @club_id
+      @new_season_membership.seasons_id = @season_id
+      @new_season_membership.goes_to = "seasons_table"
+      @new_season_membership.category = "member"
+      if @new_season_membership.valid?
+        @new_season_membership.save
+
+        #Add asset row for added user
+          #find fund row in season table
+          @season_fund = Season.where({ :id => @season_id }).at(0).fund
+        
+        @new_season_membership_asset = Asset.new
+        @new_season_membership_asset.membership_id = @new_season_membership.id
+        @new_season_membership_asset.season_id = @season_id
+        @new_season_membership_asset.category = "season_fund"
+        @new_season_membership_asset.quantity = @season_fund
+        @new_season_membership_asset.save
+
+        flash[:notice] = "Player was successfully added!" 
+
+        redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+
+      else
+        flash[:alert] = "There was an issue adding this player. It looks like the player has already been invited!" 
+
+        redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      end
+      
+    else 
+      flash[:alert] = "There was an issue adding this player. Please confirm you entered the correct username."
+      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+    end
+
+  end
+
 end

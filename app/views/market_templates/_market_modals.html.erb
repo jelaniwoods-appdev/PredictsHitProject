@@ -127,3 +127,28 @@
     </div>
   </div>
 </div>
+
+<!-- Invite users modal html -->
+<div class="modal fade" id="add_players" tabindex="-1" role="dialog" aria-labelledby="add_playersLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add_playersLabel">Invite Players</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/add_market_memberships/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="Add_member_username">What is the username of the player you would like to add?<br><br>Note: This will add the User to the Club and Season this Market is associated with.</label>
+            <input class="form-control" id="add_member_username" type="text" name="username" placeholder="Enter a username...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-block">Invite Players</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

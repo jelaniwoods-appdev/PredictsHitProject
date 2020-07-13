@@ -18,6 +18,12 @@
       <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#close_market">
           Close Market
       </button>
+      <% if @club_owner_user_id == current_user.id %>
+        <br>
+        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#add_players">
+          Invite Players
+        </button>
+      <% end %>
     <% end %>
   </div>
   
