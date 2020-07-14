@@ -25,6 +25,17 @@ class MembershipController < ApplicationController
     redirect_to("/clubs/" + @club_id.to_s)
   end
 
+  def manage_club_members
+    @club_id = params.fetch("club_id")
+    @member_username = params.fetch("username")
+    @user_row = User.where({ :username => @member_username }).at(0)
+    @member_category = params.fetch("member_category")
+
+    flash[:notice] = "Test Successful" 
+
+    redirect_to("/clubs/" + @club_id.to_s)
+  end
+
 
   def add_season_member
     @club_id = params.fetch("club_id")
