@@ -24,6 +24,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  searchkick word_start: [:username]
+  
   validates_uniqueness_of :username
   validates_presence_of :username
   validates :username, length: { maximum: 15 }

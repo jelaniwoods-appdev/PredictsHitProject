@@ -28,6 +28,7 @@ gem 'finishing_moves'
 gem 'sortable-rails'
 gem 'bootstrap-editable-rails'
 gem 'closure_tree'
+gem 'searchkick'
 
 
 group :development do

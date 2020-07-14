@@ -2,6 +2,14 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :user do
+    collection do
+      get :autocomplete
+    end
+  end
+
+  get("/users/autocomplete", { :controller => "user", :action => "search_users" })
+
   #Homepage routes
   get("/", { :controller => "home", :action => "show_homepage" })
   get("/about", { :controller => "home", :action => "show_about" })
@@ -11,6 +19,7 @@ Rails.application.routes.draw do
   post("/getting_started_action", { :controller => "home", :action => "create_starter_market" })
   get("/faq", { :controller => "home", :action => "show_faq" })
   get("/test_page", { :controller => "test", :action => "test_mailgun" })
+
 
   #profile routes
   get("/profile/:user_id", { :controller => "profile", :action => "show_profile" })
