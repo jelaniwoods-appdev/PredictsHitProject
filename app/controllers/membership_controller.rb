@@ -27,13 +27,43 @@ class MembershipController < ApplicationController
 
   def manage_club_members
     @club_id = params.fetch("club_id")
-    @member_username = params.fetch("username")
-    @user_row = User.where({ :username => @member_username }).at(0)
+    @member_user_id = params.fetch("user_id")
+    @user_row = User.where({ :id => @member_user_id }).at(0)
+    @membership_row = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :users_id => @member_user_id }).at(0)
+    @owner_membership_row = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :category => "owner" }).at(0)
     @member_category = params.fetch("member_category")
 
-    flash[:notice] = "Test Successful" 
+    if @member_category == @membership_row.category
+      flash[:alert] = @user_row.username.to_s + " was already a " + @member_category.to_s + "."
+      redirect_to("/clubs/" + @club_id.to_s)
+    else
+      if @member_category == "owner"
+        #if changing owner status, remove current owner and change to admin and then update user to owner
+        @owner_membership_row.category = "admin"
+        @owner_membership_row.save
+        @membership_row.category = @member_category
+        @membership_row.save
 
-    redirect_to("/clubs/" + @club_id.to_s)
+        flash[:notice] = @user_row.username.to_s + " is now the " + @member_category.to_s + "."
+
+        redirect_to("/clubs/" + @club_id.to_s)
+      else
+        #do not allow owner to change themselves to admin or member
+        if @membership_row.category == "owner"
+          flash[:alert] = "You cannot remove yourself as owner without assigning someone else. If you no longer want to be the owner, assign someone else to be the owner."
+          redirect_to("/clubs/" + @club_id.to_s)
+        else
+          @membership_row.category = @member_category
+          @membership_row.save
+          
+          flash[:notice] = @user_row.username.to_s + " is now a " + @member_category.to_s + "."
+
+          redirect_to("/clubs/" + @club_id.to_s)
+        end
+      end
+    end
+
+    
   end
 
 

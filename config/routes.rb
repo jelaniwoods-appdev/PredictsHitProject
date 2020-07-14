@@ -69,7 +69,7 @@ Rails.application.routes.draw do
   # Membership routes
     #club memberships
   post("/add_club_memberships/:club_id", { :controller => "membership", :action => "add_club_member"})
-  post("/manage_club_memberships/:club_id", { :controller => "membership", :action => "manage_club_members"})
+  post("/manage_club_memberships/:club_id/:user_id", { :controller => "membership", :action => "manage_club_members"})
 
     #season memberships
   post("/add_season_memberships/:club_id/:season_id", { :controller => "membership", :action => "add_season_member"})
