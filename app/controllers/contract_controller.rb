@@ -99,10 +99,10 @@ class ContractController < ApplicationController
       updated_contract_details.save
 
       flash[:notice] = "Contract details were successfully updated!"
-      redirect_to("/contracts/manage/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
+      redirect_to("/contracts/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
     else
       flash[:alert] = "Contract details were not updated. Please include a title."
-      redirect_to("/contracts/manage/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
+      redirect_to("/contracts/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
     end
 
   end
