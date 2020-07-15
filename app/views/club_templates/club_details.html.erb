@@ -124,3 +124,17 @@ $(document).ready(function() {
    });
  });
 </script>
+
+<script>
+  var users = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.whitespace,
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    remote: {
+      url: '/users/autocomplete?query=%QUERY',
+      wildcard: '%QUERY'
+    }
+  });
+  $('#query').typeahead(null, {
+    source: users
+  });
+</script>
