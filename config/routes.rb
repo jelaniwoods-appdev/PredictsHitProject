@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   post("/getting_started_action", { :controller => "home", :action => "create_starter_market" })
   get("/faq", { :controller => "home", :action => "show_faq" })
   get("/test_page", { :controller => "test", :action => "test_mailgun" })
+  get("/test_message", { :controller => "test", :action => "send_message" })
 
 
   #profile routes

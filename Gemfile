@@ -32,6 +32,7 @@ gem 'searchkick'
 gem 'bonsai-elasticsearch-rails', '~> 7'
 gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: 'master'
 gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: 'master'
+gem 'rest-client'
 
 
 group :development do
