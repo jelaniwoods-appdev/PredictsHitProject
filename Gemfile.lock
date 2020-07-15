@@ -1,4 +1,15 @@
 GIT
+  remote: https://github.com/elastic/elasticsearch-rails.git
+  revision: 4c44370c9f4f5f6d764b9dca662be8c0522d1f1a
+  branch: master
+  specs:
+    elasticsearch-model (7.1.0)
+      activesupport (> 3)
+      elasticsearch (> 1)
+      hashie
+    elasticsearch-rails (7.1.0)
+
+GIT
   remote: https://github.com/firstdraft/draft_generators.git
   revision: d7ccfa08d1c9eb00b9f7b935a0f8e0c812dfe9bd
   branch: winter-2020
@@ -102,6 +113,9 @@ GEM
     bindex (0.8.1)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
+    bonsai-elasticsearch-rails (7.0.1)
+      elasticsearch-model (< 8)
+      elasticsearch-rails (< 8)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     bootstrap (4.5.0)
@@ -447,6 +461,7 @@ DEPENDENCIES
   bcrypt
   better_errors (= 2.6)
   binding_of_caller
+  bonsai-elasticsearch-rails (~> 7)
   bootsnap (>= 1.4.2)
   bootstrap (~> 4.5)
   bootstrap-editable-rails
@@ -458,6 +473,8 @@ DEPENDENCIES
   devise
   dotenv-rails
   draft_generators!
+  elasticsearch-model!
+  elasticsearch-rails!
   execjs
   factory_bot_rails
   faker

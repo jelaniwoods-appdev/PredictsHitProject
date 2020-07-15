@@ -29,7 +29,9 @@ gem 'sortable-rails'
 gem 'bootstrap-editable-rails'
 gem 'closure_tree'
 gem 'searchkick'
-
+gem 'bonsai-elasticsearch-rails', '~> 7'
+gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: 'master'
+gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: 'master'
 
 
 group :development do
