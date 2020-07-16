@@ -83,7 +83,7 @@ class MembershipController < ApplicationController
         @user_season_membership_rows.each do |season_membership|
           if season_membership.category == "owner"
             #find other season memberships and first pick among admins if there are any (category desc), and then based on who has the oldest membership
-            new_owner = Membership.where({ :seasons_id => season_membership.seasons_id, :goes_to => "seasons_table" }).where.not({ :users_id => current_user.id }).order({ :category => :desc, :created_at => :asc }).at(0)
+            new_owner = Membership.where({ :seasons_id => season_membership.seasons_id, :goes_to => "seasons_table" }).where.not({ :users_id => current_user.id }).order({ :category => :asc, :created_at => :asc }).at(0)
             #if someone else is present in a season where user leaving club is the owner, then assign new owner, otherwise just have them leave the season since no one needs to be the owner
             if new_owner.present?
               new_owner.category = "owner"
