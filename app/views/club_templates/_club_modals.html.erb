@@ -43,7 +43,6 @@
       <form action="/add_club_memberships/<%= @club_row.id %>" method="post">
         <div class="modal-body">
           <div class="form-group">
-            <!-- Update to involve search -->
             <label for="query">What is the username of the member you would like to add?</label>
             <input class="form-control col-12" id="query" type="text" name="username" placeholder="Enter a username..." autocomplete="off" required>
             <br>
@@ -173,6 +172,35 @@
 
         </table>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Leave Club modal html -->
+<div class="modal fade" id="leave_club" tabindex="-1" role="dialog" aria-labelledby="leave_clubLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="leave_clubLabel">Leave Club</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/leave_club/<%= @club_row.id %>" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+
+            <label for="select_member_category">Are you sure you want to leave this Club?<br><br>Note: This will automatically remove you from all seasons associated with this Club and this action cannot be undone.</label>
+            <select class="form-control" required="required" id="select_member_category" name="member_category"><option value="">Selected Yes if you want to leave</option>
+              <option value="yes_leave">Yes</option>
+            </select>   
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-block">Leave Club</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
