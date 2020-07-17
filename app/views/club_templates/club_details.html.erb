@@ -37,11 +37,11 @@
       <img src="<%= @club_row.picture %>" height="180" width="240" class="img-responsive">
     </div>
     <br>
-    <% if @season_rows.present? %>
-      <h2 class="center_title">Seasons available in <%= @club_row.title %></h2>
+    <% if @current_season_rows.present? %>
+      <h2>Current Seasons</h2>
       <br>
       <div class="row row-cols-1 row-cols-md-4">
-        <% @season_rows.each do |season| %>
+        <% @current_season_rows.each do |season| %>
           <div class="col mb-4">
             <div class="card h-100">
               <img src="<%= season.picture %>" class="card-img-top" alt="...">
@@ -69,6 +69,29 @@
         Ask the Club owner to create a Season in this Club!
       <% end %>
       </h2>
+    <% end %>
+    <br>
+    <% if @closed_season_rows.present? %>
+      <h2>Previous Seasons</h2>
+      <br>
+      <div class="row row-cols-1 row-cols-md-4">
+        <% @closed_season_rows.each do |season| %>
+          <div class="col mb-4">
+            <div class="card h-100">
+              <img src="<%= season.picture %>" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title text-truncate"><%= season.title %></h5>
+                <% if season.description == "" %>
+                  <p class="card-text text-truncate">[No Description]</p>
+                <% else %>
+                  <p class="card-text text-truncate"><%= season.description %> </p>
+                <% end %>
+                <div class="text-center"><a class="btn btn-secondary stretched-link" href="/seasons/<%= season.club.id.to_s + '/' + season.id.to_s %>">Go to Season</a></div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   </div>
   

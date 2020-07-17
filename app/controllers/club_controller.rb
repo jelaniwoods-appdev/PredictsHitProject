@@ -44,12 +44,11 @@ class ClubController < ApplicationController
   end
 
   def view_club
-    #set variable for club roster partial (consider deleting if not using this method anymore)
-    #@show_club_roster = true
     
     club_id = params.fetch("club_id")
     @club_row = Club.where({ :id => club_id }).at(0)
-    @season_rows = Season.where({ :club_id => club_id}).order({ :id => :desc })
+    @current_season_rows = Season.where({ :club_id => club_id}).where.not({ :status => "closed" }).order({ :id => :desc })
+    @closed_season_rows = Season.where({ :club_id => club_id}).where({ :status => "closed" }).order({ :id => :desc })
     @membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
 
     #relevant comments
