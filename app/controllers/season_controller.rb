@@ -47,7 +47,8 @@ class SeasonController < ApplicationController
     season_id = params.fetch("season_id")
     @club_row = Club.where({ :id => club_id }).at(0)
     @season_row = Season.where({ :id => season_id}).at(0)
-    @market_rows = @season_row.markets
+    @current_market_rows = @season_row.markets.where.not({ :status => "closed" })
+    @closed_market_rows = @season_row.markets.where({ :status => "closed" })
     @season_membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
     @club_membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
 

@@ -39,11 +39,11 @@
       <img src="<%= @season_row.picture %>" height="180" width="240" class="img-responsive">
     </div>
     <br>
-    <% if @market_rows.present? %>
-    <h2 class="center_title">Markets available in <%= @season_row.title %></h2>
+    <% if @current_market_rows.present? %>
+    <h2>Current Markets</h2>
     <br>
     <div class="row row-cols-1 row-cols-md-4">
-      <% @market_rows.each do |market| %>
+      <% @current_market_rows.each do |market| %>
         <div class="col mb-4">
           <div class="card h-100">
             <img src="<%= market.picture %>" class="card-img-top" alt="...">
@@ -68,10 +68,37 @@
       <br>
       <br>
       <% if @owner_user_id == current_user.id %>
-        Create the first Market in this Season!
+        Create a new Market in this Season!
+        <br>
       <% else %>
-        Ask the Season owner to create a Market in this Season!
+        Ask the Season owner to create a new Market in this Season!
+        <br>
       <% end %>
+    <% end %>
+  
+  <br>
+  <% if @closed_market_rows.present? %>
+    <h2>Previous Markets</h2>
+    <br>
+    <div class="row row-cols-1 row-cols-md-4">
+      <% @closed_market_rows.each do |market| %>
+        <div class="col mb-4">
+          <div class="card h-100">
+            <img src="<%= market.picture %>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title text-truncate"><%= market.title %></h5>
+              <% if market.description == "" %>
+                <p class="card-text text-truncate">[No Description]</p>
+              <% else %>
+                <p class="card-text text-truncate"><%= market.description %> </p>
+              <% end %>
+              <div class="text-center"><a class="btn btn-secondary stretched-link" href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a></div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <br>
     <% end %>
   </div>
 
