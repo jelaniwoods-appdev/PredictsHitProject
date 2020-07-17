@@ -293,3 +293,31 @@
     </div>
   </div>
 </div>
+
+
+<!-- Leave Season modal html -->
+<div class="modal fade" id="leave_season" tabindex="-1" role="dialog" aria-labelledby="leave_seasonLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="leave_seasonLabel">Leave Season</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/leave_season/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="select_member_category">Are you sure you want to leave this Season?</label>
+            <select class="form-control" required="required" id="select_member_category" name="member_category"><option value="">Selected Yes if you want to leave</option>
+              <option value="yes_leave">Yes</option>
+            </select>   
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-block">Leave Season</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

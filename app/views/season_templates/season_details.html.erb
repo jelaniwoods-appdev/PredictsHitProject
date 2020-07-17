@@ -3,8 +3,8 @@
     <div class="center_title"><a class="btn btn-outline-secondary btn-block" id="return" href="/clubs/<%= @club_row.id %>">Return to Club</a></div>
     <br>
     <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="standings-toggle">Season Standings</button></div>
-    <br>
     <% if @owner_user_id == current_user.id %>
+      <br>
       <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_season_details">
           Edit Season Details
       </button>
@@ -25,6 +25,10 @@
         Create Market
       </button>
     <% end %>
+    <br>
+    <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#leave_season">
+      Leave Season
+    </button>
   </div>
   
   <div class="col-6 offset-3">

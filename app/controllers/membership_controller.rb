@@ -177,42 +177,23 @@ class MembershipController < ApplicationController
     end
   end
 
-    def leave_season
+  def leave_season
     @club_id = params.fetch("club_id")
     @season_id = params.fetch("season_id")
     @user_season_membership_row = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :users_id => current_user.id }).at(0)
-    @season_membership_rows = Membership.where({ :clubs_id => @season_id, :goes_to => "seasons_table"})
-    @owner_membership_row = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :category => "owner" }).at(0)
-    @member_category = @user_club_membership_row.category
+    @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+    @member_category = @user_season_membership_row.category
 
-    if @member_category == "owner" && @club_membership_rows.count > 1
-      flash[:alert] = "You are the Club owner. You'll have to assign someone else to be the owner before you can leave."
-      redirect_to("/clubs/" + @club_id.to_s)
+    if @member_category == "owner" && @season_membership_rows.count > 1
+      flash[:alert] = "You are the Season owner. You'll have to assign someone else to be the owner before you can leave."
+      redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id)
     else
       #remove user club membership
-      @user_club_membership_row.destroy
+      @user_season_membership_row.destroy
 
-      #go through each season membership in that club and destroy user's membership. If they are a season owner and there is at least one other person in the season, assign someone else to become the owner
-      @user_season_membership_rows.each do |season_membership|
-        if season_membership.category == "owner"
-          #find other season memberships and first pick among admins if there are any (category desc), and then based on who has the oldest membership
-          new_owner = Membership.where({ :seasons_id => season_membership.seasons_id, :goes_to => "seasons_table" }).where.not({ :users_id => current_user.id }).order({ :category => :asc, :created_at => :asc }).at(0)
-          #if someone else is present in a season where user leaving club is the owner, then assign new owner, otherwise just have them leave the season since no one needs to be the owner
-          if new_owner.present?
-            new_owner.category = "owner"
-            new_owner.save
-          end
-          
-          season_membership.destroy
+      flash[:notice] = "You have successfully left the Season."
 
-        else
-          season_membership.destroy
-        end
-      end
-
-      flash[:notice] = "You have successfully left the Club and any associated Seasons."
-
-      redirect_to("/")
+      redirect_to("/clubs/" + @club_id.to_s)
     end
   end
 

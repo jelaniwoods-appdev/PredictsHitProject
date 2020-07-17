@@ -85,6 +85,7 @@ Rails.application.routes.draw do
     #season memberships
   post("/add_season_memberships/:club_id/:season_id", { :controller => "membership", :action => "add_season_member"})
   post("/manage_season_memberships/:club_id/:season_id/:user_id", { :controller => "membership", :action => "manage_season_members"})
+  post("/leave_season/:club_id/:season_id", { :controller => "membership", :action => "leave_season"})
 
     #market memberships (adds to club and season simultaneously)
   post("/add_market_memberships/:club_id/:season_id/:market_id", { :controller => "membership", :action => "add_market_member"})
