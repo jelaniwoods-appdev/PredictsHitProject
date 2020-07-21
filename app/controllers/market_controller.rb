@@ -124,9 +124,17 @@ class MarketController < ApplicationController
     @market_id = params.fetch("market_id")
   
     paused_market = Market.where({ :id => @market_id }).at(0)
+    paused_market_contracts = paused_market.contracts
+
+    #pause market
     paused_market.status = "paused"
     paused_market.save
 
+    #pause each contract
+    paused_market_contracts.each do |pause_contract|
+      pause_contract.status = "paused"
+      pause_contract.save
+    end
     flash[:notice] = "Market was successfully paused!"
     redirect_to("/markets/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
     
@@ -138,9 +146,18 @@ class MarketController < ApplicationController
     @market_id = params.fetch("market_id")
   
     unpaused_market = Market.where({ :id => @market_id }).at(0)
+    unpaused_market_contracts = unpaused_market.contracts
+
+    #unpause market
     unpaused_market.status = "active"
     unpaused_market.save
     
+    #unpause each contract
+    unpaused_market_contracts.each do |unpause_contract|
+      unpause_contract.status = "active"
+      unpause_contract.save
+    end
+
     flash[:notice] = "Market was successfully unpaused!"
     redirect_to("/markets/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
     
