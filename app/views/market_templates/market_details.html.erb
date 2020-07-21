@@ -131,7 +131,10 @@
   </div>
 </div>
 
-<%= render 'market_templates/market_modals' %>
+<!-- Only render market modals if market is not closed -->
+<% if @market_row.status != "closed" %>
+  <%= render 'market_templates/market_modals' %>
+<% end %>
 
 <script>
 $(document).ready(function() {

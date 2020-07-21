@@ -3,36 +3,38 @@
     <div class="center_title"><a class="btn btn-outline-secondary btn-block" id="return" href="/clubs/<%= @club_row.id %>">Return to Club</a></div>
     <br>
     <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="standings-toggle">Season Standings</button></div>
-    <% if @owner_user_id == current_user.id %>
+    <% if @season_row.status != "closed" %> 
+      <% if @owner_user_id == current_user.id %>
+        <br>
+        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_season_details">
+            Edit Season Details
+        </button>
+        <br>
+        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#add_season_member">
+          Add Season Members
+        </button>
+        <br>
+        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_season_members">
+          Manage Season Members
+        </button>
+        <br>
+        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_user_funds">
+          Manage User Funds
+        </button>
+        <br>
+        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#create_market">
+          Create Market
+        </button>
+        <br>
+        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#close_season">
+          Close Season
+        </button>
+      <% end %>
       <br>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_season_details">
-          Edit Season Details
-      </button>
-      <br>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#add_season_member">
-        Add Season Members
-      </button>
-      <br>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_season_members">
-        Manage Season Members
-      </button>
-      <br>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_user_funds">
-        Manage User Funds
-      </button>
-      <br>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#create_market">
-        Create Market
-      </button>
-      <br>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#close_season">
-        Close Season
+      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#leave_season">
+        Leave Season
       </button>
     <% end %>
-    <br>
-    <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#leave_season">
-      Leave Season
-    </button>
   </div>
   
   <div class="col-6 offset-3">
@@ -129,7 +131,10 @@
 </div>
 
 
-<%= render 'season_templates/season_modals' %>
+<!-- Only render season modals if not closed -->
+<% if @season_row.status != "closed" %> 
+  <%= render 'season_templates/season_modals' %>
+<% end %>
 
 <script>
 $(document).ready(function() {
