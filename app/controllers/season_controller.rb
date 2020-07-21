@@ -118,4 +118,32 @@ class SeasonController < ApplicationController
     end
   end
 
+  def close_season
+    @club_id = params.fetch("club_id")
+    @season_id = params.fetch("season_id")
+    closed_season = Season.where({ :id => @season_id }).at(0)
+    season_markets = closed_season.markets
+    markets_not_closed_counter = 0
+    
+    #check if all markets are closed
+    season_markets.each do |market_closed_check|
+      if market_closed_check.status != "closed"
+        markets_not_closed_counter = markets_not_closed_counter + 1
+      end
+    end
+    
+    #check if all markets in season are closed and then close season if so
+    if markets_not_closed_counter == 0
+      flash[:notice] = "Season was successfully closed!"
+      closed_season.status = "closed"
+      closed_season.save
+    else
+      flash[:alert] = "At least one Market in the Season is not yet closed. Please make sure all Markets are closed before closing the Season."
+    end
+    
+
+    
+    redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+  end
+
 end

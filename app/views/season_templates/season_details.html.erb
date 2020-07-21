@@ -24,6 +24,10 @@
       <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#create_market">
         Create Market
       </button>
+      <br>
+      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#close_season">
+        Close Season
+      </button>
     <% end %>
     <br>
     <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#leave_season">
@@ -39,9 +43,9 @@
       <img src="<%= @season_row.picture %>" height="180" width="240" class="img-responsive">
     </div>
     <br>
-    <% if @current_market_rows.present? %>
     <h2>Current Markets</h2>
     <br>
+    <% if @current_market_rows.present? %>
     <div class="row row-cols-1 row-cols-md-4">
       <% @current_market_rows.each do |market| %>
         <div class="col mb-4">
@@ -63,17 +67,10 @@
     <br>
 
     <% else %>
-    <h2>
+    <h3>
       There are no markets currently available in <%= @season_row.title %>.
+    </h3>
       <br>
-      <br>
-      <% if @owner_user_id == current_user.id %>
-        Create a new Market in this Season!
-        <br>
-      <% else %>
-        Ask the Season owner to create a new Market in this Season!
-        <br>
-      <% end %>
     <% end %>
   
   <br>

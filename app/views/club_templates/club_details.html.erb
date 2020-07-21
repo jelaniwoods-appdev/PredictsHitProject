@@ -37,9 +37,9 @@
       <img src="<%= @club_row.picture %>" height="180" width="240" class="img-responsive">
     </div>
     <br>
-    <% if @current_season_rows.present? %>
-      <h2>Current Seasons</h2>
+    <h2>Current Seasons</h2>
       <br>
+    <% if @current_season_rows.present? %>
       <div class="row row-cols-1 row-cols-md-4">
         <% @current_season_rows.each do |season| %>
           <div class="col mb-4">
@@ -59,16 +59,10 @@
         <% end %>
       </div>
     <% else %>
-      <h2>
+      <h3>
       There are no seasons currently available in <%= @club_row.title %>.
       <br>
-      <br>
-      <% if @owner_user_id == current_user.id %>
-        Create the first Season in this Club!
-      <% else %>
-        Ask the Club owner to create a Season in this Club!
-      <% end %>
-      </h2>
+      </h3>
     <% end %>
     <br>
     <% if @closed_season_rows.present? %>

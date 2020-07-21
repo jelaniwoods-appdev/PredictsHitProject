@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   get("/seasons/:club_id/:season_id", { :controller => "season", :action => "view_season" })
   get("/seasons/manage/:club_id/:season_id", { :controller => "season", :action => "manage_season" })
   patch("/update_season_details/:club_id/:season_id", { :controller => "season", :action => "update_season_details"})
+  post("/close_season/:club_id/:season_id", { :controller => "season", :action => "close_season"})
 
   #market routes
   get("/new_market", { :controller => "market", :action => "market_create_form" })
@@ -86,6 +87,7 @@ Rails.application.routes.draw do
   post("/add_season_memberships/:club_id/:season_id", { :controller => "membership", :action => "add_season_member"})
   post("/manage_season_memberships/:club_id/:season_id/:user_id", { :controller => "membership", :action => "manage_season_members"})
   post("/leave_season/:club_id/:season_id", { :controller => "membership", :action => "leave_season"})
+  
 
     #market memberships (adds to club and season simultaneously)
   post("/add_market_memberships/:club_id/:season_id/:market_id", { :controller => "membership", :action => "add_market_member"})
