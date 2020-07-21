@@ -53,7 +53,7 @@
               <form action='/buy_yes_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title'>
                   <label for='quantity_buy_yes_contract'>How many 'yes' contracts do you want to buy?</label>
-                  <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' required>
+                  <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' autocomplete="off" required>
                   <!-- 
                   <div> 
                     <div class="text-justify">Total price: <%= number_to_currency(contract.price_check(contract.id, 50, 10, "yes")) %></div>
@@ -71,7 +71,7 @@
               <form action='/sell_yes_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title'>
                   <label for='quantity_sell_yes_contract'>How many 'yes' contracts do you want to sell?</label>
-                  <input class='form-control center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' required>
+                  <input class='form-control center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' autocomplete="off" required>
                   <br>
                   <button class='btn btn-secondary btn-block'>Sell Yes</button>
                 </div>
@@ -82,7 +82,7 @@
               <form action='/buy_no_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title'>
                   <label for='quantity_buy_no_contract'>How many 'no' contracts do you want to buy?</label>
-                  <input class='form-control center_title' id='quantity_buy_no_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_no' required>
+                  <input class='form-control center_title' id='quantity_buy_no_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_no' autocomplete="off" required>
                   <br>
                   <button class='btn btn-secondary btn-block'>Buy No</button>
                 </div>
@@ -93,7 +93,7 @@
               <form action='/sell_no_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title'>
                   <label for='quantity_sell_no_contract'>How many 'no' contracts do you want to sell?</label>
-                  <input class='form-control center_title' id='quantity_sell_no_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_no' required>
+                  <input class='form-control center_title' id='quantity_sell_no_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_no' autocomplete="off" required>
                   <br>
                   <button class='btn btn-secondary btn-block'>Sell No</button>
                 </div>
