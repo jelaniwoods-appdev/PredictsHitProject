@@ -93,6 +93,37 @@
   </div>
 </div>
 
+<!-- Unpause Market modal html -->
+<div class="modal fade" id="unpause_market" tabindex="-1" role="dialog" aria-labelledby="unpause_marketLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="unpause_marketLabel">Pause Market</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <% if @market_row.status == "active" %>
+          <h5>This Market is already active!</h5>
+        <% elsif @market_row.status == "paused" %>
+          <form action="/unpause_market/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="select_member_category">Are you sure you want to unpause this market?<br><br>Note: If you want to close the market, that is a different action from unpausing. Unpausing the market will allow trading again.</label>
+                <select class="form-control" required="required" id="select_member_category" name="member_category"><option value="">Select Yes to confirm</option>
+                  <option value="yes_close">Yes</option>
+                </select>   
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary btn-block">Unpause Market</button>
+            </div>
+          </form>
+        <% end %>
+    </div>
+  </div>
+</div>
+
 <!-- Close Market modal html -->
 <div class="modal fade" id="close_market" tabindex="-1" role="dialog" aria-labelledby="close_marketLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

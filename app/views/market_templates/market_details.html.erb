@@ -15,10 +15,17 @@
           Add Contract
       </button>
       <br>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#pause_market">
-          Pause Market
-      </button>
-      <br>
+      <% if @market_row.status == "active" %>
+        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#pause_market">
+            Pause Market
+        </button>
+        <br>
+      <% elsif @market_row.status == "paused" %>
+        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#unpause_market">
+            Unpause Market
+        </button>
+        <br>
+      <% end %>
       <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#close_market">
           Close Market
       </button>

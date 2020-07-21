@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   patch("/update_market_details/:club_id/:season_id/:market_id", { :controller => "market", :action => "update_market_details"})
   post("/close_market/:club_id/:season_id/:market_id", { :controller => "market", :action => "close_market_action" })
   post("/pause_market/:club_id/:season_id/:market_id", { :controller => "market", :action => "pause_market_action" })
+  post("/unpause_market/:club_id/:season_id/:market_id", { :controller => "market", :action => "unpause_market_action" })
   
   #contract routes
   post("/add_market_contract/:club_id/:season_id/:market_id", { :controller => "contract", :action => "add_contract" })
