@@ -81,6 +81,7 @@ class MarketController < ApplicationController
           #Add amount associated with contract to season_fund for each relevant membership
           season_fund_row.quantity = season_fund_row.quantity + amount
           season_fund_row.save
+
         end
 
         contract_x.status = "closed"
@@ -104,6 +105,11 @@ class MarketController < ApplicationController
         end
         contract_x.status = "closed"
         contract_x.save
+      end
+      #now that funds have been distributed to season fund, clear all asset ownership of this contract
+      all_asset_rows = Asset.where({ :contract_id => contract_x.id})
+      all_asset_rows.each do |remove_contract_ownership|
+        remove_contract_ownership.destroy
       end
     end
 

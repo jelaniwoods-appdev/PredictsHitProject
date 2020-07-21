@@ -55,10 +55,6 @@
     </div>
     <br>
 
-    <% if @market_row.status == "closed" %>
-      <br>
-      <h2 class="center_title">This Market is closed!</h2>
-    <% else %>
       <% if @contract_rows.present? %>
       <h2 class="center_title">Contracts in Play</h2>
       <br>
@@ -104,7 +100,6 @@
           Ask the Season/Market owner to create a Contract in this Market!
         <% end %>
       <% end %>
-    <% end %>
   </div>
 
   <div class="col-1">
