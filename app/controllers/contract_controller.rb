@@ -186,7 +186,7 @@ class ContractController < ApplicationController
       @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
       @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
-      
+      @market_row = @contract_row.market
 
       
 
@@ -338,6 +338,7 @@ class ContractController < ApplicationController
     @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
     @membership_id = @membership_row.id
     @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+    @market_row = @contract_row.market
 
     respond_to do |format|
       format.js { render 'contract_templates/render_contracts.js.erb' }
@@ -501,6 +502,7 @@ class ContractController < ApplicationController
     @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
     @membership_id = @membership_row.id
     @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+    @market_row = @contract_row.market
 
     respond_to do |format|
       format.js { render 'contract_templates/render_contracts.js.erb' }
@@ -596,6 +598,7 @@ class ContractController < ApplicationController
       @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
       @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+      @market_row = @contract_row.market
 
       respond_to do |format|
         format.js { render 'contract_templates/render_contracts.js.erb' }
