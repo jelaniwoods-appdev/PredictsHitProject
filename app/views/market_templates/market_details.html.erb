@@ -6,7 +6,7 @@
       <button class="btn btn-outline-secondary btn-block" id="standings-toggle">Season Standings</button>
     </div>
     <br>
-    <% if @owner_user_id == current_user.id %>
+    <% if @owner_user_id == current_user.id && @market_row.status != "closed" %>
       <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_market_details">
           Edit Market Details
       </button>
