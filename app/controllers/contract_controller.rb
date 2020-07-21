@@ -279,6 +279,7 @@ class ContractController < ApplicationController
     @club_id = @contract_row.market.season.club.id
     
     @number_of_contracts = (params.fetch("quantity_sell_yes").to_i * -1).to_s
+    @pos_num_contracts = @number_of_contracts.to_i * -1
     @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
     @user_asset_rows = @membership_row.assets
     @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
@@ -297,7 +298,10 @@ class ContractController < ApplicationController
         
         #check if they have any contracts to sell
         if @contract_asset_row.quantity < 1
-          flash[:alert] = "It looks like you don't have any of " + @contract_row.title + " to sell. You'll need to buy some contracts before you can sell them."
+          flash[:alert] = "It looks like you don't have any of " + @contract_row.title + " to sell."
+        #check if they have enough available contracts to sell
+        elsif @contract_asset_row.quantity < @pos_num_contracts
+          flash[:alert] = "It looks like you don't have enough 'yes' of " + @contract_row.title + " to sell."
         else
           #algorithm (C= b * ln(e^(q1/b) + e^(q2/b)...))
           #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
@@ -321,7 +325,6 @@ class ContractController < ApplicationController
           @contract_row.quantity_a = @contract_row.quantity_a + @number_of_contracts.to_i
           @contract_row.save
 
-          @pos_num_contracts = @number_of_contracts.to_i * -1
           if @pos_num_contracts == 1
             flash[:notice] = "Yay! " + @pos_num_contracts.to_s + " yes contract was sucessfully sold for " + number_to_currency((total_cost * -1)) + "."
           else
@@ -521,6 +524,7 @@ class ContractController < ApplicationController
     @club_id = @contract_row.market.season.club.id
     
     @number_of_contracts = (params.fetch("quantity_sell_no").to_i * -1).to_s
+    @pos_num_contracts = @number_of_contracts.to_i * -1
     @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
     @user_asset_rows = @membership_row.assets
     @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
@@ -540,6 +544,9 @@ class ContractController < ApplicationController
         #check if they have any contracts to sell
         if @contract_asset_row.quantity < 1
           flash[:alert] = "It looks like you don't have any of " + @contract_row.title + " to sell. You'll need to buy some contracts before you can sell them."
+        #check if they have enough available contracts to sell
+        elsif @contract_asset_row.quantity < @pos_num_contracts
+          flash[:alert] = "It looks like you don't have enough 'no' of " + @contract_row.title + " to sell."
         else
           #algorithm (C= b * ln(e^(q1/b) + e^(q2/b)...))
           #consider updating contract table to include column for quantity outstanding to avoid many of these calculations
@@ -583,7 +590,6 @@ class ContractController < ApplicationController
             @contract_row.save
           end
           
-          @pos_num_contracts = @number_of_contracts.to_i * -1
           if @pos_num_contracts == 1
             flash[:notice] = "Yay! " + @pos_num_contracts.to_s + " no contract was sucessfully sold for " + number_to_currency((total_cost * -1)) + "."
           else
