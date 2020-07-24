@@ -1,43 +1,5 @@
 <div class="row">   
-  <div class="col-1 position-fixed" style="min-width: 150px;">
-    <div class="center_title"><a class="btn btn-outline-secondary btn-block" id="return" href="/clubs/<%= @club_row.id %>">Return to Club</a></div>
-    <br>
-    <div class="center_title"><button class="btn btn-outline-secondary btn-block" id="standings-toggle">Season Standings</button></div>
-    <% if @season_row.status != "closed" %> 
-      <% if @owner_user_id == current_user.id %>
-        <br>
-        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_season_details">
-            Edit Season Details
-        </button>
-        <br>
-        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#add_season_member">
-          Add Season Members
-        </button>
-        <br>
-        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_season_members">
-          Manage Season Members
-        </button>
-        <br>
-        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_user_funds">
-          Manage User Funds
-        </button>
-        <br>
-        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#create_market">
-          Create Market
-        </button>
-        <br>
-        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#close_season">
-          Close Season
-        </button>
-      <% end %>
-      <br>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#leave_season">
-        Leave Season
-      </button>
-    <% end %>
-  </div>
-  
-  <div class="col-6 offset-3">
+  <div class="col-xs-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
     <h1 class="center_title"><%= @season_row.title %></h1>
     <div class="center_title"><%= @season_row.description %></div>
     <br>
@@ -108,7 +70,7 @@
 
 
 <div class="row">
-  <div class="col-6 offset-3">
+  <div class="col-xs-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
     <div class="jumbotron">
       <div class="container">
         <h1>Season Discussion Board</h1>

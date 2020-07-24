@@ -1,0 +1,41 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-light sticky-offset" style="background-color: #e3f2fd;">
+  <a class="navbar-brand" href="#">Season Management</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#club_dropdown" aria-controls="club_dropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="club_dropdown">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a type="button" class="nav-link" id="return" href="/clubs/<%= @club_row.id %>">Return to Club</a>
+      </li>
+      <li class="nav-item">
+        <a type="button" class="nav-link" id="standings-toggle">Season Standings</a>
+      </li>
+      <% if @season_row.status != "closed" %> 
+        <% if @owner_user_id == current_user.id %>
+          <li class="nav-item">
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_season_details">Edit Season Details</a>
+          </li>
+          <li class="nav-item">
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#add_season_member">Add Season Members</a>
+          </li>
+          <li class="nav-item">
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_season_members">Manage Season Members</a>
+          </li>
+          <li class="nav-item">
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_user_funds">Manage User Funds</a>
+          </li>
+          <li class="nav-item">
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#create_market">Create Market</a>
+          </li>
+          <li class="nav-item">
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#close_season">Close Season</a>
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <a type="button" class="nav-link" data-toggle="modal" data-target="#leave_season">Leave Season</a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

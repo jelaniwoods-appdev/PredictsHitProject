@@ -36,6 +36,10 @@
         <%= render 'club_templates/club_details_navbar' %>
       <% end %>
 
+      <% if params[:action] == 'view_season' && params[:controller] == 'season' %>
+        <%= render 'season_templates/season_details_navbar' %>
+      <% end %>
+
     
     <div class="container-fluid">
       <%= render 'home_templates/flash' %>
