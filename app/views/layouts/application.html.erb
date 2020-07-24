@@ -31,9 +31,11 @@
   <body>
     <%= render 'home_templates/navbar' %>
 
-    <!-- Render relevant sidebars conditional on which page is being shown. 
-      <%= render 'club_templates/club_roster' if @show_club_roster %>
-    -->
+    <!-- Render relevant sidebars conditional on which page is being shown. -->
+      <% if params[:action] == 'view_club' && params[:controller] == 'club' %>
+        <%= render 'club_templates/club_details_navbar' %>
+      <% end %>
+
     
     <div class="container-fluid">
       <%= render 'home_templates/flash' %>
