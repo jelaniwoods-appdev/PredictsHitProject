@@ -1,0 +1,43 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-light sticky-offset" style="background-color: #e3f2fd;">
+  <a class="navbar-brand" href="#">Market Management</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#market_dropdown" aria-controls="market_dropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="market_dropdown">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a type="button" class="nav-link" id="return" href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>">Return to Season</a>
+      </li>
+      <li class="nav-item">
+        <a type="button" class="nav-link" id="standings-toggle">Season Standings</a>
+      </li>
+      <% if @owner_user_id == current_user.id && @market_row.status != "closed" %>
+        <li class="nav-item">
+          <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_market_details">Edit Market Details</a>
+        </li>
+        <li class="nav-item">
+          <a type="button" class="nav-link" data-toggle="modal" data-target="#add_contract">Add Contract</a>
+        </li>
+        <% if @market_row.status == "active" %>
+          <li class="nav-item">
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#pause_market">Pause Market</a>
+          </li>
+        <% elsif @market_row.status == "paused" %>
+          <li class="nav-item">
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#unpause_market">Unpause Market</a>
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <a type="button" class="nav-link" data-toggle="modal" data-target="#close_market">Close Market</a>
+        </li>
+        <% if @club_owner_user_id == current_user.id %>
+          <li class="nav-item">
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#add_players">Invite Players</a>
+          </li>
+        <% end %>
+      <% end %>
+     
+     
+    </ul>
+  </div>
+</nav>

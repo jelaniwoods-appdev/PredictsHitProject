@@ -1,44 +1,5 @@
 <div class="row">   
-  <div class="col-1 position-fixed" style="min-width: 150px;">
-    <div class="center_title"><a class="btn btn-outline-secondary btn-block" id="return" href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>">Return to Season</a></div>
-    <br>
-    <div class="center_title">
-      <button class="btn btn-outline-secondary btn-block" id="standings-toggle">Season Standings</button>
-    </div>
-    <br>
-    <% if @owner_user_id == current_user.id && @market_row.status != "closed" %>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#manage_market_details">
-          Edit Market Details
-      </button>
-      <br>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#add_contract">
-          Add Contract
-      </button>
-      <br>
-      <% if @market_row.status == "active" %>
-        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#pause_market">
-            Pause Market
-        </button>
-        <br>
-      <% elsif @market_row.status == "paused" %>
-        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#unpause_market">
-            Unpause Market
-        </button>
-        <br>
-      <% end %>
-      <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#close_market">
-          Close Market
-      </button>
-      <% if @club_owner_user_id == current_user.id %>
-        <br>
-        <button type="button" class="btn btn-outline-secondary btn-block" data-toggle="modal" data-target="#add_players">
-          Invite Players
-        </button>
-      <% end %>
-    <% end %>
-  </div>
-  
-  <div class="col-6 offset-3">
+  <div class="col-xs-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
     <h1 class="center_title"><%= @market_row.title %></h1>
     <div class="center_title"><%= @market_row.description %></div>
     <br>
@@ -109,7 +70,7 @@
 
 <br>
 <div class="row">
-  <div class="col-6 offset-3">
+  <div class="col-xs-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
     <div class="jumbotron">
       <div class="container">
         <h1>Market Discussion Board</h1>
