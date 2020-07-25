@@ -16,40 +16,39 @@
     </div>
     <br>
 
+    <div class="row">
+      <div class="col-3">
+      </div>
+    </div>
+
       <% if @contract_rows.present? %>
-      <h2 class="center_title">Contracts in Play</h2>
-      <br>
-      <div id="accordion">
+        <h2 class="center_title">Contracts in Play</h2>
+        <br>
+        <div id="accordion">
 
-        <div class="card">
-          <div class="card-header" id="header">
-            <div class="row">
-              <h5 class="mb-0 col-6">
+          <div class="card">
+            <div class="card-header" id="header">
+              <div class="row">
+                <h6 class="mb-0 col-4">
                   Contract
-              </h5>
-              <h5 class="mb-0 col-1">
-                  Yes Owned
-              </h5>
-              <h5 class="mb-0 col-1">
-                  Yes Price
-              </h5>
-              <h5 class="mb-0 col-1">
-                  No Owned
-              </h5>
-              <h5 class="mb-0 col-1">
-                  No Price
-              </h5>
-              <h5 class="mb-0 col-2">
+                </h6>
+                <h6 class="mb-0 col-3" data-toggle="tooltip" data-html="true" title="'Yes' for this contract will pay out $1.00 if this <em>does</em> occur and $0 if this <em>does not</em> occur. The current price for 1 additional 'Yes' of this contract is shown below alongside the quantity you currently own.">
+                    Yes
+                </h6>
+                <h6 class="mb-0 col-3" data-toggle="tooltip" data-html="true" title="'No' for this contract will pay out $0 if this <em>does</em> occur and $1.00 if this <em>does not</em> occur. The current price for 1 additional 'No' of this contract is shown below alongside the quantity you currently own.">
+                    No
+                </h6>
+                <h6 class="mb-0 col-2">
 
-              </h5>
+                </h6>
+              </div>
 
             </div>
           </div>
-        </div>
-      
-        <%= render 'market_templates/contract_rows' %>
         
-      </div>
+          <%= render 'market_templates/contract_rows' %>
+          
+        </div>
       <% else %>
       <h2>
         There are no contracts currently available in <%= @market_row.title %>.
@@ -121,4 +120,10 @@ $(document).ready(function() {
   $('#query').typeahead(null, {
     source: users
   });
+</script>
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
 </script>
