@@ -33,6 +33,7 @@ gem 'bonsai-elasticsearch-rails', '~> 7'
 gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: 'master'
 gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: 'master'
 gem 'rest-client'
+gem 'font-awesome-sass', '~> 5.13.0'
 
 
 group :development do
