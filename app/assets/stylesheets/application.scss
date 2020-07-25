@@ -47,8 +47,10 @@
   top: 56px;
 }
 
-.text-small {
-  font-size: 70%;
+@media all and (max-width: 767px) {  
+  .text-small {
+    font-size: 80%;
+  }
 }
 /* Custom Bootstrap css end */
 

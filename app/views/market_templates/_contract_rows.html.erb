@@ -4,7 +4,7 @@
     <div class="card">
       <div class="card-header" id="headingOne">
         <div class="row">
-          <div class="mb-0 col-4">
+          <div class="mb-0 col-5">
             <div class="media text-truncate">
               <a style="color: black" class="stretched-link d-none d-lg-block" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>"><img class="mr-3" src="<%= contract.contractpic %>" alt="Generic placeholder image" height="50" width="75"></a>
               <div class="media-body">
@@ -32,7 +32,7 @@
                 (<%= Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_b"}).at(0).quantity.to_i  %>)
               <% end %>
           </div>
-          <div class="mb-0 col-2">
+          <div class="mb-0 px-0 col-1">
             <% if @market_row.status == "active" %>
               <button class="btn stretched-link" data-toggle="collapse" data-target="#heading_<%= index %>" aria-expanded="false" aria-controls="heading_<%= index %>">
                 +
@@ -46,9 +46,9 @@
 
       <% if @market_row.status == "active" %>
         <div id="heading_<%= index %>" class="collapse" aria-labelledby="heading_<%= index %>" data-parent="#accordion">
-          <div class="row">
+          <div class="row px-1">
             
-            <div class="card-body col-3">
+            <div class="card-body col-3 px-3">
               <form action='/buy_yes_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title text-small'>
                   <label for='quantity_buy_yes_contract'>How many 'yes' contracts do you want to buy?</label>
@@ -61,40 +61,40 @@
                   </div>
                   -->
                   <br>
-                  <button class='btn btn-secondary btn-block text-small'>Buy Yes</button>
+                  <button class='btn btn-secondary btn-block text-small px-0'>Buy Yes</button>
                 </div>
               </form>
             </div>
 
-            <div class="card-body col-3">
+            <div class="card-body col-3 px-3">
               <form action='/sell_yes_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title text-small'>
                   <label for='quantity_sell_yes_contract'>How many 'yes' contracts do you want to sell?</label>
                   <input class='form-control center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' autocomplete="off" required>
                   <br>
-                  <button class='btn btn-secondary btn-block text-small'>Sell Yes</button>
+                  <button class='btn btn-secondary btn-block text-small px-0'>Sell Yes</button>
                 </div>
               </form>
             </div>
 
-            <div class="card-body col-3">
+            <div class="card-body col-3 px-3">
               <form action='/buy_no_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title text-small'>
                   <label for='quantity_buy_no_contract'>How many 'no' contracts do you want to buy?</label>
                   <input class='form-control center_title' id='quantity_buy_no_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_no' autocomplete="off" required>
                   <br>
-                  <button class='btn btn-secondary btn-block text-small'>Buy No</button>
+                  <button class='btn btn-secondary btn-block text-small px-0'>Buy No</button>
                 </div>
               </form>
             </div>
 
-            <div class="card-body col-3">
+            <div class="card-body col-3 px-3">
               <form action='/sell_no_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title text-small'>
                   <label for='quantity_sell_no_contract'>How many 'no' contracts do you want to sell?</label>
                   <input class='form-control center_title' id='quantity_sell_no_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_no' autocomplete="off" required>
                   <br>
-                  <button class='btn btn-secondary btn-block text-small'>Sell No</button>
+                  <button class='btn btn-secondary btn-block text-small px-0'>Sell No</button>
                 </div>
               </form>
             </div>
