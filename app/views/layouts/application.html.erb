@@ -44,6 +44,10 @@
         <%= render 'market_templates/market_details_navbar' %>
       <% end %>
 
+      <% if (params[:action] == 'show_clubs' && params[:controller] == 'club') || (params[:action] == 'show_seasons' && params[:controller] == 'season') || (params[:action] == 'show_markets' && params[:controller] == 'market')%>
+        <%= render 'home_templates/membership_navbar' %>
+      <% end %>
+
     
     <div class="container-fluid">
       <%= render 'home_templates/flash' %>
