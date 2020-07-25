@@ -9,13 +9,13 @@
             <div class="media text-truncate">
               <a style="color: black" class="stretched-link" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>"><img class="mr-3  d-none d-lg-block" src="<%= contract.contractpic %>" alt="Generic placeholder image" height="50" width="75"></a>
               <div class="media-body">
-                <h6 class="mt-0"><%= contract.title %></h6>
-                <div><%= contract.description %></div>
+                <h6 class="mt-0 text-small"><%= contract.title %></h6>
+                <div class="text-small"><%= contract.description %></div>
               </div>
             </div>
           </div>
 
-          <div class="mb-0 col-3">
+          <div class="mb-0 col-3 text-small">
               <%= number_to_currency(contract.price_check(contract.id, 50, 1, "yes")) %>
 
               <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_a"}).at(0) == nil %>
@@ -24,7 +24,7 @@
                 (<%= Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_a"}).at(0).quantity.to_i  %>)
               <% end %>
           </div>
-          <div class="mb-0 col-3">
+          <div class="mb-0 col-3 text-small">
               <%= number_to_currency(contract.price_check(contract.id, 50, 1, "no")) %>
 
               <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_b"}).at(0) == nil %>
