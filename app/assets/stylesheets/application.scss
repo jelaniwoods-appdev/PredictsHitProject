@@ -42,6 +42,14 @@
 
 /* Custom Bootstrap css start */
 
+.navbar {
+   background-color: #374785;
+}
+
+.btn-secondary {
+  background-color: #24305E;
+}
+
 @media screen and (max-width: 767px) {
     .card-img-top {
     width: 100%;
@@ -67,9 +75,6 @@
 }
 
 
-
-
-
 .jumbotron {
   padding: 1rem 2rem;
 }
@@ -77,6 +82,7 @@
 .sticky-offset {
   top: 56px;
   z-index: 1;
+  background-color: #A8D0E6;
 }
 
 @media all and (max-width: 767px) {  
