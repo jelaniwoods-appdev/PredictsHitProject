@@ -8,7 +8,7 @@
       <div class="row row-cols-1 row-cols-md-3">
         <% @membership_rows.each do |member| %>
           <div class="col mb-4">
-            <div class="card h-100">
+            <div class="card">
               <img src="<%= member.club.picture %>" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title text-truncate"><%= member.club.title %></h5>
