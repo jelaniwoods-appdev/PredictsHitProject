@@ -76,29 +76,15 @@
   </div>
 
 </div>
+<br>
 
-<div class="row">
-  <div class="col-xs-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Club Discussion Board</h1>
-        <p>
-          <form action="/comments/club/create/<%= @club_row.id %>/<%= current_user.id %>" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-              <label for="comment_body"></label>
-              <textarea class="form-control" id="comment_body" name="body" placeholder="Have something on your mind?" rows="4"></textarea>
-              <br>
-              <button class="btn btn-secondary">Submit Comment</button>
-            </div>
-          </form>
-        </p>
-      </div>
-      <div class="container">
-        <%= comments_tree_for @club_comments %>
-      </div>
-    </div>
+
+  <div id="club_chat">
+    <%= render 'club_templates/club_chat' %>
   </div>
-</div>
+
+
+<br>
 
 <%= render 'club_templates/club_modals' %>
 

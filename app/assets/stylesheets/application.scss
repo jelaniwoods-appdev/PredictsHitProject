@@ -38,6 +38,22 @@
   border-radius: .2rem;
 }
 
+.avatar {
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+}
+
+.comment-text {
+  overflow: hidden;
+}
+
+.comment-box {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 /* general custom css end*/
 
 /* Custom Bootstrap css start */

@@ -53,6 +53,7 @@ class ClubController < ApplicationController
 
     #relevant comments
     @club_comments = Comment.where({ :clubs_id => club_id, :goes_to => "club" }).hash_tree
+    @club_messages = Chat.where({ :clubs_id => club_id, :goes_to => "club" }).order({ :created_at => :desc })
 
     if @membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
