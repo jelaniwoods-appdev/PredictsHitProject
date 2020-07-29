@@ -10,12 +10,17 @@ class ChatController < ApplicationController
     @message.users_id = params.fetch("user_id")
     if @message.valid?
       @message.save
-      flash[:notice] = 'Your message was successfully added!'
-      redirect_to("/clubs/"+@message.clubs_id.to_s)
     else
-      flash[:alert] = 'Your message was NOT added!'
-      redirect_to("/clubs/"+@message.clubs_id.to_s)
     end
+
+    #add instance variables needed for comments partial that is refreshed
+    @club_messages = Chat.where({ :clubs_id => @message.clubs_id, :goes_to => "club" }).order({ :created_at => :desc })
+    @club_row = @message.club
+
+    respond_to do |format|
+      format.js { render 'club_templates/render_messages.js.erb' }
+    end
+
   end
 
 end
