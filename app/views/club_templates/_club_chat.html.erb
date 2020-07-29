@@ -1,33 +1,37 @@
-<div id="messages">
-  <div class="row">
-    <div class="col-xs-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3 comment-card">
-        <div class="container">
-          <h1>Club Chat</h1>
-        </div>
-        <div class="container sidebar-right scrolly comment-box" style="height: 500px">
-          <% @club_messages.each do |message| %>
-            <div>
-              <div class="float-left image pr-3">
-                <img src="<%= User.where({ :id => message.users_id }).at(0).prof_pic %>" class="img-circle avatar" alt="user profile image">
+<nav id="sidebar_right">
+  <div id="messages">
+    <div class="row pt-5">
+      <div class="col-10 offset-1 comment-card">
+          <div class="container">
+            <h3 class="center_title">Club Chat</h3>
+          </div>
+          <div class="container scrolly comment-box" style="height: 50vh">
+            <% @club_messages.each do |message| %>
+              <div>
+                <div class="float-left image pr-3">
+                  <img src="<%= User.where({ :id => message.users_id }).at(0).prof_pic %>" class="img-circle avatar" alt="user profile image">
+                </div>
+                <div class="comment-text">
+                  <b><%= User.where({ :id => message.users_id }).at(0).username %></b>
+                  <%= message.body %>
+                </div>
+                <br>
               </div>
-              <div class="comment-text">
-                <b><%= User.where({ :id => message.users_id }).at(0).username %></b>
-                <%= message.body %>
+            <% end %>
+          </div>
+          <div class="container">
+            <form action="/messages/club/create/<%= @club_row.id %>/<%= current_user.id %>" method="post" data-remote="true">
+              <div class="form-group">
+                <label for="comment_body"></label>
+                <textarea class="form-control" id="comment_body" name="body" placeholder="Have something on your mind?" rows="1" maxlength="300" required></textarea>
+                <br>
+                <button class="btn btn-secondary">Send Message</button>
               </div>
-              <br>
-            </div>
-          <% end %>
-        </div>
-        <div class="container">
-          <form action="/messages/club/create/<%= @club_row.id %>/<%= current_user.id %>" method="post" data-remote="true">
-            <div class="form-group">
-              <label for="comment_body"></label>
-              <textarea class="form-control" id="comment_body" name="body" placeholder="Have something on your mind?" rows="1" maxlength="300"></textarea>
-              <br>
-              <button class="btn btn-secondary">Submit Comment</button>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
+      </div>
     </div>
   </div>
-</div>
+
+
+</nav>

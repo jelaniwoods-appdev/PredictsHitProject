@@ -9,17 +9,17 @@
         <a type="button" class="nav-link" href="/my_clubs">View All Clubs</a>
       </li>
       <li class="nav-item">
-        <a type="button" class="nav-link" id="roster-toggle">Club Roster</a>
+        <a type="button" class="nav-link" id="roster-toggle"><i class="fas fa-user-friends"></i></a>
       </li>
       <% if @owner_user_id == current_user.id %>
         <li class="nav-item">
-          <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_club_details">Edit Club Details</a>
+          <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_club_details">Edit Details</a>
         </li>
         <li class="nav-item">
-          <a type="button" class="nav-link" data-toggle="modal" data-target="#add_club_member">Add Club Members</a>
+          <a type="button" class="nav-link" data-toggle="modal" data-target="#add_club_member">Add Members</a>
         </li>
         <li class="nav-item">
-          <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_club_members">Manage Club Members</a>
+          <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_club_members">Manage Members</a>
         </li>
         <li class="nav-item">
           <a type="button" class="nav-link" data-toggle="modal" data-target="#create_season">Create Season</a>
@@ -28,6 +28,11 @@
       <li class="nav-item">
         <a type="button" class="nav-link" data-toggle="modal" data-target="#leave_club">Leave Club</a>
       </li>
+      <button type="button" id="sidebar_rightCollapse" class="btn btn-info">
+        <i class="fas fa-comments"></i>
+      </button>
     </ul>
   </div>
 </nav>
+
+

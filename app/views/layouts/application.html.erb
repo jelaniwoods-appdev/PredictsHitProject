@@ -31,9 +31,10 @@
   <body>
     <%= render 'home_templates/navbar' %>
 
-    <!-- Render relevant sidebars conditional on which page is being shown. -->
+    <!-- Render relevant secondary navbars and sidebars conditional on which page is being shown. -->
       <% if params[:action] == 'view_club' && params[:controller] == 'club' %>
         <%= render 'club_templates/club_details_navbar' %>
+        <%= render 'club_templates/club_chat' %>
       <% end %>
 
       <% if params[:action] == 'view_season' && params[:controller] == 'season' %>
@@ -47,6 +48,7 @@
       <% if (params[:action] == 'show_clubs' && params[:controller] == 'club') || (params[:action] == 'show_seasons' && params[:controller] == 'season') || (params[:action] == 'show_markets' && params[:controller] == 'market')%>
         <%= render 'home_templates/membership_navbar' %>
       <% end %>
+
 
     
     <div class="container-fluid">
