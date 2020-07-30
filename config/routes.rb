@@ -95,7 +95,8 @@ Rails.application.routes.draw do
   post("/add_market_memberships/:club_id/:season_id/:market_id", { :controller => "membership", :action => "add_market_member"})
 
   #comments / messages
-  post("/messages/club/create/:club_id/:user_id/(:parent_id)", { :controller => "chat", :action => "create_club_message" })
+  post("/messages/club/create/:club_id/:user_id", { :controller => "chat", :action => "create_club_message" })
+  post("/messages/season/create/:club_id/:season_id/:user_id", { :controller => "chat", :action => "create_season_message" })
 
   post("/comments/club/create/:club_id/:user_id/(:parent_id)", { :controller => "comment", :action => "create_club_comment" })
   post("/comments/season/create/:season_id/:user_id/(:parent_id)", { :controller => "comment", :action => "create_season_comment" })

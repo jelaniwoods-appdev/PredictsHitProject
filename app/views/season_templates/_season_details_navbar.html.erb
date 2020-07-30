@@ -8,19 +8,16 @@
       <li class="nav-item">
         <a type="button" class="nav-link" id="return" href="/clubs/<%= @club_row.id %>">Return to Club</a>
       </li>
-      <li class="nav-item">
-        <a type="button" class="nav-link" id="standings-toggle">Season Standings</a>
-      </li>
       <% if @season_row.status != "closed" %> 
         <% if @owner_user_id == current_user.id %>
           <li class="nav-item">
-            <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_season_details">Edit Season Details</a>
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_season_details">Edit Details</a>
           </li>
           <li class="nav-item">
-            <a type="button" class="nav-link" data-toggle="modal" data-target="#add_season_member">Add Season Members</a>
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#add_season_member">Add Members</a>
           </li>
           <li class="nav-item">
-            <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_season_members">Manage Season Members</a>
+            <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_season_members">Manage Members</a>
           </li>
           <li class="nav-item">
             <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_user_funds">Manage User Funds</a>
@@ -37,5 +34,15 @@
         </li>
       <% end %>
     </ul>
+    <div class="d-none d-lg-block">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a type="button" class="nav-link" id="standings-toggle"><i class="fas fa-user-friends"></i></a>
+        </li>
+        <li class="nav-item">
+          <a type="button" class="nav-link" id="sidebar_rightCollapse"><i class="fas fa-comments"></i></a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>

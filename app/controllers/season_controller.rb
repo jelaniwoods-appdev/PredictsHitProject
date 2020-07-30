@@ -54,6 +54,7 @@ class SeasonController < ApplicationController
 
     #relevant comments
     @season_comments = Comment.where({ :seasons_id => season_id, :goes_to => "season" }).hash_tree
+    @season_messages = Chat.where({ :seasons_id => season_id, :goes_to => "season" }).order({ :created_at => :desc })
 
     if @season_membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
