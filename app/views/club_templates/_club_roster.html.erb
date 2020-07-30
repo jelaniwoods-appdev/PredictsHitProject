@@ -1,4 +1,5 @@
-<nav id="sidebar_left">
+<!-- For large screens -->
+<nav id="sidebar_left" class="d-none d-lg-block">
   <div id="club_roster">
     <div class="row pt-5">
       <div class="col-10 offset-1 comment-card" style="height: 75vh">
@@ -18,3 +19,25 @@
     </div>
   </div>
 </nav>
+
+
+
+<!-- For smaller screens -->
+<div id="club_roster" class="d-lg-none">
+  <div class="row pt-5">
+    <div class="col-10 offset-1 comment-card" style="height: 75vh">
+      <div class="container">
+        <h3 class="center_title">Club Roster</h3>
+        <h5> Username | Role </h5>
+      </div>
+      <div class="container scrolly" style="height: 90%">
+        
+        <% @membership_rows.each do |member| %>
+          <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> | <%= member.category %>
+          <br>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -34,7 +34,6 @@
     <!-- Render relevant secondary navbars and sidebars conditional on which page is being shown. -->
       <% if params[:action] == 'view_club' && params[:controller] == 'club' %>
         <%= render 'club_templates/club_details_navbar' %>
-        
       <% end %>
 
       <% if params[:action] == 'view_season' && params[:controller] == 'season' %>
