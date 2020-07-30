@@ -39,9 +39,9 @@ class User < ApplicationRecord
   
   searchkick word_start: [:username]
   
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :case_sensitive => false
   validates_presence_of :username
-  validates :username, length: { maximum: 15 }
+  validates :username, length: { maximum: 15 }, format: { with: /\A[a-zA-Z0-9]+\Z/ }
 
   # Include default devise modules. Others available are:
   # :timeoutable, and :omniauthable
