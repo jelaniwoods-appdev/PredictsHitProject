@@ -196,21 +196,23 @@
 
 /* Roster sidebar css start */
 
-#sidebar_left {
-    width: 20vw;
-    position: fixed;
-    top: 112px;
-    left: 0;
-    height: 50vh;
-    z-index: 999;
-    background: white;
-    color: black;
-    transition: all 0.3s;
+@media screen and (min-width: 993px) {
+  #sidebar_left {
+      width: 20vw;
+      position: fixed;
+      top: 112px;
+      left: 0;
+      height: 50vh;
+      z-index: 999;
+      background: white;
+      color: black;
+      transition: all 0.3s;
 
-}
+  }
 
-#sidebar_left.active {
-  margin-left: -20vw;
+  #sidebar_left.active {
+    margin-left: -20vw;
+  }
 }
 
 /* Roster sidebar css end */
@@ -224,7 +226,8 @@
 }
 
 
-#sidebar_right {
+@media screen and (min-width: 993px) {
+  #sidebar_right {
     width: 20vw;
     position: fixed;
     top: 112px;
@@ -235,7 +238,10 @@
     color: black;
     transition: all 0.3s;
 
+  }
 }
+
+
 
 /* Chat sidebar css end */
 
