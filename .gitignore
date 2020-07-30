@@ -34,8 +34,6 @@
 yarn-debug.log*
 .yarn-integrity
 
-# Ignore images files
-app/images/*
 
 # Ignore dotenv files
 /.env*
