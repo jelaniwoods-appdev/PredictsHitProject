@@ -220,21 +220,22 @@
 
 /* Chat sidebar css start */
 
-#club_container {
-  padding-left: 20vw;
-  padding-right: 20vw;
-}
+@media screen and (min-width: 993px) {
+  #club_container {
+    padding-left: 20vw;
+    padding-right: 20vw;
+  }
 
-#season_container {
-  padding-left: 20vw;
-  padding-right: 20vw;
-}
+  #season_container {
+    padding-left: 20vw;
+    padding-right: 20vw;
+  }
 
-#market_container {
-  padding-left: 20vw;
-  padding-right: 20vw;
+  #market_container {
+    padding-left: 20vw;
+    padding-right: 20vw;
+  }
 }
-
 
 
 @media screen and (min-width: 993px) {
