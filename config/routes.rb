@@ -99,13 +99,4 @@ Rails.application.routes.draw do
   post("/messages/season/create/:club_id/:season_id/:user_id", { :controller => "chat", :action => "create_season_message" })
   post("/messages/market/create/:club_id/:season_id/:market_id/:user_id", { :controller => "chat", :action => "create_market_message" })
 
-  post("/comments/club/create/:club_id/:user_id/(:parent_id)", { :controller => "comment", :action => "create_club_comment" })
-  post("/comments/season/create/:season_id/:user_id/(:parent_id)", { :controller => "comment", :action => "create_season_comment" })
-  post("/comments/market/create/:market_id/:user_id/(:parent_id)", { :controller => "comment", :action => "create_market_comment" })
-
-  # get("/comments", { :controller => "comment", :action => "index" })
-  # get("/comments/new/(:parent_id)", { :controller => "comment", :action => "new" })
-  # post("/comments/create/:user_id", { :controller => "comment", :action => "create" })
-
-  
 end
