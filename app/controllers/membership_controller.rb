@@ -3,7 +3,7 @@ class MembershipController < ApplicationController
   def add_club_member
     @club_id = params.fetch("club_id")
     @member_username = params.fetch("username")
-    @user_row = User.where({ :username => @member_username }).at(0)
+    @user_row = User.where("lower(username) = ?", @member_username.downcase).at(0)
     @member_category = params.fetch("member_category")
 
     if @user_row.present?
@@ -204,7 +204,7 @@ class MembershipController < ApplicationController
     @season_id = params.fetch("season_id")
     @market_id = params.fetch("market_id")
     @member_username = params.fetch("username")
-    @user_row = User.where({ :username => @member_username }).at(0)
+    @user_row = User.where("lower(username) = ?", @member_username.downcase).at(0)
     
     #add validation check!?
     
