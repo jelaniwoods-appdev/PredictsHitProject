@@ -209,6 +209,7 @@ class MarketController < ApplicationController
 
     #relevant comments
     @market_comments = Comment.where({ :markets_id => @market_id, :goes_to => "market" }).hash_tree
+    @market_messages = Chat.where({ :markets_id => @market_id, :goes_to => "market" }).order({ :created_at => :desc })
 
     if @season_membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."

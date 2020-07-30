@@ -1,95 +1,73 @@
-<div class="row">   
-  <div class="col-xs-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
-    <h1 class="center_title"><%= @market_row.title %></h1>
-    <div class="center_title"><%= @market_row.description %></div>
-    <br>
-    <% if @market_row.status == "active" %>
-      <div class="center_title">Market Status: <span class="text-success"><%= @market_row.status %></span></div>
-    <% elsif @market_row.status == "paused" %>
-      <div class="center_title">Market Status: <span class="text-warning"><%= @market_row.status %></span></div>
-    <% elsif @market_row.status == "closed" %>
-      <div class="center_title">Market Status: <span class="text-danger"><%= @market_row.status %></span></div>
-    <% end %>
-    <br>
-    <div class="center_title">
-      <img src="<%= @market_row.picture %>" height="180" width="240" class="img-responsive">
-    </div>
-    <br>
-
-    <div class="row">
-      <div class="col-3">
-      </div>
-    </div>
-
-      <% if @contract_rows.present? %>
-        <h2 class="center_title">Contracts in Play</h2>
-        <br>
-        <div id="accordion">
-
-          <div class="card">
-            <div class="card-header" id="header">
-              <div class="row">
-                <h6 class="mb-0 col-5">
-                  Contract
-                </h6>
-                <h6 class="mb-0 col-3" data-toggle="tooltip" data-html="true" title="'Yes' for this contract will pay out $1.00 if this <em>does</em> occur and $0 if this <em>does not</em> occur. The current price for 1 additional 'Yes' of this contract is shown below alongside the quantity you currently own.">
-                    Yes
-                </h6>
-                <h6 class="mb-0 col-3" data-toggle="tooltip" data-html="true" title="'No' for this contract will pay out $0 if this <em>does</em> occur and $1.00 if this <em>does not</em> occur. The current price for 1 additional 'No' of this contract is shown below alongside the quantity you currently own.">
-                    No
-                </h6>
-                <h6 class="mb-0 px-0 col-1">
-
-                </h6>
-              </div>
-
-            </div>
-          </div>
-        
-          <%= render 'market_templates/contract_rows' %>
-          
-        </div>
-      <% else %>
-      <h2>
-        There are no contracts currently available in <%= @market_row.title %>.
-        <br>
-        <br>
-        <% if @owner_user_id == current_user.id %>
-          Create the first Contract in this Market!
-        <% else %>
-          Ask the Season/Market owner to create a Contract in this Market!
-        <% end %>
+<div id="market_container">
+  <div class="row">   
+    <div class="col-xs-12 col-md-10 offset-md-1">
+      <h1 class="center_title"><%= @market_row.title %></h1>
+      <div class="center_title"><%= @market_row.description %></div>
+      <br>
+      <% if @market_row.status == "active" %>
+        <div class="center_title">Market Status: <span class="text-success"><%= @market_row.status %></span></div>
+      <% elsif @market_row.status == "paused" %>
+        <div class="center_title">Market Status: <span class="text-warning"><%= @market_row.status %></span></div>
+      <% elsif @market_row.status == "closed" %>
+        <div class="center_title">Market Status: <span class="text-danger"><%= @market_row.status %></span></div>
       <% end %>
-  </div>
+      <br>
+      <div class="center_title">
+        <img src="<%= @market_row.picture %>" height="180" width="240" class="img-responsive">
+      </div>
+      <br>
 
-  <div class="col-1">
-  </div>
-  <%= render 'season_templates/season_standings' %>
-</div>
+      <div class="row">
+        <div class="col-3">
+        </div>
+      </div>
 
-<br>
-<div class="row">
-  <div class="col-xs-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Market Discussion Board</h1>
-        <p>
-          <form action="/comments/market/create/<%= @market_row.id %>/<%= current_user.id %>" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-              <label for="comment_body"></label>
-              <textarea class="form-control" id="comment_body" name="body" placeholder="Have something on your mind?" rows="4"></textarea>
-              <br>
-              <button class="btn btn-secondary">Submit Comment</button>
+        <% if @contract_rows.present? %>
+          <h2 class="center_title">Contracts in Play</h2>
+          <br>
+          <div id="accordion">
+
+            <div class="card">
+              <div class="card-header" id="header">
+                <div class="row">
+                  <h6 class="mb-0 col-5">
+                    Contract
+                  </h6>
+                  <h6 class="mb-0 col-3" data-toggle="tooltip" data-html="true" title="'Yes' for this contract will pay out $1.00 if this <em>does</em> occur and $0 if this <em>does not</em> occur. The current price for 1 additional 'Yes' of this contract is shown below alongside the quantity you currently own.">
+                      Yes
+                  </h6>
+                  <h6 class="mb-0 col-3" data-toggle="tooltip" data-html="true" title="'No' for this contract will pay out $0 if this <em>does</em> occur and $1.00 if this <em>does not</em> occur. The current price for 1 additional 'No' of this contract is shown below alongside the quantity you currently own.">
+                      No
+                  </h6>
+                  <h6 class="mb-0 px-0 col-1">
+
+                  </h6>
+                </div>
+
+              </div>
             </div>
-          </form>
-        </p>
-      </div>
-      <div class="container">
-        <%= comments_tree_for @market_comments %>
-      </div>
+          
+            <%= render 'market_templates/contract_rows' %>
+            
+          </div>
+        <% else %>
+        <h2>
+          There are no contracts currently available in <%= @market_row.title %>.
+          <br>
+          <br>
+          <% if @owner_user_id == current_user.id %>
+            Create the first Contract in this Market!
+          <% else %>
+            Ask the Season/Market owner to create a Contract in this Market!
+          <% end %>
+        <% end %>
     </div>
   </div>
 </div>
+
+
+<%= render 'market_templates/market_chat' %>
+<%= render 'season_templates/season_standings' %>
 
 <!-- Only render market modals if market is not closed -->
 <% if @market_row.status != "closed" %>
@@ -126,4 +104,16 @@ $(document).ready(function() {
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
   })
+</script>
+
+<script>
+$(document).ready(function() {
+
+ $('#sidebar_right').show();
+
+  $('#sidebar_rightCollapse').click(function() {
+   $('#sidebar_right').toggle();
+
+   });
+ });
 </script>

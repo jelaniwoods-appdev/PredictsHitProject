@@ -8,9 +8,6 @@
       <li class="nav-item">
         <a type="button" class="nav-link" id="return" href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>">Return to Season</a>
       </li>
-      <li class="nav-item">
-        <a type="button" class="nav-link" id="standings-toggle">Season Standings</a>
-      </li>
       <% if @owner_user_id == current_user.id && @market_row.status != "closed" %>
         <li class="nav-item">
           <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_market_details">Edit Market Details</a>
@@ -36,8 +33,16 @@
           </li>
         <% end %>
       <% end %>
-     
-     
     </ul>
+    <div class="d-none d-lg-block">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a type="button" class="nav-link" id="standings-toggle"><i class="fas fa-user-friends"></i></a>
+        </li>
+        <li class="nav-item">
+          <a type="button" class="nav-link" id="sidebar_rightCollapse"><i class="fas fa-comments"></i></a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
