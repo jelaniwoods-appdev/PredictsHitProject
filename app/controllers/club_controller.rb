@@ -49,7 +49,7 @@ class ClubController < ApplicationController
     @club_row = Club.where({ :id => club_id }).at(0)
     @current_season_rows = Season.where({ :club_id => club_id}).where.not({ :status => "closed" }).order({ :id => :desc })
     @closed_season_rows = Season.where({ :club_id => club_id}).where({ :status => "closed" }).order({ :id => :desc })
-    @membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
+    @membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"}).order_as_specified(category: ["owner", "admin", "member"])
 
     #relevant comments
     @club_comments = Comment.where({ :clubs_id => club_id, :goes_to => "club" }).hash_tree

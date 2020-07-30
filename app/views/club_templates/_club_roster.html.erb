@@ -1,35 +1,23 @@
 
+
+
 <nav id="sidebar_left">
-  <div class="row pt-5">
-    <div class="col-10 offset-1">
-      <h2 class="center_title">Club Roster</h2>
-      <table class="table table-hover table-striped sortable table-bordered">
-        <thead class="thead-dark">
-          <tr class="d-flex">
-            <th class="col-6 pr-5" >
-              Username
-            </th>
+  <div id="club_roster">
+    <div class="row pt-5">
+      <div class="col-10 offset-1 comment-card" style="height: 75vh">
+        <div class="container">
+          <h3 class="center_title">Club Roster</h3>
+          <h5> Username | Role </h5>
+        </div>
+        <div class="container scrolly" style="height: 90%">
+          
+          <% @membership_rows.each do |member| %>
+            <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> | <%= member.category %>
+            <br>
+          <% end %>
 
-            <th class="col-6 pr-5">
-              Role
-            </th>
-
-          </tr>
-        </thead>
-
-        <% @membership_rows.each do |member| %>
-        <tr class="d-flex">
-          <td class="col-6 pr-5">
-            <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
-          </td>
-          <td class="col-6 pr-5">
-            <%= member.category %>
-          </td>
-        </tr>
-                        
-        <% end %>
-        
-      </table>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

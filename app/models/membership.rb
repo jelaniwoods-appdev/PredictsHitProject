@@ -25,4 +25,6 @@ class Membership < ApplicationRecord
   has_many :assets
 
   validates :users_id, uniqueness: {scope: [:goes_to, :clubs_id , :seasons_id ]}
+  extend OrderAsSpecified
+  
 end

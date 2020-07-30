@@ -34,6 +34,7 @@ gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: 'maste
 gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: 'master'
 gem 'rest-client'
 gem 'font-awesome-sass', '~> 5.13.0'
+gem 'order_as_specified'
 
 
 group :development do

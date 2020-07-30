@@ -13,7 +13,7 @@
       <h2>Current Seasons</h2>
         <br>
       <% if @current_season_rows.present? %>
-        <div class="row row-cols-1 row-cols-md-4">
+        <div class="row row-col-xs-1 row-cols-md-2 row-cols-lg-3">
           <% @current_season_rows.each do |season| %>
             <div class="col mb-4">
               <div class="card h-100">
@@ -41,7 +41,7 @@
       <% if @closed_season_rows.present? %>
         <h2>Previous Seasons</h2>
         <br>
-        <div class="row row-cols-1 row-cols-md-4">
+        <div class="row row-col-xs-1 row-cols-md-2 row-cols-lg-3">
           <% @closed_season_rows.each do |season| %>
             <div class="col mb-4">
               <div class="card h-100">
@@ -65,21 +65,9 @@
   </div>
 </div>
 <br>
-    <div class="col-1">
-    </div>
-    <div id="club_roster">
-      <div class="col-12 position-fixed h-75 d-flex">
-        <div class="sidebar-right scrolly">
-          <div class="sidebar">
-            <div>
-              <%= render 'club_templates/club_roster' %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
 
+<%= render 'club_templates/club_roster' %>
 <%= render 'club_templates/club_modals' %>
 
 <script>
