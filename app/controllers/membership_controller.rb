@@ -141,7 +141,7 @@ class MembershipController < ApplicationController
     @club_id = params.fetch("club_id")
     @season_id = params.fetch("season_id")
     @member_user_id = params.fetch("user_id")
-    @user_row = User.where({ :id => current_user.id }).at(0)
+    @user_row = User.where({ :id => @member_user_id }).at(0)
     @membership_row = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :users_id => @member_user_id }).at(0)
     @owner_membership_row = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner" }).at(0)
     @member_category = params.fetch("member_category")
