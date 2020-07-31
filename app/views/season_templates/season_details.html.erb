@@ -11,7 +11,7 @@
       <h2>Current Markets</h2>
       <br>
       <% if @current_market_rows.present? %>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
         <% @current_market_rows.each do |market| %>
           <div class="col mb-4">
             <div class="card h-100">
@@ -42,7 +42,7 @@
     <% if @closed_market_rows.present? %>
       <h2>Previous Markets</h2>
       <br>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
         <% @closed_market_rows.each do |market| %>
           <div class="col mb-4">
             <div class="card h-100">

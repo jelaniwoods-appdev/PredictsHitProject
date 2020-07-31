@@ -72,7 +72,7 @@
   backface-visibility: hidden;
 }
 
-.middle {
+.custom_image_middle {
   transition: .5s ease;
   opacity: 0;
   position: absolute;
@@ -86,7 +86,7 @@
   opacity: 0.3;
 }
 
-.card:hover .middle {
+.card:hover .custom_image_middle {
   opacity: 1;
 }
 
