@@ -20,9 +20,9 @@ class AssetController < ApplicationController
         end
         
         if @fund_change_amount < 0
-          flash[:notice] = "$" + @fund_change_amount.to_s + " in funds were successfully removed from all Season users!"
+          flash[:notice] = ActiveSupport::NumberHelper.number_to_currency(@fund_change_amount) + " in funds were successfully removed from all Season users!"
         else
-          flash[:notice] = "$" + @fund_change_amount.to_s + " in funds were successfully added to all Season users!"
+          flash[:notice] = ActiveSupport::NumberHelper.number_to_currency(@fund_change_amount) + " in funds were successfully added to all Season users!"
         end
         
         redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
@@ -49,7 +49,7 @@ class AssetController < ApplicationController
     @membership_id = Membership.where({ :users_id => @user_id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0).id
     @asset_row = Asset.where({ :membership_id => @membership_id, :category => "season_fund"}).at(0)
     
-    #if adjustment_factor is positive, fund amount changed is same as entered, if negative, then multiple by -1
+    #if adjustment_factor is positive, fund amount changed is same as entered, if negative, then multiply by -1
     if @adjustment_factor == "positive"
       @user_funds_changed = @user_funds_entered
     elsif @adjustment_factor == "negative"
@@ -64,9 +64,9 @@ class AssetController < ApplicationController
     @asset_row.save
 
     if @user_funds_changed > 0
-      flash[:notice] = "$" + @user_funds_entered.to_s + " has successfully been added to " + @username + "'s season fund!"
+      flash[:notice] = ActiveSupport::NumberHelper.number_to_currency(@user_funds_entered) + " has successfully been added to " + @username + "'s season fund!"
     else
-      flash[:notice] = "$" + @user_funds_entered.to_s + " has successfully been removed from " + @username + "'s season fund!"
+      flash[:notice] = ActiveSupport::NumberHelper.number_to_currency(@user_funds_entered) + " has successfully been removed from " + @username + "'s season fund!"
     end
     
     redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
