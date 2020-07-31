@@ -13,7 +13,7 @@
       <h2>Current Seasons</h2>
         <br>
       <% if @current_season_rows.present? %>
-        <div class="row row-col-xs-1 row-cols-md-2 row-cols-lg-3">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
           <% @current_season_rows.each do |season| %>
             <div class="col mb-4">
               <div class="card h-100">
@@ -30,18 +30,44 @@
               </div>
             </div>
           <% end %>
+          <% if @owner_user_id == current_user.id %>
+            <div class="col mb-4">
+              <div class="card h-100">
+                <img src="<%= asset_path('plus_image.svg') %>" class="custom_image" alt="Add Season">
+                <div class="card-body">
+                  <h3 class="card-title middle">Create New Season</h3>
+                  <div class="text-center"><a type="button" class="nav-link stretched-link" data-toggle="modal" data-target="#create_season"></a></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
       <% else %>
-        <h3>
-        There are no seasons currently available in <%= @club_row.title %>.
-        <br>
-        </h3>
+        <% if @owner_user_id == current_user.id %>
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+            <div class="col mb-4">
+              <div class="card h-100">
+                <img src="<%= asset_path('plus_image.svg') %>" class="custom_image" alt="Add Season">
+                <div class="card-body">
+                  <h3 class="card-title middle">Create New Season</h3>
+                  <div class="text-center"><a type="button" class="nav-link stretched-link" data-toggle="modal" data-target="#create_season"></a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <h3>
+          There are no seasons currently available in <%= @club_row.title %>.
+          <br>
+          </h3>
+        <% end %>
+
       <% end %>
       <br>
       <% if @closed_season_rows.present? %>
         <h2>Previous Seasons</h2>
         <br>
-        <div class="row row-col-xs-1 row-cols-md-2 row-cols-lg-3">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
           <% @closed_season_rows.each do |season| %>
             <div class="col mb-4">
               <div class="card h-100">
