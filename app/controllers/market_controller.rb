@@ -207,8 +207,7 @@ class MarketController < ApplicationController
     @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
 
 
-    #relevant comments
-    @market_comments = Comment.where({ :markets_id => @market_id, :goes_to => "market" }).hash_tree
+    #relevant messages
     @market_messages = Chat.where({ :markets_id => @market_id, :goes_to => "market" }).order({ :created_at => :desc })
 
     if @season_membership_rows.where({ :users_id => current_user.id}).empty?
