@@ -10,10 +10,7 @@
       </li>
       <% if @owner_user_id == current_user.id && @market_row.status != "closed" %>
         <li class="nav-item">
-          <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_market_details">Edit Market Details</a>
-        </li>
-        <li class="nav-item">
-          <a type="button" class="nav-link" data-toggle="modal" data-target="#add_contract">Add Contract</a>
+          <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_market_details">Edit Details</a>
         </li>
         <% if @market_row.status == "active" %>
           <li class="nav-item">
