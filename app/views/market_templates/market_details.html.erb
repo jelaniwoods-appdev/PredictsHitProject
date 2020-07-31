@@ -21,9 +21,7 @@
         <div class="col-3">
         </div>
       </div>
-
-        <% if @contract_rows.present? %>
-          <h2 class="center_title">Contracts in Play</h2>
+        <h2 class="center_title">Contracts in Play</h2>
           <br>
           <div id="accordion">
 
@@ -48,19 +46,35 @@
             </div>
           
             <%= render 'market_templates/contract_rows' %>
-            
+
+            <% if @owner_user_id == current_user.id %>
+            <div>
+              <div class="px-0" id="headingOne">
+                <div class="container-fluid pr-4">
+                  <div class="row">
+                    <div class="mb-0 col-5">
+                    </div>
+
+                    <div class="mb-0 col-3 text-small">
+                    </div>
+                    <div class="mb-0 col-3 text-small">
+                    </div>
+                    <div class="mb-0 px-0 col-1">
+                      <button class="btn stretched-link px-0" data-toggle="modal" data-target="#add_contract">
+                        <i class="fas fa-plus fa-2x" style="color:#F76C6C;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% else %>
+            <br>
+            <h3>There are no contracts available yet.</h3>
+            <% end %>
+
           </div>
-        <% else %>
-        <h2>
-          There are no contracts currently available in <%= @market_row.title %>.
-          <br>
-          <br>
-          <% if @owner_user_id == current_user.id %>
-            Create the first Contract in this Market!
-          <% else %>
-            Ask the Season/Market owner to create a Contract in this Market!
-          <% end %>
-        <% end %>
+
     </div>
   </div>
 </div>

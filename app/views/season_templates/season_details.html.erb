@@ -11,31 +11,55 @@
       <h2>Current Markets</h2>
       <br>
       <% if @current_market_rows.present? %>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
-        <% @current_market_rows.each do |market| %>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
+          <% @current_market_rows.each do |market| %>
+            <div class="col mb-4">
+              <div class="card h-100">
+                <img src="<%= market.picture %>" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title text-truncate"><%= market.title %></h5>
+                  <% if market.description == "" %>
+                    <p class="card-text text-truncate">[No Description]</p>
+                  <% else %>
+                    <p class="card-text text-truncate"><%= market.description %> </p>
+                  <% end %>
+                  <div class="text-center"><a class="btn btn-secondary stretched-link" href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <% if @owner_user_id == current_user.id %>
+            <div class="col mb-4">
+              <div class="card h-100">
+                <img src="<%= asset_path('plus_image.svg') %>" class="card-img-top custom_image" alt="Create Market">
+                <div class="card-body">
+                  <h3 class="card-title custom_image_middle">Create New Market</h3>
+                  <div class="text-center"><a type="button" class="nav-link stretched-link" data-toggle="modal" data-target="#create_market"></a></div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <br>
+
+      <% else %>
+        <% if @owner_user_id == current_user.id %>
+          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
           <div class="col mb-4">
             <div class="card h-100">
-              <img src="<%= market.picture %>" class="card-img-top" alt="...">
+              <img src="<%= asset_path('plus_image.svg') %>" class="card-img-top custom_image" alt="Create Market">
               <div class="card-body">
-                <h5 class="card-title text-truncate"><%= market.title %></h5>
-                <% if market.description == "" %>
-                  <p class="card-text text-truncate">[No Description]</p>
-                <% else %>
-                  <p class="card-text text-truncate"><%= market.description %> </p>
-                <% end %>
-                <div class="text-center"><a class="btn btn-secondary stretched-link" href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a></div>
+                <h3 class="card-title custom_image_middle">Create New Market</h3>
+                <div class="text-center"><a type="button" class="nav-link stretched-link" data-toggle="modal" data-target="#create_market"></a></div>
               </div>
             </div>
           </div>
+        <% else %>
+          <h3>
+            There are no markets currently available in <%= @season_row.title %>.
+          </h3>
+          <br>
         <% end %>
-      </div>
-      <br>
-
-      <% else %>
-      <h3>
-        There are no markets currently available in <%= @season_row.title %>.
-      </h3>
-        <br>
       <% end %>
     
     <br>
