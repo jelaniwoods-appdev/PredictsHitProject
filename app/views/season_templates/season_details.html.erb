@@ -45,12 +45,13 @@
       <% else %>
         <% if @owner_user_id == current_user.id %>
           <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
-          <div class="col mb-4">
-            <div class="card h-100">
-              <img src="<%= asset_path('plus_image.svg') %>" class="card-img-top custom_image" alt="Create Market">
-              <div class="card-body">
-                <h3 class="card-title custom_image_middle">Create New Market</h3>
-                <div class="text-center"><a type="button" class="nav-link stretched-link" data-toggle="modal" data-target="#create_market"></a></div>
+            <div class="col mb-4">
+              <div class="card h-100">
+                <img src="<%= asset_path('plus_image.svg') %>" class="card-img-top custom_image" alt="Create Market">
+                <div class="card-body">
+                  <h3 class="card-title custom_image_middle">Create New Market</h3>
+                  <div class="text-center"><a type="button" class="nav-link stretched-link" data-toggle="modal" data-target="#create_market"></a></div>
+                </div>
               </div>
             </div>
           </div>
@@ -85,7 +86,7 @@
         <% end %>
       </div>
       <br>
-      <% end %>
+    <% end %>
     </div>
   </div>
 </div>
