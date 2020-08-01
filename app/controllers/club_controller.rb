@@ -7,23 +7,31 @@ class ClubController < ApplicationController
 
 
   def update_club_details
-
     @updated_title = params.fetch("updated_club_title")
     @updated_description = params.fetch("updated_club_description")
     @club_id = params.fetch("club_id")
-    updated_club_details = Club.where({ :id => @club_id }).at(0)
-    updated_club_details.title = @updated_title
-    updated_club_details.description = @updated_description
-    if params[:updated_club_picture].present?
-      updated_club_details.picture = params.fetch("updated_club_picture")
-    end
-    if updated_club_details.valid?
-      updated_club_details.save
-      flash[:notice] = "Club details were successfully updated!"
+
+    #confirm club owner is the one submitting this form
+    @owner_user_id = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
+
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to perform this action."
       redirect_to("/clubs/" + @club_id.to_s)
     else
-      flash[:alert] = "Club details were not updated. Please include a title."
-      redirect_to("/clubs/" + @club_id.to_s)
+      updated_club_details = Club.where({ :id => @club_id }).at(0)
+      updated_club_details.title = @updated_title
+      updated_club_details.description = @updated_description
+      if params[:updated_club_picture].present?
+        updated_club_details.picture = params.fetch("updated_club_picture")
+      end
+      if updated_club_details.valid?
+        updated_club_details.save
+        flash[:notice] = "Club details were successfully updated!"
+        redirect_to("/clubs/" + @club_id.to_s)
+      else
+        flash[:alert] = "Club details were not updated. Please include a title."
+        redirect_to("/clubs/" + @club_id.to_s)
+      end
     end
   end
 
@@ -36,7 +44,6 @@ class ClubController < ApplicationController
     @membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"}).order_as_specified(category: ["owner", "admin", "member"])
 
     #relevant comments
-    @club_comments = Comment.where({ :clubs_id => club_id, :goes_to => "club" }).hash_tree
     @club_messages = Chat.where({ :clubs_id => club_id, :goes_to => "club" }).order({ :created_at => :desc })
 
     if @membership_rows.where({ :users_id => current_user.id}).empty?
