@@ -192,7 +192,7 @@ class MarketController < ApplicationController
         flash[:alert] = "Market details were not updated. Please include a title."
         redirect_to("/markets/" + @club_id.to_s + "/"+ @season_id.to_s + "/"+ @market_id.to_s)
       end
-      
+
     end
     
   end
@@ -238,28 +238,41 @@ class MarketController < ApplicationController
   end
 
   def create_market
-    #Create a new market and pass in the form fields
-    @new_market = Market.new
-    @new_market.season_id = params.fetch("associated_season_id")
-    @new_market.title = params.fetch("market_title")
-    @new_market.description = params.fetch("market_description")
-    @new_market.category = params.fetch("market_category")
-      #see relevant html.erb page for note on these. uncomment if change there
-        #@new_market.price = params.fetch("market_price")
-        #@new_market.quantity = params.fetch("market_quantity")
-    @new_market.status = "active"
-    if params[:market_picture].present?
-      @new_market.picture = params.fetch("market_picture")
-    end
-    if @new_market.valid?
-      @new_market.save
-      flash[:notice] = "Market successfully created!" 
-      redirect_to("/markets/" + @new_market.season.club.id.to_s + "/" + @new_market.season.id.to_s + "/" + @new_market.id.to_s)
-    else
-      flash[:alert] = "Market creation was unsuccessful. Please enter a title." 
-      redirect_to("/new_market")
-    end
+    season_id = params.fetch("associated_season_id")
+    market_title = params.fetch("market_title")
+    market_description = params.fetch("market_description")
+    market_category = params.fetch("market_category")
+
+    #Confirm user submitting form is the owner of the Season the market is being created for
+    @owner_user_id = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
     
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to perform this action."
+      redirect_to("/")
+    else
+
+      #Create a new market and pass in the form fields
+      @new_market = Market.new
+      @new_market.season_id = season_id
+      @new_market.title = market_title
+      @new_market.description = market_description
+      @new_market.category = market_category
+
+
+      @new_market.status = "active"
+      if params[:market_picture].present?
+        @new_market.picture = params.fetch("market_picture")
+      end
+      if @new_market.valid?
+        @new_market.save
+        flash[:notice] = "Market successfully created!" 
+        redirect_to("/markets/" + @new_market.season.club.id.to_s + "/" + @new_market.season.id.to_s + "/" + @new_market.id.to_s)
+      else
+        flash[:alert] = "Market creation was unsuccessful. Please enter a title." 
+        redirect_to("/new_market")
+      end
+      
+    end
     
   end
 
