@@ -11,28 +11,6 @@ class MarketController < ApplicationController
     render({ :template => "market_templates/show_market_memberships.html.erb" })
   end
 
-  def manage_market
-    club_id = params.fetch("club_id")
-    season_id = params.fetch("season_id")
-    market_id = params.fetch("market_id")
-
-    @club_row = Club.where({ :id => club_id }).at(0)
-    @season_row = Season.where({ :id => season_id }).at(0)
-    @market_row = Market.where({ :id => market_id }).at(0)
-    @contract_rows = @market_row.contracts
-    @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
-    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
-    @owner_user_id = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
-
-    if @owner_user_id != current_user.id
-      flash[:alert] = "You are not authorized to view this page."
-      redirect_to("/")
-    else
-      render({ :template => "market_templates/manage_market_page.html.erb" })
-    end
-    
-  end
-
   def close_market_page
     club_id = params.fetch("club_id")
     season_id = params.fetch("season_id")

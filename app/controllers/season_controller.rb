@@ -5,25 +5,6 @@ class SeasonController < ApplicationController
     render({ :template => "season_templates/show_season_memberships.html.erb" })
   end
 
-  def manage_season
-    club_id = params.fetch("club_id")
-    season_id = params.fetch("season_id")
-    @club_row = Club.where({ :id => club_id }).at(0)
-    @season_row = Season.where({ :id => season_id }).at(0)
-    @season_membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
-    @club_membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
-    #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
-    @owner_user_id = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
-
-    if @owner_user_id != current_user.id
-      flash[:alert] = "You are not authorized to view this page."
-      redirect_to("/")
-    else
-      render({ :template => "season_templates/manage_season_page.html.erb" })
-    end
-    
-  end
-
   def update_season_details
     @club_id = params.fetch("club_id")
     @season_id = params.fetch("season_id")
