@@ -10,17 +10,27 @@ class SeasonController < ApplicationController
     @season_id = params.fetch("season_id")
     @updated_title = params.fetch("updated_season_title")
     @updated_description = params.fetch("updated_season_description")
-  
-    updated_season_details = Season.where({ :id => @season_id }).at(0)
-    updated_season_details.title = @updated_title
-    updated_season_details.description = @updated_description
-    if params[:updated_season_picture].present?
-      updated_season_details.picture = params.fetch("updated_season_picture")
-    end
-    updated_season_details.save
+    
+    #Confirm user submitting form is the Season owner
+    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
 
-    flash[:notice] = "Season Details were successfully updated!"
-    redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to perform this action."
+      redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+    else
+      updated_season_details = Season.where({ :id => @season_id }).at(0)
+      updated_season_details.title = @updated_title
+      updated_season_details.description = @updated_description
+      if params[:updated_season_picture].present?
+        updated_season_details.picture = params.fetch("updated_season_picture")
+      end
+      updated_season_details.save
+
+      flash[:notice] = "Season Details were successfully updated!"
+      redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+
+    end
+
   end
 
   def view_season
@@ -59,45 +69,61 @@ class SeasonController < ApplicationController
   end
 
   def create_season
-    #Create a new season and pass in the form fields
-    @new_season = Season.new
-    @new_season.club_id = params.fetch("associated_club_id")
-    @new_season.title = params.fetch("season_title")
-    @new_season.description = params.fetch("season_description")
-    @new_season.fund = params.fetch("season_fund")
-    @new_season.status = "active"
-    if params[:season_picture].present?
-      @new_season.picture = params.fetch("season_picture")
-    end
-    if @new_season.valid?
-      @new_season.save
-      #Create a new membership to this season and assign the creator of the season to be the 'owner'
-      @new_membership = Membership.new
-      @new_membership.users_id = current_user.id
-      @new_membership.seasons_id = @new_season.id
-      @new_membership.clubs_id = params.fetch("associated_club_id")
-      @new_membership.goes_to = "seasons_table"
-      @new_membership.category = "owner"
-      @new_membership.save
-      
-      #Create a new asset associated to this membership based on funding amount
-      @new_asset = Asset.new
-      @new_asset.membership_id = @new_membership.id
-      @new_asset.season_id = @new_season.id
-      @new_asset.category = "season_fund"
-      @new_asset.quantity = params.fetch("season_fund")
-      @new_asset.save
+    club_id = params.fetch("associated_club_id")
+    season_title = params.fetch("season_title")
+    season_description = params.fetch("season_description")
+    season_fund = params.fetch("season_fund")
+    
+    #Confirm user submitting form is the Season owner of the Market
+    @owner_user_id = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
 
-      flash[:notice] = "Season successfully created!" 
-      redirect_to("/seasons/" + @new_season.club_id.to_s + "/" + @new_season.id.to_s)
-    else
-      if params.fetch("season_title").present?
-        flash[:alert] = "Season creation was unsuccessful. Please enter a numerical amount of money for season participants to start with. If you do not want to give participants money yet, please enter 0."
-      else
-        flash[:alert] = "Season creation was unsuccessful. Please provide a title for your Season."
-      end
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to perform this action."
       redirect_to("/new_season")
+    else
+
+      #Create a new season and pass in the form fields
+      @new_season = Season.new
+      @new_season.club_id = club_id
+      @new_season.title = season_title
+      @new_season.description = season_description
+      @new_season.fund = season_fund
+      @new_season.status = "active"
+      if params[:season_picture].present?
+        @new_season.picture = params.fetch("season_picture")
+      end
+      if @new_season.valid?
+        @new_season.save
+        #Create a new membership to this season and assign the creator of the season to be the 'owner'
+        @new_membership = Membership.new
+        @new_membership.users_id = current_user.id
+        @new_membership.seasons_id = @new_season.id
+        @new_membership.clubs_id = club_id
+        @new_membership.goes_to = "seasons_table"
+        @new_membership.category = "owner"
+        @new_membership.save
+        
+        #Create a new asset associated to this membership based on funding amount
+        @new_asset = Asset.new
+        @new_asset.membership_id = @new_membership.id
+        @new_asset.season_id = @new_season.id
+        @new_asset.category = "season_fund"
+        @new_asset.quantity = season_fund
+        @new_asset.save
+
+        flash[:notice] = "Season successfully created!" 
+        redirect_to("/seasons/" + @new_season.club_id.to_s + "/" + @new_season.id.to_s)
+      else
+        if params.fetch("season_title").present?
+          flash[:alert] = "Season creation was unsuccessful. Please enter a numerical amount of money for season participants to start with. If you do not want to give participants money yet, please enter 0."
+        else
+          flash[:alert] = "Season creation was unsuccessful. Please provide a title for your Season."
+        end
+        redirect_to("/new_season")
+      end
+
     end
+
   end
 
   def close_season
