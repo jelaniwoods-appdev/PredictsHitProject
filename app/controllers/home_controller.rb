@@ -70,9 +70,9 @@ class HomeController < ApplicationController
 
     else
       if params.fetch("season_title").present?
-        flash[:alert] = "Market creation was unsucessful. Please enter a numerical amount of money for season participants to start with. If you do not want to give participants money yet, please enter 0."
+        flash[:alert] = "Market creation was unsuccessful. Please enter a numerical amount of money for season participants to start with. If you do not want to give participants money yet, please enter 0."
       else
-        flash[:alert] = "Market creation was unsucessful. Please provide a title for your Season."
+        flash[:alert] = "Market creation was unsuccessful. Please provide a title for your Season."
       end
       redirect_to("/getting_started")
     end
@@ -86,7 +86,7 @@ class HomeController < ApplicationController
     if @new_market.valid?
       @new_market.save
     else
-      flash[:alert] = "Market creation was unsucessful. Please enter a title for your Market." 
+      flash[:alert] = "Market creation was unsuccessful. Please enter a title for your Market." 
       redirect_to("/getting_started")
     end
 
