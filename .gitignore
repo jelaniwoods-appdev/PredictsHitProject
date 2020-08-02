@@ -46,6 +46,3 @@ cloud9_plugins.sh
 appdev/
 node_modules
 package-lock.json
-
-# customize gitignore
-/app/assets/images/*
