@@ -118,8 +118,8 @@ class ContractController < ApplicationController
     @user_starting_season_funds = @user_season_funds_row.quantity
     @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_a"}).at(0) #membership_row.id is probably unnecessary.
 
-    #confirm user actually belongs to the Season associated with this Contract/Market
-    if @membership_row.present?
+    #confirm user actually belongs to the Season associated with this Contract/Market and that the market is active
+    if (@membership_row.present?) && (@contract_row.market.status == "active")
             
       #Confirm number is a positive integer.
       if @number_of_contracts.to_i < 1 || @number_of_contracts.include?(".")
@@ -281,8 +281,8 @@ class ContractController < ApplicationController
     @user_starting_season_funds = @user_season_funds_row.quantity
     @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_a"}).at(0) #membership_row.id is probably unnecessary.
     
-    #confirm user actually belongs to the Season associated with this Contract/Market
-    if @membership_row.present?
+    #confirm user actually belongs to the Season associated with this Contract/Market and that the market is active
+    if (@membership_row.present?) && (@contract_row.market.status == "active")
         
       #Confirm number is a positive integer.
       if @number_of_contracts.to_i > 1 || @number_of_contracts.include?(".")
@@ -442,8 +442,8 @@ class ContractController < ApplicationController
     @user_starting_season_funds = @user_season_funds_row.quantity
     @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_b"}).at(0) #membership_row.id is probably unnecessary.
     
-    #confirm user actually belongs to the Season associated with this Contract/Market
-    if @membership_row.present?
+    #confirm user actually belongs to the Season associated with this Contract/Market and that the market is active
+    if (@membership_row.present?) && (@contract_row.market.status == "active")
       
       #Confirm number is a positive integer.
       if @number_of_contracts.to_i < 1 || @number_of_contracts.include?(".")
@@ -540,8 +540,8 @@ class ContractController < ApplicationController
     @user_starting_season_funds = @user_season_funds_row.quantity
     @starting_contract_asset_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :contract_id => @contract_id, :category => "contract_quantity_b"}).at(0) #membership_row.id is probably unnecessary.
     
-    #confirm user actually belongs to the Season associated with this Contract/Market
-    if @membership_row.present?
+    #confirm user actually belongs to the Season associated with this Contract/Market and that the market is active
+    if (@membership_row.present?) && (@contract_row.market.status == "active")
   
       #Confirm number is a positive integer.
       if @number_of_contracts.to_i > 1 || @number_of_contracts.include?(".")
