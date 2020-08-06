@@ -9,4 +9,4 @@
  3. elasticsearch
 
  ## create channel
- 
+ 1. bundle exec rails webpacker:install
