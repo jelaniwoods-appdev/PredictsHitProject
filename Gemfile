@@ -13,7 +13,7 @@ gem "nokogiri", ">= 1.10.8"
 gem 'rails', '~> 6.0.0'
 gem 'sprockets', '< 4'
 gem 'sassc-rails'
-gem 'webpacker', '~> 4.0'
+gem 'webpacker', '~> 5.x'
 gem 'faker'
 gem 'bootstrap', '~> 4.5'
 gem 'jquery-rails'
@@ -35,6 +35,7 @@ gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: 'maste
 gem 'rest-client'
 gem 'font-awesome-sass', '~> 5.13.0'
 gem 'order_as_specified'
+gem 'turbolinks', '~> 5.2.0'
 
 
 group :development do

@@ -7,3 +7,6 @@
  1. eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
  2. brew install elasticsearch
  3. elasticsearch
+
+ ## create channel
+ 
