@@ -18,7 +18,7 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 $(document).on('turbolinks:load', function () {
-  console.log("Hello!!!")
+  console.log("Hello")
 })
 
 
