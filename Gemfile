@@ -36,6 +36,7 @@ gem 'rest-client'
 gem 'font-awesome-sass', '~> 5.13.0'
 gem 'order_as_specified'
 gem 'turbolinks', '~> 5.2.0'
+gem 'redis'
 
 
 group :development do
