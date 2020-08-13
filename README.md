@@ -11,3 +11,11 @@
  ## getting webpacker to work
  1. yarn install
  2. yarn install --check-files && bin/setup
+
+ ## actioncable
+ 1. npm install @rails/actioncable
+ 2. yarn install --check-files
+ 3. yarn upgrade
+ 4. ./bin/webpack-dev-server
+ 5. 
+
