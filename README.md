@@ -8,5 +8,6 @@
  2. brew install elasticsearch
  3. elasticsearch
 
- ## create channel
- 1. bundle exec rails webpacker:install
+ ## getting webpacker to work
+ 1. yarn install
+ 2. yarn install --check-files && bin/setup
