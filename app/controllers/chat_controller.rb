@@ -1,5 +1,40 @@
 class ChatController < ApplicationController
 
+  def create_live_club_message
+    club_id = params.fetch("club_id")
+    user_id = params.fetch("user_id")
+    message_body = params.fetch("live_body")
+    
+    #confirm user actually belongs to the Club that the message is sent in and that user submitting form is the right user
+    if (user_id == current_user.id.to_s) && (Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table", :users_id => current_user.id }).at(0).present?)
+      @message = Chat.new
+      @message.goes_to = "club"
+      @message.status = "active"
+      @message.clubs_id = club_id
+      @message.goes_to_id = club_id
+      @message.body = message_body
+      @message.users_id = user_id
+      if @message.valid?
+        @message.save
+        @message_username = User.where({ :id => @message.users_id }).at(0).username
+        @message_prof_pic = User.where({ :id => @message.users_id }).at(0).prof_pic.url
+        
+        ActionCable.server.broadcast "room_channel", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
+
+      else
+      end
+    else
+     flash[:alert] = "You are not authorized to perform this action."
+    end
+    
+
+
+  end
+
+
+
+
+
   def create_club_message
     club_id = params.fetch("club_id")
     user_id = params.fetch("user_id")

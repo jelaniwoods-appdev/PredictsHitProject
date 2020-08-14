@@ -1,0 +1,37 @@
+<div id="live_chat">
+
+  <div class="row pt-5">
+    <div class="col-6 offset-3 comment-card px-2" style="height: 75vh">
+      <div class="container">
+        <h3 class="center_title">Club Chat Test</h3>
+      </div>
+      <div class="container scrolly comment-box px-0" style="height: calc(75vh - 200px)">
+        <div id="live_messages">
+          <% @club_live_messages.limit(50).each do |message| %>
+            <div>
+              <div class="float-left image pr-3">
+                <img src="<%= User.where({ :id => message.users_id }).at(0).prof_pic %>" class="img-circle avatar" alt="user profile image">
+              </div>
+              <div class="comment-text">
+                <b><%= User.where({ :id => message.users_id }).at(0).username %></b>
+                <%= message.body %>
+              </div>
+              <br>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="container" style="height: 200px">
+        <form action="/messages/club/create_live_message/<%= @club_row.id %>/<%= current_user.id %>" method="post" data-remote="true">
+          <div class="form-group">
+            <label for="live_comment_body"></label>
+            <textarea class="form-control" id="live_comment_body" name="live_body" placeholder="Have something on your mind?" rows="1" maxlength="300" required></textarea>
+            <br>
+            <button class="btn btn-secondary" data-disable-with="Sending...">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

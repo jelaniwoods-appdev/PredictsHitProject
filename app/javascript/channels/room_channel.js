@@ -12,5 +12,23 @@ consumer.subscriptions.create("RoomChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
+    console.log(data.prof_pic)
+    console.log(data.username)
+    console.log(data.body)
+
+    $('#live_messages').append(
+      '<div>' +
+      '<div class="float-left image pr-3">' +
+      '<img src=' + data.prof_pic + ' class="img-circle avatar" alt="user profile image"></img>' +
+      '</div>' + 
+      '<div class="comment-text">' + 
+      '<b>' + data.username + '</b>' + 
+      ' ' + data.body +
+      '</div>' +
+      '<br>' +
+      '</div>'
+    )
   }
+
 });
+
