@@ -53,16 +53,12 @@ class ChatController < ApplicationController
       @message.users_id = user_id
       if @message.valid?
         @message.save
+        @message_username = User.where({ :id => @message.users_id }).at(0).username
+        @message_prof_pic = User.where({ :id => @message.users_id }).at(0).prof_pic.url
+        
+        ActionCable.server.broadcast "room_channel_season_#{@message.seasons_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
+        head :no_content
       else
-      end
-
-      #add instance variables needed for comments partial that is refreshed
-      @season_messages = Chat.where({ :seasons_id => @message.seasons_id, :goes_to => "season" }).order({ :created_at => :desc })
-      @club_row = @message.season.club
-      @season_row = @message.season
-
-      respond_to do |format|
-        format.js { render 'season_templates/render_messages.js.erb' }
       end
 
     else

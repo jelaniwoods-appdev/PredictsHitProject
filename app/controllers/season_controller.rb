@@ -44,8 +44,8 @@ class SeasonController < ApplicationController
     @club_membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
 
     #relevant comments
-    @season_comments = Comment.where({ :seasons_id => season_id, :goes_to => "season" }).hash_tree
-    @season_messages = Chat.where({ :seasons_id => season_id, :goes_to => "season" }).order({ :created_at => :desc })
+    @season_messages_all = Chat.where({ :seasons_id => season_id, :goes_to => "season" }).order({ :created_at => :desc })
+    @season_messages_latest = @season_messages_all.first(50).reverse
 
     if @season_membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
