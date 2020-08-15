@@ -44,8 +44,8 @@ class ClubController < ApplicationController
     @membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"}).order_as_specified(category: ["owner", "admin", "member"])
 
     #relevant comments
-    @club_messages = Chat.where({ :clubs_id => club_id, :goes_to => "club" }).order({ :created_at => :desc })
-    @club_live_messages = Chat.where({ :clubs_id => club_id, :goes_to => "club" }).order({ :created_at => :desc })
+    @club_messages_all = Chat.where({ :clubs_id => club_id, :goes_to => "club" }).order({ :created_at => :desc })
+    @club_messages_latest = @club_messages_all.first(50).reverse
 
     if @membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."

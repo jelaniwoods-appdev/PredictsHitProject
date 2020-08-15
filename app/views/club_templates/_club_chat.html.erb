@@ -7,7 +7,7 @@
         </div>
         <div class="container scrolly comment-box px-0" style="height: calc(75vh - 200px)">
           <div id="live_messages">
-            <% @club_messages.limit(50).each do |message| %>
+            <% @club_messages_latest.each do |message| %>
               <div>
                 <div class="float-left image pr-3">
                   <img src="<%= User.where({ :id => message.users_id }).at(0).prof_pic %>" class="img-circle avatar" alt="user profile image">
