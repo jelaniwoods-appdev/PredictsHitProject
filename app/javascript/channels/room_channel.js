@@ -4,8 +4,8 @@ $(document).on('turbolinks:load', function () {
 
   consumer.subscriptions.create({
       channel: "RoomChannel",
-      room_type: $('#live_chat').attr('data-room-type'),
-      room_id: $('#live_chat').attr('data-room-id')
+      room_type: $('#messages').attr('data-room-type'),
+      room_id: $('#messages').attr('data-room-id')
     }, {
     connected() {
       // Called when the subscription is ready for use on the server

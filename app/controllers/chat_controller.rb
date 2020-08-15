@@ -1,9 +1,9 @@
 class ChatController < ApplicationController
 
-  def create_live_club_message
+  def create_club_message
     club_id = params.fetch("club_id")
     user_id = params.fetch("user_id")
-    message_body = params.fetch("live_body")
+    message_body = params.fetch("body")
     
     #confirm user actually belongs to the Club that the message is sent in and that user submitting form is the right user
     if (user_id == current_user.id.to_s) && (Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table", :users_id => current_user.id }).at(0).present?)
@@ -23,45 +23,7 @@ class ChatController < ApplicationController
         head :no_content
       else
       end
-    else
-     flash[:alert] = "You are not authorized to perform this action."
-    end
-    
 
-
-  end
-
-
-
-
-
-  def create_club_message
-    club_id = params.fetch("club_id")
-    user_id = params.fetch("user_id")
-    message_body = params.fetch("body")
-    
-    #confirm user actually belongs to the Club that the message is sent in and that user submitting form is the right user
-    if (user_id == current_user.id.to_s) && (Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table", :users_id => current_user.id }).at(0).present?)
-      @message = Chat.new
-      @message.goes_to = "club"
-      @message.status = "active"
-      @message.clubs_id = club_id
-      @message.goes_to_id = club_id
-      @message.body = message_body
-      @message.users_id = user_id
-      if @message.valid?
-        @message.save
-      else
-      end
-
-      #add instance variables needed for comments partial that is refreshed
-      @club_messages = Chat.where({ :clubs_id => @message.clubs_id, :goes_to => "club" }).order({ :created_at => :desc })
-      @club_row = @message.club
-
-      respond_to do |format|
-        format.js { render 'club_templates/render_messages.js.erb' }
-      end
-      
     else
      flash[:alert] = "You are not authorized to perform this action."
     end
