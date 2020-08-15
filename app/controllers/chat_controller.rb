@@ -19,7 +19,7 @@ class ChatController < ApplicationController
         @message_username = User.where({ :id => @message.users_id }).at(0).username
         @message_prof_pic = User.where({ :id => @message.users_id }).at(0).prof_pic.url
         
-        ActionCable.server.broadcast "room_channel#{@message.clubs_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
+        ActionCable.server.broadcast "room_channel_club_#{@message.clubs_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
         head :no_content
       else
       end
