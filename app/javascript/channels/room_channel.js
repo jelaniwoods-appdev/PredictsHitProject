@@ -1,34 +1,40 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create("RoomChannel", {
-  connected() {
-    // Called when the subscription is ready for use on the server
-    console.log("connected!")
-  },
+$(document).on('turbolinks:load', function () {
 
-  disconnected() {
-    // Called when the subscription has been terminated by the server
-  },
+  consumer.subscriptions.create({
+      channel: "RoomChannel",
+      room_id: $('#live_chat').attr('data-room-id')
+    }, {
+    connected() {
+      // Called when the subscription is ready for use on the server
+      console.log("connected!")
+    },
 
-  received(data) {
-    // Called when there's incoming data on the websocket for this channel
-    console.log(data.prof_pic)
-    console.log(data.username)
-    console.log(data.body)
+    disconnected() {
+      // Called when the subscription has been terminated by the server
+    },
 
-    $('#live_messages').append(
-      '<div>' +
-      '<div class="float-left image pr-3">' +
-      '<img src=' + data.prof_pic + ' class="img-circle avatar" alt="user profile image"></img>' +
-      '</div>' + 
-      '<div class="comment-text">' + 
-      '<b>' + data.username + '</b>' + 
-      ' ' + data.body +
-      '</div>' +
-      '<br>' +
-      '</div>'
-    )
-  }
+    received(data) {
+      // Called when there's incoming data on the websocket for this channel
+      console.log(data.prof_pic)
+      console.log(data.username)
+      console.log(data.body)
 
-});
+      $('#live_messages').append(
+        '<div>' +
+        '<div class="float-left image pr-3">' +
+        '<img src=' + data.prof_pic + ' class="img-circle avatar" alt="user profile image"></img>' +
+        '</div>' + 
+        '<div class="comment-text">' + 
+        '<b>' + data.username + '</b>' + 
+        ' ' + data.body +
+        '</div>' +
+        '<br>' +
+        '</div>'
+      )
+    }
 
+  });
+
+})
