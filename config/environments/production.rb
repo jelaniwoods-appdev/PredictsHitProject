@@ -7,6 +7,9 @@ config.action_mailer.default_url_options = { :host => "https://www.predictshit.c
     domain: ENV.fetch("MAILGUN_DOMAIN")
   }
 
+  #allow action cable to work on domain
+  config.action_cable.allowed_request_origins = ["https://www.predictshit.com/"]
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

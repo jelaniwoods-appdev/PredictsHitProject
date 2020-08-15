@@ -6,5 +6,5 @@ test:
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: ActionCableRails6_production
+  url: <%= ENV.fetch("REDIS_URL") { "redis-10423.c93.us-east-1-3.ec2.cloud.redislabs.com:10423" } %>
+  channel_prefix: REDIS_Predictshit
