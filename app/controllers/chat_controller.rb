@@ -88,17 +88,12 @@ class ChatController < ApplicationController
       @message.users_id = user_id
       if @message.valid?
         @message.save
+        @message_username = User.where({ :id => @message.users_id }).at(0).username
+        @message_prof_pic = User.where({ :id => @message.users_id }).at(0).prof_pic.url
+        
+        ActionCable.server.broadcast "room_channel_market_#{@message.markets_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
+        head :no_content
       else
-      end
-
-      #add instance variables needed for comments partial that is refreshed
-      @market_messages = Chat.where({ :markets_id => @message.markets_id, :goes_to => "market" }).order({ :created_at => :desc })
-      @club_row = @message.market.season.club
-      @season_row = @message.market.season
-      @market_row = @message.market
-
-      respond_to do |format|
-        format.js { render 'market_templates/render_messages.js.erb' }
       end
 
     else

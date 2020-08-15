@@ -210,7 +210,8 @@ class MarketController < ApplicationController
 
 
     #relevant messages
-    @market_messages = Chat.where({ :markets_id => @market_id, :goes_to => "market" }).order({ :created_at => :desc })
+    @market_messages_all = Chat.where({ :markets_id => @market_id, :goes_to => "market" }).order({ :created_at => :desc })
+    @market_messages_latest = @market_messages_all.first(50).reverse
 
     if @season_membership_rows.where({ :users_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."

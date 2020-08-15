@@ -1,23 +1,25 @@
 <nav id="sidebar_right">
-  <div id="messages">
+  <div id="messages" data-channel-subscribe="room" data-room-id="<%= @market_row.id %>" data-room-type="market">
     <div class="row pt-5">
       <div class="col-10 offset-1 comment-card px-2" style="height: 75vh">
         <div class="container">
           <h3 class="center_title">Market Chat</h3>
         </div>
         <div class="container scrolly comment-box px-0" style="height: calc(75vh - 200px)">
-          <% @market_messages.limit(50).each do |message| %>
-            <div>
-              <div class="float-left image pr-3">
-                <img src="<%= User.where({ :id => message.users_id }).at(0).prof_pic %>" class="img-circle avatar" alt="user profile image">
+          <div id="live_messages">  
+            <% @market_messages_latest.each do |message| %>
+              <div>
+                <div class="float-left image pr-3">
+                  <img src="<%= User.where({ :id => message.users_id }).at(0).prof_pic %>" class="img-circle avatar" alt="user profile image">
+                </div>
+                <div class="comment-text">
+                  <b><%= User.where({ :id => message.users_id }).at(0).username %></b>
+                  <%= message.body %>
+                </div>
+                <br>
               </div>
-              <div class="comment-text">
-                <b><%= User.where({ :id => message.users_id }).at(0).username %></b>
-                <%= message.body %>
-              </div>
-              <br>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
         <div class="container" style="height: 200px">
           <form action="/messages/market/create/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= current_user.id %>" method="post" data-remote="true">
