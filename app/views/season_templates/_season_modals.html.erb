@@ -47,8 +47,8 @@
             <label for="select_club_member">Select a member to add from the Club associated with this Season:</label>
               <select class="form-control" required="required" id="select_club_member" name="member_id"><option value="">Select member</option>
                 <% @club_membership_rows.each do |club_member| %>
-                  <% if Membership.where({ :users_id => club_member.users_id, :clubs_id => club_member.clubs_id, :seasons_id => @season_row.id }).at(0) == nil %>
-                    <option value="<%= club_member.users_id %>"><%= club_member.user.username %></option>
+                  <% if Membership.where({ :user_id => club_member.user_id, :club_id => club_member.club_id, :season_id => @season_row.id }).at(0) == nil %>
+                    <option value="<%= club_member.user_id %>"><%= club_member.user.username %></option>
                   <% end %>
                 <% end %>
               </select>
@@ -101,9 +101,9 @@
           <% @season_membership_rows.each do |member| %>
           <tr class="d-flex">
             <td class="col-4">
-              <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+              <a href="/profile/<%= member.user_id %>"><%= member.user.username %></a> 
             </td>
-            <form action="/manage_season_memberships/<%= @club_row.id %>/<%= @season_row.id %>/<%= member.users_id %>" method="post">
+            <form action="/manage_season_memberships/<%= @club_row.id %>/<%= @season_row.id %>/<%= member.user_id %>" method="post">
               
               <td class="col-4">
                 <select class="form-control" required="required" id="select_member_category" name="member_category"><option value="">Select new role for this Club member</option>

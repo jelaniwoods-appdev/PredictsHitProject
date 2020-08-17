@@ -25,7 +25,7 @@
                   <% else %>
                     <p class="card-text text-truncate"><%= season.description %> </p>
                   <% end %>
-                  <div class="text-center"><a class="btn btn-secondary stretched-link" href="/seasons/<%= season.club.id.to_s + '/' + season.id.to_s %>">Go to Season</a></div>
+                  <div class="text-center"><a class="btn btn-secondary stretched-link" href="/seasons/<%= season.club_id.to_s + '/' + season.id.to_s %>">Go to Season</a></div>
                 </div>
               </div>
             </div>

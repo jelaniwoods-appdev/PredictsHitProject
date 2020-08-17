@@ -24,6 +24,9 @@ class Season < ApplicationRecord
   has_many :memberships
   has_many :users, :through => :memberships
 
+  scope :open, -> { where.not(status: 'closed') }
+  scope :closed, -> { where(status: 'closed') }
+
   validates :fund, :numericality => true
   validates_presence_of :title
   

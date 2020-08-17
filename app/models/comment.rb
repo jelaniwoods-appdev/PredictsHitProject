@@ -9,26 +9,26 @@
 #  title      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  clubs_id   :integer
+#  club_id    :integer
 #  goes_to_id :integer
-#  markets_id :integer
+#  market_id  :integer
 #  parent_id  :integer
-#  seasons_id :integer
-#  users_id   :integer
+#  season_id  :integer
+#  user_id    :integer
 #
 # Indexes
 #
-#  index_comments_on_clubs_id    (clubs_id)
-#  index_comments_on_markets_id  (markets_id)
-#  index_comments_on_seasons_id  (seasons_id)
-#  index_comments_on_users_id    (users_id)
+#  index_comments_on_club_id    (club_id)
+#  index_comments_on_market_id  (market_id)
+#  index_comments_on_season_id  (season_id)
+#  index_comments_on_user_id    (user_id)
 #
 
 class Comment < ApplicationRecord
-  belongs_to :user, {:foreign_key => "users_id"}
-  belongs_to :club, {:foreign_key => "clubs_id"}
-  belongs_to :season, {:foreign_key => "seasons_id"}
-  belongs_to :market, {:foreign_key => "markets_id"}
+  belongs_to :user
+  belongs_to :club
+  belongs_to :season
+  belongs_to :market
 
   acts_as_tree order: 'created_at DESC'
   

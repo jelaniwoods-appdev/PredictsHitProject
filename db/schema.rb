@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_181559) do
+ActiveRecord::Schema.define(version: 2020_08_17_184206) do
 
   create_table "assets", force: :cascade do |t|
     t.string "category"
@@ -31,16 +31,16 @@ ActiveRecord::Schema.define(version: 2020_07_29_181559) do
     t.string "status"
     t.string "goes_to"
     t.integer "goes_to_id"
-    t.integer "users_id"
-    t.integer "clubs_id"
-    t.integer "seasons_id"
-    t.integer "markets_id"
+    t.integer "user_id"
+    t.integer "club_id"
+    t.integer "season_id"
+    t.integer "market_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["clubs_id"], name: "index_chats_on_clubs_id"
-    t.index ["markets_id"], name: "index_chats_on_markets_id"
-    t.index ["seasons_id"], name: "index_chats_on_seasons_id"
-    t.index ["users_id"], name: "index_chats_on_users_id"
+    t.index ["club_id"], name: "index_chats_on_club_id"
+    t.index ["market_id"], name: "index_chats_on_market_id"
+    t.index ["season_id"], name: "index_chats_on_season_id"
+    t.index ["user_id"], name: "index_chats_on_user_id"
   end
 
   create_table "clubs", force: :cascade do |t|
@@ -67,16 +67,16 @@ ActiveRecord::Schema.define(version: 2020_07_29_181559) do
     t.integer "parent_id"
     t.string "goes_to"
     t.integer "goes_to_id"
-    t.integer "users_id"
-    t.integer "clubs_id"
-    t.integer "seasons_id"
-    t.integer "markets_id"
+    t.integer "user_id"
+    t.integer "club_id"
+    t.integer "season_id"
+    t.integer "market_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["clubs_id"], name: "index_comments_on_clubs_id"
-    t.index ["markets_id"], name: "index_comments_on_markets_id"
-    t.index ["seasons_id"], name: "index_comments_on_seasons_id"
-    t.index ["users_id"], name: "index_comments_on_users_id"
+    t.index ["club_id"], name: "index_comments_on_club_id"
+    t.index ["market_id"], name: "index_comments_on_market_id"
+    t.index ["season_id"], name: "index_comments_on_season_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "contracts", force: :cascade do |t|
@@ -112,14 +112,14 @@ ActiveRecord::Schema.define(version: 2020_07_29_181559) do
   create_table "memberships", force: :cascade do |t|
     t.string "goes_to"
     t.string "category"
-    t.integer "users_id"
-    t.integer "clubs_id"
-    t.integer "seasons_id"
+    t.integer "user_id"
+    t.integer "club_id"
+    t.integer "season_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["clubs_id"], name: "index_memberships_on_clubs_id"
-    t.index ["seasons_id"], name: "index_memberships_on_seasons_id"
-    t.index ["users_id"], name: "index_memberships_on_users_id"
+    t.index ["club_id"], name: "index_memberships_on_club_id"
+    t.index ["season_id"], name: "index_memberships_on_season_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "seasons", force: :cascade do |t|

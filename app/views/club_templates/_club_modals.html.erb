@@ -141,9 +141,9 @@
           <% @membership_rows.each do |member| %>
           <tr class="d-flex">
             <td class="col-4">
-              <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+              <a href="/profile/<%= member.user_id %>"><%= member.user.username %></a> 
             </td>
-            <form action="/manage_club_memberships/<%= @club_row.id %>/<%= member.users_id %>" method="post">
+            <form action="/manage_club_memberships/<%= @club_row.id %>/<%= member.user_id %>" method="post">
               
               <td class="col-4">
                 <select class="form-control" required="required" id="select_member_category" name="member_category"><option value="">Select new role for this Club member</option>

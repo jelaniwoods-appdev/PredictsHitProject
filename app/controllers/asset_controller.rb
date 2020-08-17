@@ -6,7 +6,7 @@ class AssetController < ApplicationController
     @season_id = params.fetch("season_id")
     
     #confirm season owner is the one submitting this form
-    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
 
     if @owner_user_id != current_user.id
@@ -58,11 +58,11 @@ class AssetController < ApplicationController
     @adjustment_factor = params.fetch("adjustment_factor")
 
     @username = User.where({ :id => @user_id }).at(0).username
-    @membership_id = Membership.where({ :users_id => @user_id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0).id
+    @membership_id = Membership.where({ :user_id => @user_id, :season_id => @season_id, :goes_to => "seasons_table"}).at(0).id
     @asset_row = Asset.where({ :membership_id => @membership_id, :category => "season_fund"}).at(0)
     
     #confirm season owner is the one submitting this form
-    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
@@ -95,7 +95,3 @@ class AssetController < ApplicationController
   end
   
 end
-
-
-
-    

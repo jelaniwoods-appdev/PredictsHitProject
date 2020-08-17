@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get("/users/autocomplete", { :controller => "user", :action => "search_users" })
 
   #Homepage routes
-  get("/", { :controller => "home", :action => "show_homepage" })
+  root to: 'home#show_homepage'
   get("/about", { :controller => "home", :action => "show_about" })
   get("/support", { :controller => "home", :action => "show_support" })
   get("/global_markets", { :controller => "home", :action => "show_global_markets" })

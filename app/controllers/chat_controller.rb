@@ -6,20 +6,20 @@ class ChatController < ApplicationController
     message_body = params.fetch("body")
     
     #confirm user actually belongs to the Club that the message is sent in and that user submitting form is the right user
-    if (user_id == current_user.id.to_s) && (Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table", :users_id => current_user.id }).at(0).present?)
+    if (user_id == current_user.id.to_s) && (Membership.where({ :club_id => club_id, :goes_to => "clubs_table", :user_id => current_user.id }).at(0).present?)
       @message = Chat.new
       @message.goes_to = "club"
       @message.status = "active"
-      @message.clubs_id = club_id
+      @message.club_id = club_id
       @message.goes_to_id = club_id
       @message.body = message_body
-      @message.users_id = user_id
+      @message.user_id = user_id
       if @message.valid?
         @message.save
-        @message_username = User.where({ :id => @message.users_id }).at(0).username
-        @message_prof_pic = User.where({ :id => @message.users_id }).at(0).prof_pic.url
+        @message_username = User.where({ :id => @message.user_id }).at(0).username
+        @message_prof_pic = User.where({ :id => @message.user_id }).at(0).prof_pic.url
         
-        ActionCable.server.broadcast "room_channel_club_#{@message.clubs_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
+        ActionCable.server.broadcast "room_channel_club_#{@message.club_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
         head :no_content
       else
       end
@@ -41,22 +41,22 @@ class ChatController < ApplicationController
     message_body = params.fetch("body")
     
     #confirm user actually belongs to the Season that the message is sent in and that user submitting form is the right user
-    if (user_id == current_user.id.to_s) && (Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :users_id => user_id }).at(0).present?)
+    if (user_id == current_user.id.to_s) && (Membership.where({ :season_id => season_id, :goes_to => "seasons_table", :user_id => user_id }).at(0).present?)
 
       @message = Chat.new
       @message.goes_to = "season"
       @message.status = "active"
-      @message.clubs_id = club_id
-      @message.seasons_id = season_id
+      @message.club_id = club_id
+      @message.season_id = season_id
       @message.goes_to_id = season_id
       @message.body = message_body
-      @message.users_id = user_id
+      @message.user_id = user_id
       if @message.valid?
         @message.save
-        @message_username = User.where({ :id => @message.users_id }).at(0).username
-        @message_prof_pic = User.where({ :id => @message.users_id }).at(0).prof_pic.url
+        @message_username = User.where({ :id => @message.user_id }).at(0).username
+        @message_prof_pic = User.where({ :id => @message.user_id }).at(0).prof_pic.url
         
-        ActionCable.server.broadcast "room_channel_season_#{@message.seasons_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
+        ActionCable.server.broadcast "room_channel_season_#{@message.season_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
         head :no_content
       else
       end
@@ -75,23 +75,23 @@ class ChatController < ApplicationController
     message_body = params.fetch("body")
 
     #confirm user actually belongs to the Season containing the market that the message is sent in and that user submitting form is the right user
-    if (user_id == current_user.id.to_s) && (Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :users_id => user_id }).at(0).present?)
+    if (user_id == current_user.id.to_s) && (Membership.where({ :season_id => season_id, :goes_to => "seasons_table", :user_id => user_id }).at(0).present?)
 
       @message = Chat.new
       @message.goes_to = "market"
       @message.status = "active"
-      @message.clubs_id = club_id
-      @message.seasons_id = season_id
-      @message.markets_id = market_id
+      @message.club_id = club_id
+      @message.season_id = season_id
+      @message.market_id = market_id
       @message.goes_to_id = market_id
       @message.body = message_body
-      @message.users_id = user_id
+      @message.user_id = user_id
       if @message.valid?
         @message.save
-        @message_username = User.where({ :id => @message.users_id }).at(0).username
-        @message_prof_pic = User.where({ :id => @message.users_id }).at(0).prof_pic.url
+        @message_username = User.where({ :id => @message.user_id }).at(0).username
+        @message_prof_pic = User.where({ :id => @message.user_id }).at(0).prof_pic.url
         
-        ActionCable.server.broadcast "room_channel_market_#{@message.markets_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
+        ActionCable.server.broadcast "room_channel_market_#{@message.market_id}", { body: @message.body, username: @message_username, prof_pic: @message_prof_pic }
         head :no_content
       else
       end

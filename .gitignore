@@ -46,3 +46,7 @@ cloud9_plugins.sh
 appdev/
 node_modules
 package-lock.json
+
+/db/development.sqlite3
+predict_development
+public/uploads/tmp

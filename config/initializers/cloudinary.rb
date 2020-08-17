@@ -7,4 +7,6 @@ end
 
 CarrierWave.configure do |config|
  config.cache_storage = :file
+ # disable processing for development purposes
+ #config.enable_processing = false
 end

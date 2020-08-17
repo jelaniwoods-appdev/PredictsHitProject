@@ -7,7 +7,7 @@ class MembershipController < ApplicationController
     @member_category = params.fetch("member_category")
 
     #confirm user submitting form is the club owner
-    @owner_user_id = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :club_id => @club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
@@ -17,8 +17,8 @@ class MembershipController < ApplicationController
       if @user_row.present?
   
         @new_membership = Membership.new
-        @new_membership.users_id = @user_row.id
-        @new_membership.clubs_id = @club_id
+        @new_membership.user_id = @user_row.id
+        @new_membership.club_id = @club_id
         @new_membership.goes_to = "clubs_table"
         @new_membership.category = @member_category
         if @new_membership.valid?
@@ -40,9 +40,9 @@ class MembershipController < ApplicationController
     @club_id = params.fetch("club_id")
     @member_user_id = params.fetch("user_id")
     @user_row = User.where({ :id => @member_user_id }).at(0)
-    @membership_row = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :users_id => @member_user_id }).at(0)
-    @owner_membership_row = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :category => "owner" }).at(0)
-    @owner_user_id = @owner_membership_row.users_id
+    @membership_row = Membership.where({ :club_id => @club_id, :goes_to => "clubs_table", :user_id => @member_user_id }).at(0)
+    @owner_membership_row = Membership.where({ :club_id => @club_id, :goes_to => "clubs_table", :category => "owner" }).at(0)
+    @owner_user_id = @owner_membership_row.user_id
     @member_category = params.fetch("member_category")
 
     #confirm user submitting form is the club owner
@@ -87,10 +87,10 @@ class MembershipController < ApplicationController
 
   def leave_club
     @club_id = params.fetch("club_id")
-    @user_club_membership_row = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :users_id => current_user.id }).at(0)
-    @user_season_membership_rows = Membership.where({ :clubs_id => @club_id, :goes_to => "seasons_table", :users_id => current_user.id })
-    @club_membership_rows = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table"})
-    @owner_membership_row = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :category => "owner" }).at(0)
+    @user_club_membership_row = Membership.where({ :club_id => @club_id, :goes_to => "clubs_table", :user_id => current_user.id }).at(0)
+    @user_season_membership_rows = Membership.where({ :club_id => @club_id, :goes_to => "seasons_table", :user_id => current_user.id })
+    @club_membership_rows = Membership.where({ :club_id => @club_id, :goes_to => "clubs_table"})
+    @owner_membership_row = Membership.where({ :club_id => @club_id, :goes_to => "clubs_table", :category => "owner" }).at(0)
     @member_category = @user_club_membership_row.category
 
     if @member_category == "owner" && @club_membership_rows.count > 1
@@ -104,7 +104,7 @@ class MembershipController < ApplicationController
       @user_season_membership_rows.each do |season_membership|
         if season_membership.category == "owner"
           #find other season memberships and first pick among admins if there are any (category desc), and then based on who has the oldest membership
-          new_owner = Membership.where({ :seasons_id => season_membership.seasons_id, :goes_to => "seasons_table" }).where.not({ :users_id => current_user.id }).order({ :category => :asc, :created_at => :asc }).at(0)
+          new_owner = Membership.where({ :season_id => season_membership.season_id, :goes_to => "seasons_table" }).where.not({ :user_id => current_user.id }).order({ :category => :asc, :created_at => :asc }).at(0)
           #if someone else is present in a season where user leaving club is the owner, then assign new owner, otherwise just have them leave the season since no one needs to be the owner
           if new_owner.present?
             new_owner.category = "owner"
@@ -132,7 +132,7 @@ class MembershipController < ApplicationController
     @member_category = params.fetch("member_category")
     
     #confirm user submitting form is the season owner
-    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
     
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
@@ -141,9 +141,9 @@ class MembershipController < ApplicationController
     
       #Create membership row for added user
       @new_membership = Membership.new
-      @new_membership.users_id = @member_id
-      @new_membership.clubs_id = @club_id
-      @new_membership.seasons_id = @season_id
+      @new_membership.user_id = @member_id
+      @new_membership.club_id = @club_id
+      @new_membership.season_id = @season_id
       @new_membership.goes_to = "seasons_table"
       @new_membership.category = @member_category
       @new_membership.save
@@ -173,9 +173,9 @@ class MembershipController < ApplicationController
     @season_id = params.fetch("season_id")
     @member_user_id = params.fetch("user_id")
     @user_row = User.where({ :id => @member_user_id }).at(0)
-    @membership_row = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :users_id => @member_user_id }).at(0)
-    @owner_membership_row = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner" }).at(0)
-    @owner_user_id = @owner_membership_row.users_id
+    @membership_row = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :user_id => @member_user_id }).at(0)
+    @owner_membership_row = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner" }).at(0)
+    @owner_user_id = @owner_membership_row.user_id
     @member_category = params.fetch("member_category")
 
     #confirm user submitting form is the season owner
@@ -222,8 +222,8 @@ class MembershipController < ApplicationController
   def leave_season
     @club_id = params.fetch("club_id")
     @season_id = params.fetch("season_id")
-    @user_season_membership_row = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :users_id => current_user.id }).at(0)
-    @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+    @user_season_membership_row = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :user_id => current_user.id }).at(0)
+    @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
     @member_category = @user_season_membership_row.category
 
     if @member_category == "owner" && @season_membership_rows.count > 1
@@ -249,8 +249,8 @@ class MembershipController < ApplicationController
     @user_row = User.where("lower(username) = ?", @member_username.downcase).at(0)
     
     #confirm user submitting form is both the season owner and the club owner
-    @club_owner_user_id = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
-    @season_owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @club_owner_user_id = Membership.where({ :club_id => @club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).user_id
+    @season_owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
     
     if (@club_owner_user_id != current_user.id) || (@season_owner_user_id != current_user.id)
       flash[:alert] = "You are not authorized to perform this action."
@@ -261,8 +261,8 @@ class MembershipController < ApplicationController
       if @user_row.present?
 
         @new_club_membership = Membership.new
-        @new_club_membership.users_id = @user_row.id
-        @new_club_membership.clubs_id = @club_id
+        @new_club_membership.user_id = @user_row.id
+        @new_club_membership.club_id = @club_id
         @new_club_membership.goes_to = "clubs_table"
         @new_club_membership.category = "member"
         if @new_club_membership.valid?
@@ -271,9 +271,9 @@ class MembershipController < ApplicationController
 
         #Create season membership row for added user
         @new_season_membership = Membership.new
-        @new_season_membership.users_id = @user_row.id
-        @new_season_membership.clubs_id = @club_id
-        @new_season_membership.seasons_id = @season_id
+        @new_season_membership.user_id = @user_row.id
+        @new_season_membership.club_id = @club_id
+        @new_season_membership.season_id = @season_id
         @new_season_membership.goes_to = "seasons_table"
         @new_season_membership.category = "member"
         if @new_season_membership.valid?

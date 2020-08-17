@@ -9,7 +9,7 @@
             <!-- Include some form of permission functionality where only members of each season who are designated owner or admin under category column can create market -->
             <select class="form-control" required="required" id="select_season" name="associated_season_id"><option value="">Select (Club | Season)</option>
               <% @user_season_memberships.each do |season_option| %>
-                <option value="<%= season_option.seasons_id %>"><%= season_option.season.club.title %> | <%= season_option.season.title %></option>
+                <option value="<%= season_option.season_id %>"><%= season_option.season.club.title %> | <%= season_option.season.title %></option>
               <% end %>
             </select>
             <br>

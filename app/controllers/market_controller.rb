@@ -1,10 +1,10 @@
 class MarketController < ApplicationController
 
   def show_markets
-    @membership_rows = Membership.where({ :users_id => current_user.id, :goes_to => "seasons_table" }).order({ :clubs_id => :asc, :seasons_id => :asc })
+    @membership_rows = Membership.where({ :user_id => current_user.id, :goes_to => "seasons_table" }).order({ :club_id => :asc, :season_id => :asc })
     @m_count = 0
     @membership_rows.each do |member_check|
-      Season.where({ :id => member_check.seasons_id }).at(0).markets.each do |market_count|
+      Season.where({ :id => member_check.season_id }).at(0).markets.each do |market_count|
         @m_count = @m_count + 1
       end
     end
@@ -17,10 +17,10 @@ class MarketController < ApplicationController
     market_id = params.fetch("market_id")
     @market_row = Market.where({ :id => market_id }).at(0)
     @contract_rows = @market_row.contracts
-    @membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
+    @membership_rows = Membership.where({ :season_id => season_id, :goes_to => "seasons_table"})
 
     #Confirm user submitting form is the Season owner of the Market and that the Market is not already closed
-    @owner_user_id = Membership.where({ :seasons_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if (@market_row.status == "closed") || (@owner_user_id != current_user.id)
       flash[:alert] = "You are not authorized to perform this action."
@@ -98,7 +98,7 @@ class MarketController < ApplicationController
     @market_row = Market.where({ :id => @market_id }).at(0)
   
     #Confirm user submitting form is the Season owner of the Market and that the Market is active
-    @owner_user_id = Membership.where({ :seasons_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if (@market_row.status != "active") || (@owner_user_id != current_user.id)
       flash[:alert] = "You are not authorized to perform this action."
@@ -133,7 +133,7 @@ class MarketController < ApplicationController
     @market_row = Market.where({ :id => @market_id }).at(0)
   
     #Confirm user submitting form is the Season owner of the Market and that the Market is paused
-    @owner_user_id = Membership.where({ :seasons_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if (@market_row.status != "paused") || (@owner_user_id != current_user.id)
       flash[:alert] = "You are not authorized to perform this action."
@@ -170,7 +170,7 @@ class MarketController < ApplicationController
     @updated_description = params.fetch("updated_market_description")
   
     #Confirm user submitting form is the Season owner of the Market
-    @owner_user_id = Membership.where({ :seasons_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
@@ -206,22 +206,22 @@ class MarketController < ApplicationController
     @season_row = Season.where({ :id => @season_id}).at(0)
     @market_row = Market.where({ :id => @market_id}).at(0)
     @contract_rows = @market_row.contracts.order({ :created_at => :asc })
-    @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+    @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
 
 
     #relevant messages
-    @market_messages_all = Chat.where({ :markets_id => @market_id, :goes_to => "market" }).order({ :created_at => :desc })
+    @market_messages_all = Chat.where({ :market_id => @market_id, :goes_to => "market" }).order({ :created_at => :desc })
     @market_messages_latest = @market_messages_all.first(50).reverse
 
-    if @season_membership_rows.where({ :users_id => current_user.id}).empty?
+    if @season_membership_rows.where({ :user_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")
     else
       #determine current user asset quantities (this seems unnecessary because i could just call current_user.id. Think through and decide whether to update.)
-      @membership_id = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id }).at(0).id
+      @membership_id = Membership.where({ :user_id => current_user.id, :season_id => @season_id }).at(0).id
       #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets.
-      @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
-      @club_owner_user_id = Membership.where({ :clubs_id => @club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
+      @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+      @club_owner_user_id = Membership.where({ :club_id => @club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).user_id
 
       render({ :template => "market_templates/market_details.html.erb" })
     end
@@ -233,7 +233,7 @@ class MarketController < ApplicationController
 
     #pull the season memberships in which the user is an owner or admin for
     #see if better way to map memberships to seasons
-    @user_season_memberships = Membership.where({ :users_id => @user_id, :goes_to => "seasons_table", :category => "owner"}).or(Membership.where({ :users_id => @user_id, :goes_to => "seasons_table", :category => "admin"})).order({ :clubs_id => :asc })
+    @user_season_memberships = Membership.where({ :user_id => @user_id, :goes_to => "seasons_table", :category => "owner"}).or(Membership.where({ :user_id => @user_id, :goes_to => "seasons_table", :category => "admin"})).order({ :club_id => :asc })
     
     render({ :template => "market_templates/create_market_page.html.erb" })
   end
@@ -245,7 +245,7 @@ class MarketController < ApplicationController
     market_category = params.fetch("market_category")
 
     #Confirm user submitting form is the owner of the Season the market is being created for
-    @owner_user_id = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
     
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."

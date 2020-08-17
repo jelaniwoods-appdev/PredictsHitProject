@@ -1,7 +1,7 @@
 class SeasonController < ApplicationController
   
   def show_seasons
-    @membership_rows = Membership.where({ :users_id => current_user.id, :goes_to => "seasons_table" }).order({ :clubs_id => :asc, :seasons_id => :asc })
+    @membership_rows = Membership.where({ :user_id => current_user.id, :goes_to => "seasons_table" }).order({ :club_id => :asc, :season_id => :asc })
     render({ :template => "season_templates/show_season_memberships.html.erb" })
   end
 
@@ -12,7 +12,7 @@ class SeasonController < ApplicationController
     @updated_description = params.fetch("updated_season_description")
     
     #Confirm user submitting form is the Season owner
-    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
@@ -40,19 +40,19 @@ class SeasonController < ApplicationController
     @season_row = Season.where({ :id => season_id}).at(0)
     @current_market_rows = @season_row.markets.where.not({ :status => "closed" })
     @closed_market_rows = @season_row.markets.where({ :status => "closed" })
-    @season_membership_rows = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table"})
-    @club_membership_rows = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table"})
+    @season_membership_rows = Membership.where({ :season_id => season_id, :goes_to => "seasons_table"})
+    @club_membership_rows = Membership.where({ :club_id => club_id, :goes_to => "clubs_table"})
 
     #relevant comments
-    @season_messages_all = Chat.where({ :seasons_id => season_id, :goes_to => "season" }).order({ :created_at => :desc })
+    @season_messages_all = Chat.where({ :season_id => season_id, :goes_to => "season" }).order({ :created_at => :desc })
     @season_messages_latest = @season_messages_all.first(50).reverse
 
-    if @season_membership_rows.where({ :users_id => current_user.id}).empty?
+    if @season_membership_rows.where({ :user_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")
     else
       #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners.
-      @owner_user_id = Membership.where({ :seasons_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+      @owner_user_id = Membership.where({ :season_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
       render({ :template => "season_templates/season_details.html.erb" })
     end
   end
@@ -63,7 +63,7 @@ class SeasonController < ApplicationController
     #pull the club memberships in which the user is an owner or admin for
     #see if better way to map memberships to clubs
     #later make it so only active clubs show up and/or include search option.
-    @user_club_memberships = Membership.where({ :users_id => @user_id, :goes_to => "clubs_table", :category => "owner"}).or(Membership.where({ :users_id => @user_id, :goes_to => "clubs_table", :category => "admin"}))
+    @user_club_memberships = Membership.where({ :user_id => @user_id, :goes_to => "clubs_table", :category => "owner"}).or(Membership.where({ :user_id => @user_id, :goes_to => "clubs_table", :category => "admin"}))
     
     render({ :template => "season_templates/create_season_page.html.erb" })
   end
@@ -75,7 +75,7 @@ class SeasonController < ApplicationController
     season_fund = params.fetch("season_fund")
     
     #Confirm user submitting form is the Season owner of the Market
-    @owner_user_id = Membership.where({ :clubs_id => club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :club_id => club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
@@ -96,9 +96,9 @@ class SeasonController < ApplicationController
         @new_season.save
         #Create a new membership to this season and assign the creator of the season to be the 'owner'
         @new_membership = Membership.new
-        @new_membership.users_id = current_user.id
-        @new_membership.seasons_id = @new_season.id
-        @new_membership.clubs_id = club_id
+        @new_membership.user_id = current_user.id
+        @new_membership.season_id = @new_season.id
+        @new_membership.club_id = club_id
         @new_membership.goes_to = "seasons_table"
         @new_membership.category = "owner"
         @new_membership.save
@@ -134,7 +134,7 @@ class SeasonController < ApplicationController
     markets_not_closed_counter = 0
     
     #Confirm user submitting form is the Season owner
-    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
     
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."

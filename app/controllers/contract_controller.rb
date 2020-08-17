@@ -7,7 +7,7 @@ class ContractController < ApplicationController
     @market_id = params.fetch("market_id")
 
     #confirm season owner is the one submitting this form
-    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
@@ -48,16 +48,16 @@ class ContractController < ApplicationController
     @season_row = Season.where({ :id => @season_id}).at(0)
     @market_row = Market.where({ :id => @market_id}).at(0)
     @contract_row = Contract.where({ :id => @contract_id}).at(0)
-    @membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+    @membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
 
     
 
-    if @membership_rows.where({ :users_id => current_user.id}).empty?
+    if @membership_rows.where({ :user_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")
     else
       #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets/contracts.
-      @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+      @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
       render({ :template => "contract_templates/contract_details.html.erb" })
     end
@@ -73,7 +73,7 @@ class ContractController < ApplicationController
     @updated_description = params.fetch("updated_contract_description")
   
     #confirm season owner is the one submitting this form
-    @owner_user_id = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).users_id
+    @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
@@ -112,7 +112,7 @@ class ContractController < ApplicationController
     @club_id = @contract_row.market.season.club.id
     
     @number_of_contracts = params.fetch("quantity_buy_yes")
-    @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
+    @membership_row = Membership.where({ :user_id => current_user.id, :season_id => @season_id, :goes_to => "seasons_table"}).at(0)
     @user_asset_rows = @membership_row.assets
     @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
     @user_starting_season_funds = @user_season_funds_row.quantity
@@ -181,7 +181,7 @@ class ContractController < ApplicationController
         #add instance variables needed for partials that are refreshed
         @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
         @membership_id = @membership_row.id
-        @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+        @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
         @market_row = @contract_row.market
 
         
@@ -275,7 +275,7 @@ class ContractController < ApplicationController
     
     @number_of_contracts = (params.fetch("quantity_sell_yes").to_i * -1).to_s
     @pos_num_contracts = @number_of_contracts.to_i * -1
-    @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
+    @membership_row = Membership.where({ :user_id => current_user.id, :season_id => @season_id, :goes_to => "seasons_table"}).at(0)
     @user_asset_rows = @membership_row.assets
     @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
     @user_starting_season_funds = @user_season_funds_row.quantity
@@ -338,7 +338,7 @@ class ContractController < ApplicationController
       #add instance variables needed for partials that are refreshed
       @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
-      @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+      @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
       @market_row = @contract_row.market
 
       respond_to do |format|
@@ -436,7 +436,7 @@ class ContractController < ApplicationController
     @club_id = @contract_row.market.season.club.id
     
     @number_of_contracts = params.fetch("quantity_buy_no")
-    @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
+    @membership_row = Membership.where({ :user_id => current_user.id, :season_id => @season_id, :goes_to => "seasons_table"}).at(0)
     @user_asset_rows = @membership_row.assets
     @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
     @user_starting_season_funds = @user_season_funds_row.quantity
@@ -509,7 +509,7 @@ class ContractController < ApplicationController
       #add instance variables needed for partials that are refreshed
       @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
-      @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+      @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
       @market_row = @contract_row.market
 
       respond_to do |format|
@@ -534,7 +534,7 @@ class ContractController < ApplicationController
     
     @number_of_contracts = (params.fetch("quantity_sell_no").to_i * -1).to_s
     @pos_num_contracts = @number_of_contracts.to_i * -1
-    @membership_row = Membership.where({ :users_id => current_user.id, :seasons_id => @season_id, :goes_to => "seasons_table"}).at(0)
+    @membership_row = Membership.where({ :user_id => current_user.id, :season_id => @season_id, :goes_to => "seasons_table"}).at(0)
     @user_asset_rows = @membership_row.assets
     @user_season_funds_row = @user_asset_rows.where({ :membership_id => @membership_row.id, :category => "season_fund"}).at(0)
     @user_starting_season_funds = @user_season_funds_row.quantity
@@ -615,7 +615,7 @@ class ContractController < ApplicationController
         #add instance variables needed for partials that are refreshed
         @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
         @membership_id = @membership_row.id
-        @season_membership_rows = Membership.where({ :seasons_id => @season_id, :goes_to => "seasons_table"})
+        @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
         @market_row = @contract_row.market
 
         respond_to do |format|

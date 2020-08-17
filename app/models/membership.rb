@@ -7,24 +7,24 @@
 #  goes_to    :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  clubs_id   :integer
-#  seasons_id :integer
-#  users_id   :integer
+#  club_id    :integer
+#  season_id  :integer
+#  user_id    :integer
 #
 # Indexes
 #
-#  index_memberships_on_clubs_id    (clubs_id)
-#  index_memberships_on_seasons_id  (seasons_id)
-#  index_memberships_on_users_id    (users_id)
+#  index_memberships_on_club_id    (club_id)
+#  index_memberships_on_season_id  (season_id)
+#  index_memberships_on_user_id    (user_id)
 #
 
 class Membership < ApplicationRecord
-  belongs_to :user, {:foreign_key => "users_id"}
-  belongs_to :club, {:foreign_key => "clubs_id"}
-  belongs_to :season, {:foreign_key => "seasons_id"}
+  belongs_to :user
+  belongs_to :club
+  belongs_to :season
   has_many :assets
 
-  validates :users_id, uniqueness: {scope: [:goes_to, :clubs_id , :seasons_id ]}
+  validates :user_id, uniqueness: {scope: [:goes_to, :club_id , :season_id ]}
   extend OrderAsSpecified
   
 end

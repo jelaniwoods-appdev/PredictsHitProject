@@ -61,7 +61,7 @@
         <% @membership_rows.each do |member| %>
         <tr class="d-flex">
           <td class="col-4 text-center pr-5">
-            <a href="/profile/<%= member.users_id %>"><%= member.user.username %></a> 
+            <a href="/profile/<%= member.user_id %>"><%= member.user.username %></a> 
           </td>
           <td class="col-4 text-center pr-5">
             <% if member.assets.where({ :contract_id => @contract_row.id, :category => "contract_quantity_a"}).at(0)  == nil %>

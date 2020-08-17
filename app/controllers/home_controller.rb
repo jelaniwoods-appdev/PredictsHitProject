@@ -33,8 +33,8 @@ class HomeController < ApplicationController
       @new_club.save
       #Create a new membership to this club and assign the creator of the club to be the 'owner'
       @new_membership = Membership.new
-      @new_membership.users_id = current_user.id
-      @new_membership.clubs_id = @new_club.id
+      @new_membership.user_id = current_user.id
+      @new_membership.club_id = @new_club.id
       @new_membership.goes_to = "clubs_table"
       @new_membership.category = "owner"
       @new_membership.save
@@ -54,9 +54,9 @@ class HomeController < ApplicationController
       @new_season.save
 
       @new_membership = Membership.new
-      @new_membership.users_id = current_user.id
-      @new_membership.seasons_id = @new_season.id
-      @new_membership.clubs_id = @new_club.id
+      @new_membership.user_id = current_user.id
+      @new_membership.season_id = @new_season.id
+      @new_membership.club_id = @new_club.id
       @new_membership.goes_to = "seasons_table"
       @new_membership.category = "owner"
       @new_membership.save

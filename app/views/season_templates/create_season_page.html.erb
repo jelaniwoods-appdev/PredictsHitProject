@@ -9,7 +9,7 @@
             <!-- Include some form of permission functionality where only members of each club who are designated owner or admin under category column can create season -->
             <select class="form-control" required="required" id="select_club" name="associated_club_id"><option value="">Select Club</option>
               <% @user_club_memberships.each do |club_option| %>
-              <option value="<%= club_option.clubs_id %>"><%= club_option.club.title %></option>
+              <option value="<%= club_option.club_id %>"><%= club_option.club.title %></option>
               <% end %>
             </select>
             <br>
@@ -36,4 +36,4 @@
         </form>
     </div>
   </div>
-</div>   
+</div>
