@@ -18,7 +18,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <%= link_to 'My Clubs', clubs_path, class: 'dropdown-item' %>
-            <a class="dropdown-item" href="/my_seasons">My Seasons</a>
+            <%= link_to 'My Seasons', seasons_path, class: 'dropdown-item' %>
             <a class="dropdown-item" href="/my_markets">My Markets</a>
           </div>
         </li>
@@ -28,7 +28,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <%= link_to 'New Club', new_club_path, class: 'dropdown-item' %>
-            <a class="dropdown-item" href="/new_season">New Season</a>
+            <%= link_to 'New Season', new_season_path, class: 'dropdown-item' %>
             <a class="dropdown-item" href="/new_market">New Market</a>
           </div>
         </li>

@@ -21,8 +21,9 @@
 class Season < ApplicationRecord
   belongs_to :club
   has_many :markets
-  has_many :memberships
+  has_many :memberships, -> { where(goes_to: 'seasons_table') }
   has_many :users, :through => :memberships
+  has_many :chats, -> { where(goes_to: 'season') }
 
   scope :open, -> { where.not(status: 'closed') }
   scope :closed, -> { where(status: 'closed') }

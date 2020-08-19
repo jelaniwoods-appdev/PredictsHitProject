@@ -25,6 +25,9 @@ class Market < ApplicationRecord
   belongs_to :season
   has_many :contracts
 
+  scope :open, -> { where.not(status: 'closed') }
+  scope :closed, -> { where(status: 'closed') }
+
   validates_presence_of :title
 
   mount_uploader :picture, PictureUploader

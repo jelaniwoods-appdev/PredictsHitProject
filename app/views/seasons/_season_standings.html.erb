@@ -8,7 +8,7 @@
         </div>
         <div class="container scrolly" style="height: 90%">
 
-          <% @season_membership_rows.each do |member| %>
+          <% @season_memberships.each do |member| %>
             <a href="/profile/<%= member.user_id %>"><%= member.user.username %></a> | <%= number_to_currency(member.assets.where({ :category => "season_fund"}).at(0).quantity) %> | <%= member.assets.where("category = ? OR category =?", "contract_quantity_a", "contract_quantity_b").sum(:quantity).to_i %>
             <br>
           <% end %>

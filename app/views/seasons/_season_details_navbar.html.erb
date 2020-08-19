@@ -6,9 +6,9 @@
   <div class="collapse navbar-collapse" id="season_dropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a type="button" class="nav-link" id="return" href="/clubs/<%= @club_row.id %>">Return to Club</a>
+        <a type="button" class="nav-link" id="return" href="/clubs/<%= @club.id %>">Return to Club</a>
       </li>
-      <% if @season_row.status != "closed" %> 
+      <% if @season.status != "closed" %> 
         <% if @owner_user_id == current_user.id %>
           <li class="nav-item">
             <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_season_details">Edit Details</a>

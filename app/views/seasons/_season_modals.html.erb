@@ -8,18 +8,18 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/update_season_details/<%= @club_row.id %>/<%= @season_row.id %>" method="post" enctype="multipart/form-data">
+      <form action="<%= @season.id %>" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="form-group">
             <input type="hidden" name="_method" value="patch">
             <label for="update_season_title">What is the new title of this Season?</label>
-            <input class="form-control" id="update_season_title" type="text" name="updated_season_title" placeholder="Enter a title..." value="<%= @season_row.title %>" required="required">
+            <input class="form-control" id="update_season_title" type="text" name="title" placeholder="Enter a title..." value="<%= @season.title %>" required="required">
             <br>
             <label for="update_season_description">What is the new description of this Season?</label>
-            <input class="form-control" id="update_season_description" type="text" name="updated_season_description" placeholder="Enter a description..." value="<%= @season_row.description %>">
+            <input class="form-control" id="update_season_description" type="text" name="description" placeholder="Enter a description..." value="<%= @season.description %>">
             <br>
             <label for="update_season_picture">What picture would you like to set for this Season?</label>
-            <input type="file" id="update_season_picture" name="updated_season_picture" class="form-control">
+            <input type="file" id="update_season_picture" name="picture" class="form-control">
           </div>
         </div>
         <div class="modal-footer">
@@ -40,14 +40,14 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/add_season_memberships/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
+      <form action="/add_season_memberships/<%= @club.id %>/<%= @season.id %>" method="post">
         <div class="modal-body">
           <div class="form-group">
             <!-- Update to involve search -->
             <label for="select_club_member">Select a member to add from the Club associated with this Season:</label>
               <select class="form-control" required="required" id="select_club_member" name="member_id"><option value="">Select member</option>
-                <% @club_membership_rows.each do |club_member| %>
-                  <% if Membership.where({ :user_id => club_member.user_id, :club_id => club_member.club_id, :season_id => @season_row.id }).at(0) == nil %>
+                <% @club_memberships.each do |club_member| %>
+                  <% if Membership.where({ :user_id => club_member.user_id, :club_id => club_member.club_id, :season_id => @season.id }).at(0) == nil %>
                     <option value="<%= club_member.user_id %>"><%= club_member.user.username %></option>
                   <% end %>
                 <% end %>
@@ -98,12 +98,12 @@
             </tr>
           </thead>
 
-          <% @season_membership_rows.each do |member| %>
+          <% @season_memberships.each do |member| %>
           <tr class="d-flex">
             <td class="col-4">
               <a href="/profile/<%= member.user_id %>"><%= member.user.username %></a> 
             </td>
-            <form action="/manage_season_memberships/<%= @club_row.id %>/<%= @season_row.id %>/<%= member.user_id %>" method="post">
+            <form action="/manage_season_memberships/<%= @club.id %>/<%= @season.id %>/<%= member.user_id %>" method="post">
               
               <td class="col-4">
                 <select class="form-control" required="required" id="select_member_category" name="member_category"><option value="">Select new role for this Club member</option>
@@ -148,10 +148,10 @@
       </div>
       <div class="modal-body">
         <h5>Add (or Remove) Funds for all Users in Season</h5>
-        <form action="/update_season_funds/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
+        <form action="/update_season_funds/<%= @club.id %>/<%= @season.id %>" method="post">
           <div class="form-group">
             <input type="hidden" name="_method" value="patch">
-            <label for="update_season_fund">How much would you like to add to (or subtract from) the season fund?<br><br>(Amount currently in Season Fund: <%= number_to_currency(@season_row.fund) %>)</label>
+            <label for="update_season_fund">How much would you like to add to (or subtract from) the season fund?<br><br>(Amount currently in Season Fund: <%= number_to_currency(@season.fund) %>)</label>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
@@ -187,7 +187,7 @@
 
             </tr>
           </thead>
-          <% @season_membership_rows.each do |member| %>
+          <% @season_memberships.each do |member| %>
           <tr>
             <td>
               <%= member.user.username %>
@@ -198,7 +198,7 @@
             </td>
 
             <td>
-              <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= member.user.id %>" method="post">
+              <form action="/adjust_user_funds/<%= @club.id %>/<%= @season.id %>/<%= member.user.id %>" method="post">
                 <div class="form-group">
                   <input type="hidden" name="_method" value="patch">
                   <input type="hidden" name="adjustment_factor" value="positive">
@@ -215,7 +215,7 @@
             </td>
 
             <td>
-              <form action="/adjust_user_funds/<%= @club_row.id %>/<%= @season_row.id %>/<%= member.user.id %>" method="post">
+              <form action="/adjust_user_funds/<%= @club.id %>/<%= @season.id %>/<%= member.user.id %>" method="post">
                 <div class="form-group">
                   <input type="hidden" name="_method" value="patch">
                   <input type="hidden" name="adjustment_factor" value="negative">
@@ -254,8 +254,8 @@
           <div class="form-group">
             <!-- Include some form of permission functionality where only members of each season who are designated owner or admin under category column can create market -->
             <label for="selected_season">Create a Market for the following Season:</label>
-            <input id="selected_season" name="associated_season_title" class="form-control" type="text" placeholder="<%= @season_row.title %>" readonly>
-            <input type="hidden" id="hidden_season_id" name="associated_season_id" value="<%= @season_row.id %>">
+            <input id="selected_season" name="associated_season_title" class="form-control" type="text" placeholder="<%= @season.title %>" readonly>
+            <input type="hidden" id="hidden_season_id" name="associated_season_id" value="<%= @season.id %>">
             <br>
             <label for="create_market_title">What is the title of this Market?</label>
             <input class="form-control" id="create_market_title" type="text" name="market_title" placeholder="Enter a title..." required>
@@ -305,7 +305,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/close_season/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
+      <form action="/close_season/<%= @club.id %>/<%= @season.id %>" method="post">
         <div class="modal-body">
           <div class="form-group">
             <label for="select_member_category">Are you sure you want to close this Season?</label>
@@ -333,7 +333,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/leave_season/<%= @club_row.id %>/<%= @season_row.id %>" method="post">
+      <form action="/leave_season/<%= @club.id %>/<%= @season.id %>" method="post">
         <div class="modal-body">
           <div class="form-group">
             <label for="select_member_category">Are you sure you want to leave this Season?</label>

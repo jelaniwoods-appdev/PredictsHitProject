@@ -33,19 +33,18 @@ Rails.application.routes.draw do
   # post("/create_new_club", { :controller => "club", :action => "create_club" })
   # get("/my_clubs", { :controller => "club", :action => "show_clubs" })
   # get("/clubs/:club_id", { :controller => "club", :action => "view_club" })
-  # get("/clubs/manage/:club_id", { :controller => "club", :action => "manage_club" })
   # patch("/update_club_details/:club_id", { :controller => "club", :action => "update_club_details"})
-  resources :clubs, except: [:destroy]
+  resources :clubs, except: [:destroy, :edit]
 
 
   #season routes
-  get("/new_season", { :controller => "season", :action => "season_create_form" })
-  post("/create_new_season", { :controller => "season", :action => "create_season" })
-  get("/my_seasons", { :controller => "season", :action => "show_seasons" })
-  get("/seasons/:club_id/:season_id", { :controller => "season", :action => "view_season" })
-  get("/seasons/manage/:club_id/:season_id", { :controller => "season", :action => "manage_season" })
-  patch("/update_season_details/:club_id/:season_id", { :controller => "season", :action => "update_season_details"})
-  post("/close_season/:club_id/:season_id", { :controller => "season", :action => "close_season"})
+  # get("/new_season", { :controller => "season", :action => "season_create_form" })
+  # post("/create_new_season", { :controller => "season", :action => "create_season" })
+  # get("/my_seasons", { :controller => "season", :action => "show_seasons" })
+  # get("/seasons/:club_id/:season_id", { :controller => "season", :action => "view_season" })
+  # patch("/update_season_details/:club_id/:season_id", { :controller => "season", :action => "update_season_details"})
+  # post("/close_season/:club_id/:season_id", { :controller => "season", :action => "close_season"})
+  resources :seasons, except: [:destroy, :edit]
 
   #market routes
   get("/new_market", { :controller => "market", :action => "market_create_form" })
