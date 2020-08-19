@@ -32,8 +32,8 @@
     <%= render 'home_templates/navbar' %>
 
     <!-- Render relevant secondary navbars and sidebars conditional on which page is being shown. -->
-      <% if params[:action] == 'view_club' && params[:controller] == 'club' %>
-        <%= render 'club_templates/club_details_navbar' %>
+      <% if params[:action] == 'show' && params[:controller] == 'clubs' %>
+        <%= render 'clubs/club_details_navbar' %>
       <% end %>
 
       <% if params[:action] == 'view_season' && params[:controller] == 'season' %>
@@ -44,7 +44,7 @@
         <%= render 'market_templates/market_details_navbar' %>
       <% end %>
 
-      <% if (params[:action] == 'show_clubs' && params[:controller] == 'club') || (params[:action] == 'show_seasons' && params[:controller] == 'season') || (params[:action] == 'show_markets' && params[:controller] == 'market')%>
+      <% if (params[:action] == 'index' && params[:controller] == 'clubs') || (params[:action] == 'show_seasons' && params[:controller] == 'season') || (params[:action] == 'show_markets' && params[:controller] == 'market')%>
         <%= render 'home_templates/membership_navbar' %>
       <% end %>
 

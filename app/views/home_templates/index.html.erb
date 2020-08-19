@@ -21,7 +21,9 @@
       <img src="<%= asset_path('Getting_Started.jpg') %>" class="card-img-top h-50" alt="Getting Started">
       <div class="card-body">
         <h5 class="card-title">Getting Started</h5>
-        <p class="card-text"><a class="stretched-link" href="/getting_started" style="text-decoration:none; color: black">Build a prediction market from scratch.</a></p>
+        <p class="card-text">
+          <a class="stretched-link" href="/getting_started" style="text-decoration:none; color: black">Build a prediction market from scratch.</a>
+        </p>
       </div>
     </div>
   </div>
@@ -31,7 +33,11 @@
       <img src="<%= asset_path('Blue_Blocks.jpg') %>" class="card-img-top h-50" alt="Getting Started">
       <div class="card-body">
         <h5 class="card-title">View Clubs</h5>
-        <p class="card-text"><a class="stretched-link" href="/my_clubs" style="text-decoration:none; color: black">Navigate through your current memberships.</a></p>
+        <p class="card-text">
+          <%= link_to 'Navigate through your current memberships.', clubs_path,
+            class: 'stretched-link', style: 'text-decoration:none; color: black'
+          %>
+        </p>
       </div>
     </div>
   </div>

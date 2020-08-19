@@ -1,20 +1,20 @@
 <div id="club_container">
   <div class="row">
     <div class="col-xs-12 col-md-10 offset-md-1">
-      <h1 class="center_title"><%= @club_row.title %></h1>
+      <h1 class="center_title"><%= @club.title %></h1>
       <div class="center_title">
-        <%= @club_row.description %>
+        <%= @club.description %>
       </div>
       <br>
       <div class="center_title">
-        <img src="<%= @club_row.picture %>" height="180" width="240" class="img-responsive">
+        <img src="<%= @club.picture %>" height="180" width="240" class="img-responsive">
       </div>
       <br>
       <h2>Current Seasons</h2>
         <br>
-      <% if @current_season_rows.present? %>
+      <% if @current_seasons.present? %>
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
-          <% @current_season_rows.each do |season| %>
+          <% @current_seasons.each do |season| %>
             <div class="col mb-4">
               <div class="card h-100">
                 <img src="<%= season.picture %>" class="card-img-top" alt="...">
@@ -57,18 +57,18 @@
           </div>
         <% else %>
           <h3>
-          There are no seasons currently available in <%= @club_row.title %>.
+          There are no seasons currently available in <%= @club.title %>.
           <br>
           </h3>
         <% end %>
 
       <% end %>
       <br>
-      <% if @closed_season_rows.present? %>
+      <% if @closed_seasons.present? %>
         <h2>Previous Seasons</h2>
         <br>
         <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
-          <% @closed_season_rows.each do |season| %>
+          <% @closed_seasons.each do |season| %>
             <div class="col mb-4">
               <div class="card h-100">
                 <img src="<%= season.picture %>" class="card-img-top" alt="...">
@@ -92,9 +92,9 @@
 </div>
 <br>
 
-<%= render 'club_templates/club_chat' %>
-<%= render 'club_templates/club_roster' %>
-<%= render 'club_templates/club_modals' %>
+<%= render 'club_chat' %>
+<%= render 'club_roster' %>
+<%= render 'club_modals' %>
 
 
 

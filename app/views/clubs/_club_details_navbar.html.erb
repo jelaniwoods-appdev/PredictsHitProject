@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="club_dropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a type="button" class="nav-link" href="/my_clubs">View All Clubs</a>
+        <%= link_to 'View All Clubs', clubs_path, class: 'nav-link' %>
       </li>
       <% if @owner_user_id == current_user.id %>
         <li class="nav-item">

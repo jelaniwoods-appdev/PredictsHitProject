@@ -29,12 +29,13 @@ Rails.application.routes.draw do
 
 
   #club routes
-  get("/new_club", { :controller => "club", :action => "club_create_form" })
-  post("/create_new_club", { :controller => "club", :action => "create_club" })
-  get("/my_clubs", { :controller => "club", :action => "show_clubs" })
-  get("/clubs/:club_id", { :controller => "club", :action => "view_club" })
-  get("/clubs/manage/:club_id", { :controller => "club", :action => "manage_club" })
-  patch("/update_club_details/:club_id", { :controller => "club", :action => "update_club_details"})
+  # get("/new_club", { :controller => "club", :action => "club_create_form" })
+  # post("/create_new_club", { :controller => "club", :action => "create_club" })
+  # get("/my_clubs", { :controller => "club", :action => "show_clubs" })
+  # get("/clubs/:club_id", { :controller => "club", :action => "view_club" })
+  # get("/clubs/manage/:club_id", { :controller => "club", :action => "manage_club" })
+  # patch("/update_club_details/:club_id", { :controller => "club", :action => "update_club_details"})
+  resources :clubs, except: [:destroy]
 
 
   #season routes

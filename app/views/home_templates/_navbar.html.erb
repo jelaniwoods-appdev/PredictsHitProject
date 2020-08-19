@@ -17,7 +17,7 @@
           Memberships
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/my_clubs">My Clubs</a>
+            <%= link_to 'My Clubs', clubs_path, class: 'dropdown-item' %>
             <a class="dropdown-item" href="/my_seasons">My Seasons</a>
             <a class="dropdown-item" href="/my_markets">My Markets</a>
           </div>
@@ -27,7 +27,7 @@
           Create
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/new_club">New Club</a>
+            <%= link_to 'New Club', new_club_path, class: 'dropdown-item' %>
             <a class="dropdown-item" href="/new_season">New Season</a>
             <a class="dropdown-item" href="/new_market">New Market</a>
           </div>

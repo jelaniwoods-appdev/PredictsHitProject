@@ -4,9 +4,9 @@
     <h1 class="center_title">My Clubs</h1>
     <br>
 
-    <% if @membership_rows.present? %>
+    <% if @memberships.present? %>
       <div class="row row-cols-1 row-cols-md-3">
-        <% @membership_rows.each do |member| %>
+        <% @memberships.each do |member| %>
           <div class="col mb-4">
             <div class="card">
               <img src="<%= member.club.picture %>" class="card-img-top" alt="...">
