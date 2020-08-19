@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_184206) do
+ActiveRecord::Schema.define(version: 2020_08_19_221602) do
 
   create_table "assets", force: :cascade do |t|
     t.string "category"
@@ -50,33 +50,6 @@ ActiveRecord::Schema.define(version: 2020_08_17_184206) do
     t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "comment_hierarchies", id: false, force: :cascade do |t|
-    t.integer "ancestor_id", null: false
-    t.integer "descendant_id", null: false
-    t.integer "generations", null: false
-    t.index ["ancestor_id", "descendant_id", "generations"], name: "comment_anc_desc_idx", unique: true
-    t.index ["descendant_id"], name: "comment_desc_idx"
-  end
-
-  create_table "comments", force: :cascade do |t|
-    t.string "title"
-    t.string "status"
-    t.text "body"
-    t.integer "parent_id"
-    t.string "goes_to"
-    t.integer "goes_to_id"
-    t.integer "user_id"
-    t.integer "club_id"
-    t.integer "season_id"
-    t.integer "market_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["club_id"], name: "index_comments_on_club_id"
-    t.index ["market_id"], name: "index_comments_on_market_id"
-    t.index ["season_id"], name: "index_comments_on_season_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "contracts", force: :cascade do |t|
