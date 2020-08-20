@@ -206,14 +206,14 @@ class MarketController < ApplicationController
     @season_row = Season.where({ :id => @season_id}).at(0)
     @market_row = Market.where({ :id => @market_id}).at(0)
     @contract_rows = @market_row.contracts.order({ :created_at => :asc })
-    @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
+    @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
 
 
     #relevant messages
     @market_messages_all = Chat.where({ :market_id => @market_id, :goes_to => "market" }).order({ :created_at => :desc })
     @market_messages_latest = @market_messages_all.first(50).reverse
 
-    if @season_membership_rows.where({ :user_id => current_user.id}).empty?
+    if @season_memberships.where({ :user_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")
     else

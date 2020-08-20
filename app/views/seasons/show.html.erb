@@ -43,7 +43,7 @@
         <br>
 
       <% else %>
-        <% if @owner_user_id == current_user.id %>
+        <% if @owner_user_id == current_user.id && @season.status != "closed" %>
           <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
             <div class="col mb-4">
               <div class="card h-100">
@@ -56,10 +56,17 @@
             </div>
           </div>
         <% else %>
-          <h3>
-            There are no markets currently available in <%= @season.title %>.
-          </h3>
-          <br>
+          <% if @season.status == "closed" %>
+            <h3>
+              This Season is closed!
+            </h3>
+            <br>
+          <% else %>
+            <h3>
+              There are no markets currently available in <%= @season.title %>.
+            </h3>
+            <br>
+          <% end %>
         <% end %>
       <% end %>
     

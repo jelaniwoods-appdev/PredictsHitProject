@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   # get("/my_seasons", { :controller => "season", :action => "show_seasons" })
   # get("/seasons/:club_id/:season_id", { :controller => "season", :action => "view_season" })
   # patch("/update_season_details/:club_id/:season_id", { :controller => "season", :action => "update_season_details"})
-  # post("/close_season/:club_id/:season_id", { :controller => "season", :action => "close_season"})
+  post("/close_season/:club_id/:season_id", { :controller => "seasons", :action => "close_season"})
   resources :seasons, except: [:destroy, :edit]
 
   #market routes

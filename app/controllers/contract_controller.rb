@@ -181,7 +181,7 @@ class ContractController < ApplicationController
         #add instance variables needed for partials that are refreshed
         @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
         @membership_id = @membership_row.id
-        @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
+        @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
         @market_row = @contract_row.market
 
         
@@ -338,7 +338,7 @@ class ContractController < ApplicationController
       #add instance variables needed for partials that are refreshed
       @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
-      @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
+      @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
       @market_row = @contract_row.market
 
       respond_to do |format|
@@ -509,7 +509,7 @@ class ContractController < ApplicationController
       #add instance variables needed for partials that are refreshed
       @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
-      @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
+      @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
       @market_row = @contract_row.market
 
       respond_to do |format|
@@ -615,7 +615,7 @@ class ContractController < ApplicationController
         #add instance variables needed for partials that are refreshed
         @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
         @membership_id = @membership_row.id
-        @season_membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
+        @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
         @market_row = @contract_row.market
 
         respond_to do |format|

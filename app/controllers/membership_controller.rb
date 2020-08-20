@@ -136,7 +136,7 @@ class MembershipController < ApplicationController
     
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
+      redirect_to("/seasons/" + @season_id.to_s)
     else
     
       #Create membership row for added user
@@ -161,7 +161,7 @@ class MembershipController < ApplicationController
 
       flash[:notice] = "Season Member was successfully added!" 
 
-      redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
+      redirect_to("/seasons/" + @season_id.to_s)
 
 
     end
@@ -182,12 +182,12 @@ class MembershipController < ApplicationController
     
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
+      redirect_to("/seasons/" + @season_id.to_s)
     else
 
       if @member_category == @membership_row.category
         flash[:alert] = @user_row.username.to_s + " was already a " + @member_category.to_s + "."
-        redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
+        redirect_to("/seasons/" + @season_id.to_s)
       else
         if @member_category == "owner"
           #if changing owner status, remove current owner and change to admin and then update user to owner
@@ -198,19 +198,19 @@ class MembershipController < ApplicationController
 
           flash[:notice] = @user_row.username.to_s + " is now the " + @member_category.to_s + "."
 
-          redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
+          redirect_to("/seasons/" + @season_id.to_s)
         else
           #do not allow owner to change themselves to admin or member
           if @membership_row.category == "owner"
             flash[:alert] = "You cannot remove yourself as owner without assigning someone else. If you no longer want to be the owner, assign someone else to be the owner."
-            redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
+            redirect_to("/seasons/" + @season_id.to_s)
           else
             @membership_row.category = @member_category
             @membership_row.save
             
             flash[:notice] = @user_row.username.to_s + " is now a " + @member_category.to_s + "."
 
-            redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
+            redirect_to("/seasons/" + @season_id.to_s)
           end
         end
       end
@@ -228,7 +228,7 @@ class MembershipController < ApplicationController
 
     if @member_category == "owner" && @season_membership_rows.count > 1
       flash[:alert] = "You are the Season owner. You'll have to assign someone else to be the owner before you can leave."
-      redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id)
+      redirect_to("/seasons/" + @season_id.to_s)
     else
       #remove user club membership
       @user_season_membership_row.destroy

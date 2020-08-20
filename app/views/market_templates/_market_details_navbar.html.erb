@@ -6,7 +6,7 @@
   <div class="collapse navbar-collapse" id="market_dropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a type="button" class="nav-link" id="return" href="/seasons/<%= @club_row.id %>/<%= @season_row.id %>">Return to Season</a>
+        <a type="button" class="nav-link" id="return" href="/seasons/<%= @season_row.id %>">Return to Season</a>
       </li>
       <% if @owner_user_id == current_user.id && @market_row.status != "closed" %>
         <li class="nav-item">

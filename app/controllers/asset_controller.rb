@@ -11,7 +11,7 @@ class AssetController < ApplicationController
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+      redirect_to("/seasons/" + @season_id.to_s)
     else
 
       if params.fetch("amount_added").numeric?
@@ -35,16 +35,16 @@ class AssetController < ApplicationController
             flash[:notice] = ActiveSupport::NumberHelper.number_to_currency(@fund_change_amount) + " in funds were successfully added to all Season users!"
           end
           
-          redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+          redirect_to("/seasons/" + @season_id.to_s)
 
         else
 
           flash[:alert] = "Fund change was unsuccessful. Please enter a valid number."
-          redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+          redirect_to("/seasons/" + @season_id.to_s)
         end
       else
         flash[:alert] = "Fund change was unsuccessful. Please enter a valid number."
-        redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+        redirect_to("/seasons/" + @season_id.to_s)
       end
     end
 
@@ -66,7 +66,7 @@ class AssetController < ApplicationController
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+      redirect_to("/seasons/" + @season_id.to_s)
     else
       #if adjustment_factor is positive, fund amount changed is same as entered, if negative, then multiply by -1
       if @adjustment_factor == "positive"
@@ -75,7 +75,7 @@ class AssetController < ApplicationController
         @user_funds_changed = @user_funds_entered * -1
       else
         flash[:alert] = "User fund not updated. Please enter a valid number."
-        redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
+        redirect_to("/seasons/" + @season_id.to_s)
       return
       end
 
@@ -88,7 +88,7 @@ class AssetController < ApplicationController
         flash[:notice] = ActiveSupport::NumberHelper.number_to_currency(@user_funds_entered) + " has successfully been removed from " + @username + "'s season fund!"
       end
       
-      redirect_to("/seasons/" + @club_id.to_s + "/" + @season_id.to_s)
+      redirect_to("/seasons/" + @season_id.to_s)
 
     end
 

@@ -44,43 +44,48 @@ class SeasonsController < ApplicationController
     end
   end
 
-  def season_create_form
-    @user_id = current_user.id
-
-    #pull the club memberships in which the user is an owner or admin for
-    #see if better way to map memberships to clubs
-    #later make it so only active clubs show up and/or include search option.
-    @user_club_memberships = Membership.where({ :user_id => @user_id, :goes_to => "clubs_table", :category => "owner"}).or(Membership.where({ :user_id => @user_id, :goes_to => "clubs_table", :category => "admin"}))
-    
-    render({ :template => "season_templates/create_season_page.html.erb" })
+  def new
+    @user_club_memberships = Membership.where({ :user_id => current_user.id, :goes_to => "clubs_table", :category => "owner"}).or(Membership.where({ :user_id => current_user.id, :goes_to => "clubs_table", :category => "admin"}))
   end
 
-  def create_season
-    club_id = params.fetch("associated_club_id")
-    season_title = params.fetch("season_title")
-    season_description = params.fetch("season_description")
-    season_fund = params.fetch("season_fund")
-    
+
+    def createCLUB
+    #Create a new club and pass in the form fields
+    @new_club = Club.new(club_params)
+
+    @membership = @new_club.memberships.build(membership_attributes)
+    # `save` will run validations and return true or false if the record has
+    # persisted or not.
+    # This will also use a SQL transaction to save both the club and the membership at the same time.
+    # If either fails to persist, neither will persist.
+    if @new_club.save
+      flash[:notice] = "Your club has been successfully created!"
+      redirect_to club_path(@new_club)
+    else
+      flash[:alert] = "Club creation was unsuccessful. Please enter a title."
+
+      render :new
+    end
+  end
+
+
+
+
+  def create
     #Confirm user submitting form is the Season owner of the Market
+    club_id = params.fetch("club_id")
     @owner_user_id = Membership.where({ :club_id => club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/new_season")
+      redirect_to("/seasons/new")
     else
+      season_fund = params.fetch("season_fund")
 
-      #Create a new season and pass in the form fields
-      @new_season = Season.new
-      @new_season.club_id = club_id
-      @new_season.title = season_title
-      @new_season.description = season_description
+      @new_season = Season.new(season_params)
       @new_season.fund = season_fund
       @new_season.status = "active"
-      if params[:season_picture].present?
-        @new_season.picture = params.fetch("season_picture")
-      end
-      if @new_season.valid?
-        @new_season.save
+      if @new_season.save
         #Create a new membership to this season and assign the creator of the season to be the 'owner'
         @new_membership = Membership.new
         @new_membership.user_id = current_user.id
@@ -99,19 +104,20 @@ class SeasonsController < ApplicationController
         @new_asset.save
 
         flash[:notice] = "Season successfully created!" 
-        redirect_to("/seasons/" + @new_season.club_id.to_s + "/" + @new_season.id.to_s)
+        redirect_to("/seasons/" + @new_season.id.to_s)
       else
         if params.fetch("season_title").present?
           flash[:alert] = "Season creation was unsuccessful. Please enter a numerical amount of money for season participants to start with. If you do not want to give participants money yet, please enter 0."
         else
           flash[:alert] = "Season creation was unsuccessful. Please provide a title for your Season."
         end
-        redirect_to("/new_season")
+        redirect_to("/seasons/new")
       end
 
     end
 
   end
+
 
   def close_season
     @club_id = params.fetch("club_id")
@@ -125,7 +131,7 @@ class SeasonsController < ApplicationController
     
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+      redirect_to("/seasons/" + @season_id.to_s)
     else
       #check if all markets are closed
       season_markets.each do |market_closed_check|
@@ -143,7 +149,7 @@ class SeasonsController < ApplicationController
         flash[:alert] = "At least one Market in the Season is not yet closed. Please make sure all Markets are closed before closing the Season."
       end
       
-      redirect_to("/seasons/" + @club_id.to_s + "/"+ @season_id.to_s)
+      redirect_to("/seasons/" + @season_id.to_s)
       
     end
     
@@ -152,12 +158,15 @@ class SeasonsController < ApplicationController
   private
 
   def season_params
-    params.permit(:title, :description, :picture, :id, :_method)
+    params.permit(:title, :description, :picture, :id, :_method, :club_id)
   end
 
   def membership_attributes
     { user_id: current_user.id, goes_to: 'seasons_table', category: 'owner' }
   end
 
+  # def asset_attributes
+  #   { season_id: @new_season.id, category: 'season_fund', quantity: season_fund }
+  # end
 
 end
