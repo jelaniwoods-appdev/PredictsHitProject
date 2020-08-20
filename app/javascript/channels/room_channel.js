@@ -1,10 +1,9 @@
 import consumer from "./consumer"
 
-let submit_messages;
+
 
 $(document).on('turbolinks:load', function () {
 
-  submit_messages()
 
   consumer.subscriptions.create({
       channel: "RoomChannel",
@@ -43,12 +42,3 @@ $(document).on('turbolinks:load', function () {
   });
 
 })
-
-submit_messages = function () {
-  $('#comment_body').on('keydown', function (event) {
-    if (event.keyCode == 13) {
-      $(this).closest("form").submit()
-      $(this).innerHTML = ''
-    }
-  })
-}
