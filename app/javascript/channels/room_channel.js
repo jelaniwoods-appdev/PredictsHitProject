@@ -12,7 +12,7 @@ $(document).on('turbolinks:load', function () {
     }, {
     connected() {
       // Called when the subscription is ready for use on the server
-      console.log("connected!")
+
     },
 
     disconnected() {
@@ -21,9 +21,6 @@ $(document).on('turbolinks:load', function () {
 
     received(data) {
       // Called when there's incoming data on the websocket for this channel
-      console.log(data.prof_pic)
-      console.log(data.username)
-      console.log(data.body)
 
       $('#live_messages').append(
         '<div>' +
