@@ -12,29 +12,12 @@
         <a class="nav-link" href="/global_markets">Global Markets</a>
       </li>
       <% if user_signed_in? %>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Memberships
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <%= link_to 'My Clubs', clubs_path, class: 'dropdown-item' %>
-            <%= link_to 'My Seasons', seasons_path, class: 'dropdown-item' %>
-            <a class="dropdown-item" href="/my_markets">My Markets</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Create
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <%= link_to 'New Club', new_club_path, class: 'dropdown-item' %>
-            <%= link_to 'New Season', new_season_path, class: 'dropdown-item' %>
-            <a class="dropdown-item" href="/new_market">New Market</a>
-          </div>
+        <li class="nav-item">
+          <%= link_to 'My Clubs', clubs_path, class: 'nav-link' %>
         </li>
         <li class="nav-item">
-        <a class="nav-link" href="/profile/<%= current_user.id.to_s%>">My Profile</a>
-      </li>
+          <a class="nav-link" href="/profile/<%= current_user.id.to_s%>">My Profile</a>
+        </li>
       <% end %>
       <li class="nav-item">
         <a class="nav-link" href="/faq">FAQ</a>
