@@ -3,9 +3,17 @@
     
     <h1 class="center_title">My Clubs</h1>
     <br>
-
+    <div class="row row-cols-1 row-cols-md-3">
+      <div class="col mb-4">
+        <div class="card h-100">
+          <img src="<%= asset_path('plus_image.svg') %>" class="card-img-top custom_image" alt="Create Club">
+          <div class="card-body">
+            <h3 class="card-title custom_image_middle">Create New Club</h3>
+            <div class="text-center"><a type="button" class="nav-link stretched-link" data-toggle="modal" data-target="#create_club"></a></div>
+          </div>
+        </div>
+      </div>
     <% if @memberships.present? %>
-      <div class="row row-cols-1 row-cols-md-3">
         <% @memberships.each do |member| %>
           <div class="col mb-4">
             <div class="card">
@@ -22,14 +30,41 @@
             </div>
           </div>
         <% end %>
-      </div>
     <% else %>
-      <h2>
-        You do not belong to any Clubs yet.
-        <br>
-        <br>
-        Ask a current Club owner to invite you to their Club...or create your own!
-      </h2>
     <% end %>
+    </div>
+  </div>
+</div>
+
+
+<!-- Create Club Modal -->
+<div class="modal fade" id="create_club" tabindex="-1" role="dialog" aria-labelledby="create_clubLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="create_clubLabel">Create a New Club</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/clubs" method="post" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="create_club_title">What is the title of this Club?</label>
+            <input class="form-control" id="create_club_title" type="text" name="title" placeholder="Enter a title..." required="required">
+            <br>
+            <label for="create_club_description">What is the description of this club?</label>
+            <input class="form-control" id="create_club_description" type="text" name="description" placeholder="Enter a description...">
+            <br>
+            <label for="create_club_picture">What picture would you like to set for this Club?</label>
+            <input type="file" id="create_club_picture" name="picture" class="form-control">
+            <br>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-block" data-disable-with="Processing...">Create Club</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
