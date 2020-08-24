@@ -52,9 +52,9 @@ Rails.application.routes.draw do
   # get("/my_markets", { :controller => "market", :action => "show_markets" })
   # get("/markets/:club_id/:season_id/:market_id", { :controller => "market", :action => "view_market" })
   # patch("/update_market_details/:club_id/:season_id/:market_id", { :controller => "market", :action => "update_market_details"})
-  post("/close_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "close_market_action" })
-  post("/pause_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "pause_market_action" })
-  post("/unpause_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "unpause_market_action" })
+  post("/close_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "close_market" })
+  post("/pause_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "pause_market" })
+  post("/unpause_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "unpause_market" })
   resources :markets, except: [:destroy, :edit]
   
   #contract routes

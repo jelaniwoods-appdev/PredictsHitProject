@@ -54,49 +54,29 @@ class MarketsController < ApplicationController
     
   end
   
-  def market_create_form
-    @user_id = current_user.id
-
-    #pull the season memberships in which the user is an owner or admin for
-    #see if better way to map memberships to seasons
-    @user_season_memberships = Membership.where({ :user_id => @user_id, :goes_to => "seasons_table", :category => "owner"}).or(Membership.where({ :user_id => @user_id, :goes_to => "seasons_table", :category => "admin"})).order({ :club_id => :asc })
-    
-    render({ :template => "market_templates/create_market_page.html.erb" })
+  def new
+    @user_season_memberships = Membership.where({ :user_id => current_user.id, :goes_to => "seasons_table", :category => "owner"}).or(Membership.where({ :user_id => current_user.id, :goes_to => "seasons_table", :category => "admin"})).order({ :club_id => :asc })
   end
 
-  def create_market
-    season_id = params.fetch("associated_season_id")
-    market_title = params.fetch("market_title")
-    market_description = params.fetch("market_description")
-    market_category = params.fetch("market_category")
 
+  def create
+    season_id = params.fetch("season_id")
     #Confirm user submitting form is the owner of the Season the market is being created for
     @owner_user_id = Membership.where({ :season_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
     
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/")
+      redirect_to("/markets/new")
     else
-
       #Create a new market and pass in the form fields
-      @new_market = Market.new
-      @new_market.season_id = season_id
-      @new_market.title = market_title
-      @new_market.description = market_description
-      @new_market.category = market_category
-
-
+      @new_market = Market.new(market_params)
       @new_market.status = "active"
-      if params[:market_picture].present?
-        @new_market.picture = params.fetch("market_picture")
-      end
-      if @new_market.valid?
-        @new_market.save
+      if @new_market.save
         flash[:notice] = "Market successfully created!" 
         redirect_to("/markets/" + @new_market.id.to_s)
       else
         flash[:alert] = "Market creation was unsuccessful. Please enter a title." 
-        redirect_to("/new_market")
+        redirect_to("/seasons/" + season_id.to_s)
       end
       
     end
@@ -104,44 +84,40 @@ class MarketsController < ApplicationController
   end
 
 
-  
-
-
-
-  def close_market_action
+  def close_market
     club_id = params.fetch("club_id")
     season_id = params.fetch("season_id")
     market_id = params.fetch("market_id")
-    @market_row = Market.where({ :id => market_id }).at(0)
-    @contract_rows = @market_row.contracts
-    @membership_rows = Membership.where({ :season_id => season_id, :goes_to => "seasons_table"})
+    @market = Market.where({ :id => market_id }).at(0)
+    @contracts = @market.contracts
+    @memberships = Membership.where({ :season_id => season_id, :goes_to => "seasons_table"})
 
     #Confirm user submitting form is the Season owner of the Market and that the Market is not already closed
-    @owner_user_id = Membership.where({ :season_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+    @owner_user_id = Membership.where({ :season_id => @market.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
-    if (@market_row.status == "closed") || (@owner_user_id != current_user.id)
+    if (@market.status == "closed") || (@owner_user_id != current_user.id)
       flash[:alert] = "You are not authorized to perform this action."
       redirect_to("/markets/" + market_id.to_s)
     else
 
       #For each contract in the market, determine final resolution
 
-      @contract_rows.each do |contract_x|
+      @contracts.each do |contract_x|
         contract_outcome =  params.fetch(contract_x.id.to_s)
         if contract_outcome == "no"
           #determine rows in asset table associated with this contract (no)
-          asset_rows = Asset.where({ :contract_id => contract_x.id, :category => "contract_quantity_b"})
+          assets = Asset.where({ :contract_id => contract_x.id, :category => "contract_quantity_b"})
 
           #run loop on each relevant asset row to 1) determine quantity associated with each membership and then 2) to add to season fund to the relevant membership
-          asset_rows.each do |payout_contract|
+          assets.each do |payout_contract|
             amount = payout_contract.quantity #for now assume always 1 to 1 relationship. Can always add factor to adjust quantity if necessary
 
             #find associated season_fund row for this membership
-            season_fund_row = Asset.where({ :membership_id => payout_contract.membership_id, :category => "season_fund"}).at(0)
+            season_fund = Asset.where({ :membership_id => payout_contract.membership_id, :category => "season_fund"}).at(0)
 
             #Add amount associated with contract to season_fund for each relevant membership
-            season_fund_row.quantity = season_fund_row.quantity + amount
-            season_fund_row.save
+            season_fund.quantity = season_fund.quantity + amount
+            season_fund.save
 
           end
 
@@ -150,26 +126,26 @@ class MarketsController < ApplicationController
           
         elsif contract_outcome == "yes" #consider adding 'and' conditional that contract is active to prevent potential double counting/erros
           #determine rows in asset table associated with this contract (yes)
-          asset_rows = Asset.where({ :contract_id => contract_x.id, :category => "contract_quantity_a"})
+          assets = Asset.where({ :contract_id => contract_x.id, :category => "contract_quantity_a"})
 
           #run loop on each relevant asset row to 1) determine quantity associated with each membership and then 2) to add to season fund to the relevant membership
-          asset_rows.each do |payout_contract|
+          assets.each do |payout_contract|
             amount = payout_contract.quantity #for now assume always 1 to 1 relationship. Can always add factor to adjust quantity if necessary
 
             #find associated season_fund row for this membership
-            season_fund_row = Asset.where({ :membership_id => payout_contract.membership_id, :category => "season_fund"}).at(0)
+            season_fund = Asset.where({ :membership_id => payout_contract.membership_id, :category => "season_fund"}).at(0)
 
             #Add amount associated with contract to season_fund for each relevant membership
-            season_fund_row.quantity = season_fund_row.quantity + amount
-            season_fund_row.save
+            season_fund.quantity = season_fund.quantity + amount
+            season_fund.save
 
           end
           contract_x.status = "closed"
           contract_x.save
         end
         #now that funds have been distributed to season fund, clear all asset ownership of this contract
-        all_asset_rows = Asset.where({ :contract_id => contract_x.id})
-        all_asset_rows.each do |remove_contract_ownership|
+        all_assets = Asset.where({ :contract_id => contract_x.id})
+        all_assets.each do |remove_contract_ownership|
           remove_contract_ownership.destroy
         end
       end
@@ -177,8 +153,8 @@ class MarketsController < ApplicationController
       #convert each user's contract quantities into season funds based on the final resoultion
       
       #change market status to closed
-      @market_row.status = "closed"
-      @market_row.save
+      @market.status = "closed"
+      @market.save
 
 
       flash[:notice] = "Market has been successfully closed!"
@@ -188,22 +164,22 @@ class MarketsController < ApplicationController
 
   end
 
-  def pause_market_action
+  def pause_market
     @club_id = params.fetch("club_id")
     @season_id = params.fetch("season_id")
     @market_id = params.fetch("market_id")
-    @market_row = Market.where({ :id => @market_id }).at(0)
+    @market = Market.where({ :id => @market_id }).at(0)
   
     #Confirm user submitting form is the Season owner of the Market and that the Market is active
-    @owner_user_id = Membership.where({ :season_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+    @owner_user_id = Membership.where({ :season_id => @market.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
-    if (@market_row.status != "active") || (@owner_user_id != current_user.id)
+    if (@market.status != "active") || (@owner_user_id != current_user.id)
       flash[:alert] = "You are not authorized to perform this action."
       redirect_to("/markets/" + @market_id.to_s)
     else
     
 
-      paused_market = @market_row
+      paused_market = @market
       paused_market_contracts = paused_market.contracts
 
       #pause market
@@ -223,21 +199,21 @@ class MarketsController < ApplicationController
     
   end
 
-  def unpause_market_action
+  def unpause_market
     @club_id = params.fetch("club_id")
     @season_id = params.fetch("season_id")
     @market_id = params.fetch("market_id")
-    @market_row = Market.where({ :id => @market_id }).at(0)
+    @market = Market.where({ :id => @market_id }).at(0)
   
     #Confirm user submitting form is the Season owner of the Market and that the Market is paused
-    @owner_user_id = Membership.where({ :season_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+    @owner_user_id = Membership.where({ :season_id => @market.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
-    if (@market_row.status != "paused") || (@owner_user_id != current_user.id)
+    if (@market.status != "paused") || (@owner_user_id != current_user.id)
       flash[:alert] = "You are not authorized to perform this action."
       redirect_to("/markets/" + @market_id.to_s)
     else
 
-      unpaused_market = @market_row
+      unpaused_market = @market
       unpaused_market_contracts = unpaused_market.contracts
 
       #unpause market
@@ -261,7 +237,7 @@ class MarketsController < ApplicationController
   private
 
   def market_params
-    params.permit(:title, :description, :picture, :id, :_method, :club_id)
+    params.permit(:title, :description, :picture, :id, :_method, :season_id, :category)
   end
 
 end
