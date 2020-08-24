@@ -254,7 +254,7 @@ class MembershipController < ApplicationController
     
     if (@club_owner_user_id != current_user.id) || (@season_owner_user_id != current_user.id)
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+      redirect_to("/markets/" + @market_id.to_s)
     else
 
       #Create club membership row for added user
@@ -292,17 +292,17 @@ class MembershipController < ApplicationController
 
           flash[:notice] = "Player was successfully added!" 
 
-          redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+          redirect_to("/markets/" + @market_id.to_s)
 
         else
           flash[:alert] = "There was an issue adding this player. It looks like the player has already been invited!" 
 
-          redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+          redirect_to("/markets/" + @market_id.to_s)
         end
         
       else 
         flash[:alert] = "There was an issue adding this player. Please confirm you entered the correct username."
-        redirect_to("/markets/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s)
+        redirect_to("/markets/" + @market_id.to_s)
       end
 
     end

@@ -8,18 +8,18 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/update_market_details/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post" enctype="multipart/form-data">
+      <form action="<%= @market.id %>" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="form-group">
             <input type="hidden" name="_method" value="patch">
-            <label for="update_market_title">What is the new title of this Meason?</label>
-            <input class="form-control" id="update_market_title" type="text" name="updated_market_title" placeholder="Enter a title..." value="<%= @market_row.title %>" required>
+            <label for="update_market_title">What is the new title of this Market?</label>
+            <input class="form-control" id="update_market_title" type="text" name="title" placeholder="Enter a title..." value="<%= @market.title %>" required>
             <br>
             <label for="update_market_description">What is the new description of this Market?</label>
-            <input class="form-control" id="update_market_description" type="text" name="updated_market_description" placeholder="Enter a description..." value="<%= @market_row.description %>">
+            <input class="form-control" id="update_market_description" type="text" name="description" placeholder="Enter a description..." value="<%= @market.description %>">
             <br>
             <label for="update_market_picture">What picture would you like to set for this Market?</label>
-            <input type="file" id="update_market_picture" name="updated_market_picture" class="form-control">
+            <input type="file" id="update_market_picture" name="picture" class="form-control">
           </div>
         </div>
         <div class="modal-footer">
@@ -40,7 +40,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/add_market_contract/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post" enctype="multipart/form-data">
+      <form action="/add_market_contract/<%= @market.season.club.id %>/<%= @market.season.id %>/<%= @market.id %>" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="form-group">
             <!-- Include some form of permission functionality where only members of each season who are designated owner or admin under category column can create contract -->
@@ -72,10 +72,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <% if @market_row.status == "paused" %>
+        <% if @market.status == "paused" %>
           <h5>This Market is already paused!</h5>
         <% else %>
-          <form action="/pause_market/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+          <form action="/pause_market/<%= @market.season.club.id %>/<%= @market.season.id %>/<%= @market.id %>" method="post">
             <div class="modal-body">
               <div class="form-group">
                 <label for="select_member_category">Are you sure you want to pause this market?</label>
@@ -103,10 +103,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <% if @market_row.status == "active" %>
+        <% if @market.status == "active" %>
           <h5>This Market is already active!</h5>
-        <% elsif @market_row.status == "paused" %>
-          <form action="/unpause_market/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+        <% elsif @market.status == "paused" %>
+          <form action="/unpause_market/<%= @market.season.club.id %>/<%= @market.season.id %>/<%= @market.id %>" method="post">
             <div class="modal-body">
               <div class="form-group">
                 <label for="select_member_category">Are you sure you want to unpause this market?<br><br>Note: If you want to close the market, that is a different action from unpausing. Unpausing the market will allow trading again.</label>
@@ -134,13 +134,13 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-        <% if @market_row.status == "closed" %>
+        <% if @market.status == "closed" %>
           <h5>This Market is already closed!</h5>
         <% else %>
-          <form action="/close_market/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+          <form action="/close_market/<%= @market.season.club.id %>/<%= @market.season.id %>/<%= @market.id %>" method="post">
             <div class="modal-body">
               <div class="form-group">
-              <% if @contract_rows.present? %>
+              <% if @contracts.present? %>
                 <table class="table table-hover table-striped">
                     <thead class="thead-dark">
                       <tr>
@@ -157,7 +157,7 @@
                         </th>
                       </tr>
                     </thead>
-                    <% @contract_rows.each do |contract| %>
+                    <% @contracts.each do |contract| %>
                       <tr>
                         <td>
                           <%= contract.title %>
@@ -200,7 +200,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/add_market_memberships/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>" method="post">
+      <form action="/add_market_memberships/<%= @market.season.club.id %>/<%= @market.season.id %>/<%= @market.id %>" method="post">
         <div class="modal-body">
           <div class="form-group">
             <label for="query">What is the username of the player you would like to add?<br><br>Note: This will add the User to the Club and Season this Market is associated with.</label>

@@ -40,11 +40,11 @@
         <%= render 'seasons/season_details_navbar' %>
       <% end %>
 
-      <% if params[:action] == 'view_market' && params[:controller] == 'market' %>
-        <%= render 'market_templates/market_details_navbar' %>
+      <% if params[:action] == 'show' && params[:controller] == 'markets' %>
+        <%= render 'markets/market_details_navbar' %>
       <% end %>
 
-      <% if (params[:action] == 'index' && params[:controller] == 'clubs') || (params[:action] == 'index' && params[:controller] == 'seasons') || (params[:action] == 'show_markets' && params[:controller] == 'market')%>
+      <% if (params[:action] == 'index' && params[:controller] == 'clubs') || (params[:action] == 'index' && params[:controller] == 'seasons') || (params[:action] == 'index' && params[:controller] == 'markets')%>
         <%= render 'home_templates/membership_navbar' %>
       <% end %>
 

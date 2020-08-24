@@ -1,15 +1,112 @@
-class MarketController < ApplicationController
+class MarketsController < ApplicationController
 
-  def show_markets
-    @membership_rows = Membership.where({ :user_id => current_user.id, :goes_to => "seasons_table" }).order({ :club_id => :asc, :season_id => :asc })
+  def index
+    @memberships = Membership.where({ :user_id => current_user.id, :goes_to => "seasons_table" }).order({ :club_id => :asc, :season_id => :asc })
     @m_count = 0
-    @membership_rows.each do |member_check|
+    @memberships.each do |member_check|
       Season.where({ :id => member_check.season_id }).at(0).markets.each do |market_count|
         @m_count = @m_count + 1
       end
     end
-    render({ :template => "market_templates/show_market_memberships.html.erb" })
   end
+
+  def update
+    @market = Market.find(params[:id])
+    @market.assign_attributes(market_params.slice(:title, :description, :picture))
+    
+    #Confirm user submitting form is the Season owner of the Market
+    @owner_user_id = Membership.where({ :season_id => @market.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to perform this action."
+    else
+      if @market.save
+        flash[:notice] = "Market details were successfully updated!"
+      else
+        flash[:alert] = "Market details were not updated. Please include a title."
+      end
+
+    end
+
+    redirect_to("/markets/" + @market.id.to_s)
+  end
+
+  def show
+    @market = Market.find(params[:id])
+
+    @contracts = @market.contracts.order({ :created_at => :asc })
+    @season_memberships = @market.season.memberships
+    @club_memberships = @market.season.club.memberships
+
+    #relevant messages
+    @market_messages_all = @market.chats.order(created_at: :desc)
+    @market_messages_latest = @market_messages_all.first(50).reverse
+
+    if @season_memberships.where({ :user_id => current_user.id}).empty?
+      flash[:alert] = "You are not authorized to view this page."
+      redirect_to root_path
+    else
+      @membership_id = Membership.where({ :user_id => current_user.id, :season_id => @market.season.id }).at(0).id
+      #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets.
+      @owner_user_id = @season_memberships.where(category: "owner").first.try(:user_id)
+      @club_owner_user_id = @club_memberships.where(category: "owner").first.try(:user_id)
+    end
+    
+  end
+  
+  def market_create_form
+    @user_id = current_user.id
+
+    #pull the season memberships in which the user is an owner or admin for
+    #see if better way to map memberships to seasons
+    @user_season_memberships = Membership.where({ :user_id => @user_id, :goes_to => "seasons_table", :category => "owner"}).or(Membership.where({ :user_id => @user_id, :goes_to => "seasons_table", :category => "admin"})).order({ :club_id => :asc })
+    
+    render({ :template => "market_templates/create_market_page.html.erb" })
+  end
+
+  def create_market
+    season_id = params.fetch("associated_season_id")
+    market_title = params.fetch("market_title")
+    market_description = params.fetch("market_description")
+    market_category = params.fetch("market_category")
+
+    #Confirm user submitting form is the owner of the Season the market is being created for
+    @owner_user_id = Membership.where({ :season_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+    
+    if @owner_user_id != current_user.id
+      flash[:alert] = "You are not authorized to perform this action."
+      redirect_to("/")
+    else
+
+      #Create a new market and pass in the form fields
+      @new_market = Market.new
+      @new_market.season_id = season_id
+      @new_market.title = market_title
+      @new_market.description = market_description
+      @new_market.category = market_category
+
+
+      @new_market.status = "active"
+      if params[:market_picture].present?
+        @new_market.picture = params.fetch("market_picture")
+      end
+      if @new_market.valid?
+        @new_market.save
+        flash[:notice] = "Market successfully created!" 
+        redirect_to("/markets/" + @new_market.id.to_s)
+      else
+        flash[:alert] = "Market creation was unsuccessful. Please enter a title." 
+        redirect_to("/new_market")
+      end
+      
+    end
+    
+  end
+
+
+  
+
+
 
   def close_market_action
     club_id = params.fetch("club_id")
@@ -161,120 +258,10 @@ class MarketController < ApplicationController
   end
 
 
-  def update_market_details
-    @club_id = params.fetch("club_id")
-    @season_id = params.fetch("season_id")
-    @market_id = params.fetch("market_id")
-    @market_row = Market.where({ :id => @market_id }).at(0)
-    @updated_title = params.fetch("updated_market_title")
-    @updated_description = params.fetch("updated_market_description")
-  
-    #Confirm user submitting form is the Season owner of the Market
-    @owner_user_id = Membership.where({ :season_id => @market_row.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+  private
 
-    if @owner_user_id != current_user.id
-      flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/markets/" + @market_id.to_s)
-    else
-
-      updated_market_details = @market_row
-      updated_market_details.title = @updated_title
-      updated_market_details.description = @updated_description
-      if params[:updated_market_picture].present?
-        updated_market_details.picture = params.fetch("updated_market_picture")
-      end
-      if updated_market_details.valid?
-        updated_market_details.save
-
-        flash[:notice] = "Market details were successfully updated!"
-        redirect_to("/markets/" + @market_id.to_s)
-      else
-        flash[:alert] = "Market details were not updated. Please include a title."
-        redirect_to("/markets/" + @market_id.to_s)
-      end
-
-    end
-    
-  end
-
-  def view_market
-    @club_id = params.fetch("club_id")
-    @season_id = params.fetch("season_id")
-    @market_id = params.fetch("market_id")
-
-    @club_row = Club.where({ :id => @club_id }).at(0)
-    @season_row = Season.where({ :id => @season_id}).at(0)
-    @market_row = Market.where({ :id => @market_id}).at(0)
-    @contract_rows = @market_row.contracts.order({ :created_at => :asc })
-    @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
-
-
-    #relevant messages
-    @market_messages_all = Chat.where({ :market_id => @market_id, :goes_to => "market" }).order({ :created_at => :desc })
-    @market_messages_latest = @market_messages_all.first(50).reverse
-
-    if @season_memberships.where({ :user_id => current_user.id}).empty?
-      flash[:alert] = "You are not authorized to view this page."
-      redirect_to("/")
-    else
-      #determine current user asset quantities (this seems unnecessary because i could just call current_user.id. Think through and decide whether to update.)
-      @membership_id = Membership.where({ :user_id => current_user.id, :season_id => @season_id }).at(0).id
-      #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets.
-      @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
-      @club_owner_user_id = Membership.where({ :club_id => @club_id, :goes_to => "clubs_table", :category => "owner"}).at(0).user_id
-
-      render({ :template => "market_templates/market_details.html.erb" })
-    end
-    
-  end
-  
-  def market_create_form
-    @user_id = current_user.id
-
-    #pull the season memberships in which the user is an owner or admin for
-    #see if better way to map memberships to seasons
-    @user_season_memberships = Membership.where({ :user_id => @user_id, :goes_to => "seasons_table", :category => "owner"}).or(Membership.where({ :user_id => @user_id, :goes_to => "seasons_table", :category => "admin"})).order({ :club_id => :asc })
-    
-    render({ :template => "market_templates/create_market_page.html.erb" })
-  end
-
-  def create_market
-    season_id = params.fetch("associated_season_id")
-    market_title = params.fetch("market_title")
-    market_description = params.fetch("market_description")
-    market_category = params.fetch("market_category")
-
-    #Confirm user submitting form is the owner of the Season the market is being created for
-    @owner_user_id = Membership.where({ :season_id => season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
-    
-    if @owner_user_id != current_user.id
-      flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/")
-    else
-
-      #Create a new market and pass in the form fields
-      @new_market = Market.new
-      @new_market.season_id = season_id
-      @new_market.title = market_title
-      @new_market.description = market_description
-      @new_market.category = market_category
-
-
-      @new_market.status = "active"
-      if params[:market_picture].present?
-        @new_market.picture = params.fetch("market_picture")
-      end
-      if @new_market.valid?
-        @new_market.save
-        flash[:notice] = "Market successfully created!" 
-        redirect_to("/markets/" + @new_market.id.to_s)
-      else
-        flash[:alert] = "Market creation was unsuccessful. Please enter a title." 
-        redirect_to("/new_market")
-      end
-      
-    end
-    
+  def market_params
+    params.permit(:title, :description, :picture, :id, :_method, :club_id)
   end
 
 end

@@ -1,6 +1,6 @@
 
 <div id="contracts">
-  <% @contract_rows.each_with_index do |contract, index| %>
+  <% @contracts.each_with_index do |contract, index| %>
     <div class="card">
       <div class="card-header px-0" id="headingOne">
         <div class="container-fluid pr-4">
@@ -34,7 +34,7 @@
               <% end %>
           </div>
           <div class="mb-0 px-0 col-1">
-            <% if @market_row.status == "active" %>
+            <% if @market.status == "active" %>
               <button class="btn stretched-link px-0" data-toggle="collapse" data-target="#heading_<%= index %>" aria-expanded="false" aria-controls="heading_<%= index %>">
                 <i class="fas fa-coins fa-2x" style="color:#374785;"></i>
               </button>
@@ -46,7 +46,7 @@
         </div>
       </div>
 
-      <% if @market_row.status == "active" %>
+      <% if @market.status == "active" %>
         <div id="heading_<%= index %>" class="collapse" aria-labelledby="heading_<%= index %>" data-parent="#accordion">
           <div class="row px-1">
             

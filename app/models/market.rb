@@ -24,6 +24,7 @@ class Market < ApplicationRecord
 
   belongs_to :season
   has_many :contracts
+  has_many :chats, -> { where(goes_to: 'market') }
 
   scope :open, -> { where.not(status: 'closed') }
   scope :closed, -> { where(status: 'closed') }
@@ -32,3 +33,7 @@ class Market < ApplicationRecord
 
   mount_uploader :picture, PictureUploader
 end
+
+
+
+  

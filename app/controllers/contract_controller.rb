@@ -11,7 +11,7 @@ class ContractController < ApplicationController
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/markets/" + @club_id + "/" + @season_id + "/" + @market_id)
+      redirect_to("/markets/" + @market_id)
     else
       @new_contract = Contract.new
       @new_contract.market_id = @market_id
@@ -29,10 +29,10 @@ class ContractController < ApplicationController
       if @new_contract.valid?
         @new_contract.save
         flash[:notice] = "Contract successfully created!" 
-        redirect_to("/markets/" + @club_id + "/" + @season_id + "/" + @market_id)
+        redirect_to("/markets/" + @market_id)
       else
         flash[:alert] = "Contract creation was unsuccessful. Please enter a title."
-        redirect_to("/markets/" + @club_id + "/" + @season_id + "/" + @market_id)
+        redirect_to("/markets/" + @market_id)
       end
     end
 

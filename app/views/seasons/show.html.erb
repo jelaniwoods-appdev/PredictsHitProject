@@ -23,7 +23,7 @@
                   <% else %>
                     <p class="card-text text-truncate"><%= market.description %> </p>
                   <% end %>
-                  <div class="text-center"><a class="btn btn-secondary stretched-link" href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a></div>
+                  <div class="text-center"><a class="btn btn-secondary stretched-link" href="/markets/<%= market.id.to_s %>">Go to Market</a></div>
                 </div>
               </div>
             </div>
@@ -86,7 +86,7 @@
                 <% else %>
                   <p class="card-text text-truncate"><%= market.description %> </p>
                 <% end %>
-                <div class="text-center"><a class="btn btn-secondary stretched-link" href="/markets/<%= market.season.club.id.to_s + '/' + market.season.id.to_s + '/' + market.id.to_s %>">Go to Market</a></div>
+                <div class="text-center"><a class="btn btn-secondary stretched-link" href="/markets/<%= market.id.to_s %>">Go to Market</a></div>
               </div>
             </div>
           </div>

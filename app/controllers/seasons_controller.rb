@@ -48,29 +48,6 @@ class SeasonsController < ApplicationController
     @user_club_memberships = Membership.where({ :user_id => current_user.id, :goes_to => "clubs_table", :category => "owner"}).or(Membership.where({ :user_id => current_user.id, :goes_to => "clubs_table", :category => "admin"}))
   end
 
-
-    def createCLUB
-    #Create a new club and pass in the form fields
-    @new_club = Club.new(club_params)
-
-    @membership = @new_club.memberships.build(membership_attributes)
-    # `save` will run validations and return true or false if the record has
-    # persisted or not.
-    # This will also use a SQL transaction to save both the club and the membership at the same time.
-    # If either fails to persist, neither will persist.
-    if @new_club.save
-      flash[:notice] = "Your club has been successfully created!"
-      redirect_to club_path(@new_club)
-    else
-      flash[:alert] = "Club creation was unsuccessful. Please enter a title."
-
-      render :new
-    end
-  end
-
-
-
-
   def create
     #Confirm user submitting form is the Season owner of the Market
     club_id = params.fetch("club_id")

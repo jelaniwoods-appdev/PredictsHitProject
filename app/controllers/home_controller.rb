@@ -102,7 +102,7 @@ class HomeController < ApplicationController
     if @new_contract.valid?
       @new_contract.save
       flash[:notice] = "Your Market was successfully created!" 
-      redirect_to("/markets/" + @new_club.id.to_s + "/" + @new_season.id.to_s + "/" + @new_market.id.to_s)
+      redirect_to("/markets/" + @new_market.id.to_s)
     else
       flash[:alert] = "Market creation was unsuccessful. Please enter a title for your Contract."
       redirect_to("/getting_started")

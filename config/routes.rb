@@ -47,14 +47,15 @@ Rails.application.routes.draw do
   resources :seasons, except: [:destroy, :edit]
 
   #market routes
-  get("/new_market", { :controller => "market", :action => "market_create_form" })
-  post("/create_new_market", { :controller => "market", :action => "create_market" })
-  get("/my_markets", { :controller => "market", :action => "show_markets" })
-  get("/markets/:club_id/:season_id/:market_id", { :controller => "market", :action => "view_market" })
-  patch("/update_market_details/:club_id/:season_id/:market_id", { :controller => "market", :action => "update_market_details"})
-  post("/close_market/:club_id/:season_id/:market_id", { :controller => "market", :action => "close_market_action" })
-  post("/pause_market/:club_id/:season_id/:market_id", { :controller => "market", :action => "pause_market_action" })
-  post("/unpause_market/:club_id/:season_id/:market_id", { :controller => "market", :action => "unpause_market_action" })
+  # get("/new_market", { :controller => "market", :action => "market_create_form" })
+  # post("/create_new_market", { :controller => "market", :action => "create_market" })
+  # get("/my_markets", { :controller => "market", :action => "show_markets" })
+  # get("/markets/:club_id/:season_id/:market_id", { :controller => "market", :action => "view_market" })
+  # patch("/update_market_details/:club_id/:season_id/:market_id", { :controller => "market", :action => "update_market_details"})
+  post("/close_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "close_market_action" })
+  post("/pause_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "pause_market_action" })
+  post("/unpause_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "unpause_market_action" })
+  resources :markets, except: [:destroy, :edit]
   
   #contract routes
   post("/add_market_contract/:club_id/:season_id/:market_id", { :controller => "contract", :action => "add_contract" })
@@ -67,10 +68,6 @@ Rails.application.routes.draw do
     post("/sell_yes_contract/:contract_id", { :controller => "contract", :action => "sell_yes_contracts"})
     post("/buy_no_contract/:contract_id", { :controller => "contract", :action => "buy_no_contracts"})
     post("/sell_no_contract/:contract_id", { :controller => "contract", :action => "sell_no_contracts"})
-    
-    #add in once allowing for buying/selling of no for each contract
-    #post("/buy_no_contract/:contract_id", { :controller => "contract", :action => "buy_no_contracts"})
-    #post("/sell_no_contract/:contract_id", { :controller => "contract", :action => "sell_no_contracts"})
 
   #asset routes
   patch("/update_season_funds/:club_id/:season_id", { :controller => "asset", :action => "update_season_funds"})
