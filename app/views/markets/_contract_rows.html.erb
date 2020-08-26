@@ -17,32 +17,32 @@
 
           <script>
             setInterval(function(){
-              const buy_yes_qty = $('#quantity_buy_yes_contract').val() || 0
-              const sell_yes_qty = $('#quantity_sell_yes_contract').val() || 0
-              const buy_no_qty = $('#quantity_buy_no_contract').val() || 0
-              const sell_no_qty = $('#quantity_sell_no_contract').val() || 0
+              const buy_yes_qty = $('#quantity_buy_yes_contract_<%= contract.id %>').val() || 0
+              const sell_yes_qty = $('#quantity_sell_yes_contract_<%= contract.id %>').val() || 0
+              const buy_no_qty = $('#quantity_buy_no_contract_<%= contract.id %>').val() || 0
+              const sell_no_qty = $('#quantity_sell_no_contract_<%= contract.id %>').val() || 0
               $.get(`/contracts/<%= contract.id %>?buy_yes_qty=${buy_yes_qty}&sell_yes_qty=${sell_yes_qty}&buy_no_qty=${buy_no_qty}&sell_no_qty=${sell_no_qty}`).then(response => {
-                $('#yes_price').text(`$${parseFloat(response.yes_price).toFixed(2)}`)
-                $('#no_price').text(`$${parseFloat(response.no_price).toFixed(2)}`)
-                $('#buy_yes_quantity').text(`${parseFloat(response.buy_yes_quantity)}`)
-                $('#buy_yes_total').text(`$${parseFloat(response.buy_yes_total).toFixed(2)}`)
-                $('#buy_yes_average').text(`$${parseFloat(response.buy_yes_average).toFixed(2)}`)
-                $('#sell_yes_quantity').text(`${parseFloat(response.sell_yes_quantity)}`)
-                $('#sell_yes_total').text(`$${parseFloat(response.sell_yes_total).toFixed(2)}`)
-                $('#sell_yes_average').text(`$${parseFloat(response.sell_yes_average).toFixed(2)}`)
-                $('#buy_no_quantity').text(`${parseFloat(response.buy_no_quantity)}`)
-                $('#buy_no_total').text(`$${parseFloat(response.buy_no_total).toFixed(2)}`)
-                $('#buy_no_average').text(`$${parseFloat(response.buy_no_average).toFixed(2)}`)
-                $('#sell_no_quantity').text(`${parseFloat(response.sell_no_quantity)}`)
-                $('#sell_no_total').text(`$${parseFloat(response.sell_no_total).toFixed(2)}`)
-                $('#sell_no_average').text(`$${parseFloat(response.sell_no_average).toFixed(2)}`)
+                $('#yes_price_<%= contract.id %>').text(`$${parseFloat(response.yes_price).toFixed(2)}`)
+                $('#no_price_<%= contract.id %>').text(`$${parseFloat(response.no_price).toFixed(2)}`)
+                $('#buy_yes_quantity_<%= contract.id %>').text(`${parseFloat(response.buy_yes_quantity)}`)
+                $('#buy_yes_total_<%= contract.id %>').text(`$${parseFloat(response.buy_yes_total).toFixed(2)}`)
+                $('#buy_yes_average_<%= contract.id %>').text(`$${parseFloat(response.buy_yes_average).toFixed(2)}`)
+                $('#sell_yes_quantity_<%= contract.id %>').text(`${parseFloat(response.sell_yes_quantity)}`)
+                $('#sell_yes_total_<%= contract.id %>').text(`$${parseFloat(response.sell_yes_total).toFixed(2)}`)
+                $('#sell_yes_average_<%= contract.id %>').text(`$${parseFloat(response.sell_yes_average).toFixed(2)}`)
+                $('#buy_no_quantity_<%= contract.id %>').text(`${parseFloat(response.buy_no_quantity)}`)
+                $('#buy_no_total_<%= contract.id %>').text(`$${parseFloat(response.buy_no_total).toFixed(2)}`)
+                $('#buy_no_average_<%= contract.id %>').text(`$${parseFloat(response.buy_no_average).toFixed(2)}`)
+                $('#sell_no_quantity_<%= contract.id %>').text(`${parseFloat(response.sell_no_quantity)}`)
+                $('#sell_no_total_<%= contract.id %>').text(`$${parseFloat(response.sell_no_total).toFixed(2)}`)
+                $('#sell_no_average_<%= contract.id %>').text(`$${parseFloat(response.sell_no_average).toFixed(2)}`)
               })
-            }, 20000)
+            }, 5000)
           </script>
 
 
           <div class="mb-0 col-3 text-small">
-              <span id='yes_price'><%= number_to_currency(contract.price_check(contract.id, 50, 1, "yes")) %></span>
+              <span id='yes_price_<%= contract.id %>'><%= number_to_currency(contract.price_check(contract.id, 50, 1, "yes")) %></span>
               <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_a"}).at(0) == nil %>
                 (0)
               <% else %>
@@ -50,7 +50,7 @@
               <% end %>
           </div>
           <div class="mb-0 col-3 text-small">
-              <span id='no_price'><%= number_to_currency(contract.price_check(contract.id, 50, 1, "no")) %></span>
+              <span id='no_price_<%= contract.id %>'><%= number_to_currency(contract.price_check(contract.id, 50, 1, "no")) %></span>
               <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_b"}).at(0) == nil %>
                 (0)
               <% else %>
@@ -77,13 +77,13 @@
             <div class="card-body col-3 px-3">
               <form action='/buy_yes_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title text-small'>
-                  <label for='quantity_buy_yes_contract'>How many 'yes' contracts do you want to buy?</label>
-                  <input class='form-control center_title' id='quantity_buy_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' autocomplete="off" required>
+                  <label for='quantity_buy_yes_contract_<%= contract.id %>'>How many 'yes' contracts do you want to buy?</label>
+                  <input class='form-control center_title' id='quantity_buy_yes_contract_<%= contract.id %>' type='number' min='1' step='1' max='9999' name='quantity_buy_yes' autocomplete="off" required>
                   <br>
                   <div> 
-                    <div class="text-justify">Quantity: <span id='buy_yes_quantity'><%= 0 %></span></div>
-                    <div class="text-justify">Total: <span id='buy_yes_total'><%= number_to_currency(0) %></span></div>
-                    <div class="text-justify">Average: <span id='buy_yes_average'><%= number_to_currency(0) %></span></div>
+                    <div class="text-justify">Quantity: <span id='buy_yes_quantity_<%= contract.id %>'><%= 0 %></span></div>
+                    <div class="text-justify">Total: <span id='buy_yes_total_<%= contract.id %>'><%= number_to_currency(0) %></span></div>
+                    <div class="text-justify">Average: <span id='buy_yes_average_<%= contract.id %>'><%= number_to_currency(0) %></span></div>
                   </div>
                   <br>
                   <button class='btn btn-secondary btn-block text-small px-0'>Buy Yes</button>
@@ -94,13 +94,13 @@
             <div class="card-body col-3 px-3">
               <form action='/sell_yes_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title text-small'>
-                  <label for='quantity_sell_yes_contract'>How many 'yes' contracts do you want to sell?</label>
-                  <input class='form-control center_title' id='quantity_sell_yes_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' autocomplete="off" required>
+                  <label for='quantity_sell_yes_contract_<%= contract.id %>'>How many 'yes' contracts do you want to sell?</label>
+                  <input class='form-control center_title' id='quantity_sell_yes_contract_<%= contract.id %>' type='number' min='1' step='1' max='9999' name='quantity_sell_yes' autocomplete="off" required>
                   <br>
                   <div> 
-                    <div class="text-justify">Quantity: <span id='sell_yes_quantity'><%= 0 %></span></div>
-                    <div class="text-justify">Total: <span id='sell_yes_total'><%= number_to_currency(0) %></span></div>
-                    <div class="text-justify">Average: <span id='sell_yes_average'><%= number_to_currency(0) %></span></div>
+                    <div class="text-justify">Quantity: <span id='sell_yes_quantity_<%= contract.id %>'><%= 0 %></span></div>
+                    <div class="text-justify">Total: <span id='sell_yes_total_<%= contract.id %>'><%= number_to_currency(0) %></span></div>
+                    <div class="text-justify">Average: <span id='sell_yes_average_<%= contract.id %>'><%= number_to_currency(0) %></span></div>
                   </div>
                   <br>
                   <button class='btn btn-secondary btn-block text-small px-0'>Sell Yes</button>
@@ -111,13 +111,13 @@
             <div class="card-body col-3 px-3">
               <form action='/buy_no_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title text-small'>
-                  <label for='quantity_buy_no_contract'>How many 'no' contracts do you want to buy?</label>
-                  <input class='form-control center_title' id='quantity_buy_no_contract' type='number' min='1' step='1' max='9999' name='quantity_buy_no' autocomplete="off" required>
+                  <label for='quantity_buy_no_contract_<%= contract.id %>'>How many 'no' contracts do you want to buy?</label>
+                  <input class='form-control center_title' id='quantity_buy_no_contract_<%= contract.id %>' type='number' min='1' step='1' max='9999' name='quantity_buy_no' autocomplete="off" required>
                   <br>
                   <div> 
-                    <div class="text-justify">Quantity: <span id='buy_no_quantity'><%= 0 %></span></div>
-                    <div class="text-justify">Total: <span id='buy_no_total'><%= number_to_currency(0) %></span></div>
-                    <div class="text-justify">Average: <span id='buy_no_average'><%= number_to_currency(0) %></span></div>
+                    <div class="text-justify">Quantity: <span id='buy_no_quantity_<%= contract.id %>'><%= 0 %></span></div>
+                    <div class="text-justify">Total: <span id='buy_no_total_<%= contract.id %>'><%= number_to_currency(0) %></span></div>
+                    <div class="text-justify">Average: <span id='buy_no_average_<%= contract.id %>'><%= number_to_currency(0) %></span></div>
                   </div>
                   <br>
                   <button class='btn btn-secondary btn-block text-small px-0'>Buy No</button>
@@ -128,13 +128,13 @@
             <div class="card-body col-3 px-3">
               <form action='/sell_no_contract/<%= contract.id %>' method='post' data-remote="true">
                 <div class='form-group center_title text-small'>
-                  <label for='quantity_sell_no_contract'>How many 'no' contracts do you want to sell?</label>
-                  <input class='form-control center_title' id='quantity_sell_no_contract' type='number' min='1' step='1' max='9999' name='quantity_sell_no' autocomplete="off" required>
+                  <label for='quantity_sell_no_contract_<%= contract.id %>'>How many 'no' contracts do you want to sell?</label>
+                  <input class='form-control center_title' id='quantity_sell_no_contract_<%= contract.id %>' type='number' min='1' step='1' max='9999' name='quantity_sell_no' autocomplete="off" required>
                   <br>
                   <div> 
-                    <div class="text-justify">Quantity: <span id='sell_no_quantity'><%= 0 %></span></div>
-                    <div class="text-justify">Total: <span id='sell_no_total'><%= number_to_currency(0) %></span></div>
-                    <div class="text-justify">Average: <span id='sell_no_average'><%= number_to_currency(0) %></span></div>
+                    <div class="text-justify">Quantity: <span id='sell_no_quantity_<%= contract.id %>'><%= 0 %></span></div>
+                    <div class="text-justify">Total: <span id='sell_no_total_<%= contract.id %>'><%= number_to_currency(0) %></span></div>
+                    <div class="text-justify">Average: <span id='sell_no_average_<%= contract.id %>'><%= number_to_currency(0) %></span></div>
                   </div>
                   <br>
                   <button class='btn btn-secondary btn-block text-small px-0'>Sell No</button>

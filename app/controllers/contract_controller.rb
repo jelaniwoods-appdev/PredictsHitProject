@@ -66,16 +66,16 @@ class ContractController < ApplicationController
 
   def show
     contract = Contract.find(params[:contract_id])
+
     yes_price = contract.price_check(contract.id, 50, 1, "yes")
     no_price = contract.price_check(contract.id, 50, 1, "no")
-    
     
     buy_yes_quantity = params[:buy_yes_qty] || 0
     buy_yes_total = contract.price_check(contract.id, 50, buy_yes_quantity, "yes")
     buy_yes_average = buy_yes_total/(buy_yes_quantity.to_f.nonzero? || 1)
 
     sell_yes_quantity = params[:sell_yes_qty] || 0
-    sell_yes_total = contract.price_check(contract.id, 50, sell_yes_quantity, "yes")
+    sell_yes_total = (contract.price_check(contract.id, 50, (sell_yes_quantity.to_f * -1), "yes") * -1)
     sell_yes_average = sell_yes_total/(sell_yes_quantity.to_f.nonzero? || 1)
 
     buy_no_quantity = params[:buy_no_qty] || 0
@@ -83,15 +83,18 @@ class ContractController < ApplicationController
     buy_no_average = buy_no_total/(buy_no_quantity.to_f.nonzero? || 1)
 
     sell_no_quantity = params[:sell_no_qty] || 0
-    sell_no_total = contract.price_check(contract.id, 50, sell_no_quantity, "no")
+    sell_no_total = (contract.price_check(contract.id, 50, (sell_no_quantity.to_f * -1), "no") * -1)
     sell_no_average = sell_no_total/(sell_no_quantity.to_f.nonzero? || 1)
     
     
-    render json: { contract_id: contract.id, yes_price: yes_price, no_price: no_price, 
+    render json: { 
+                  contract_id: contract.id, yes_price: yes_price, no_price: no_price, 
                   buy_yes_quantity: buy_yes_quantity, buy_yes_total: buy_yes_total, buy_yes_average: buy_yes_average,
                   sell_yes_quantity: sell_yes_quantity, sell_yes_total: sell_yes_total, sell_yes_average: sell_yes_average,
                   buy_no_quantity: buy_no_quantity, buy_no_total: buy_no_total, buy_no_average: buy_no_average,
-                  sell_no_quantity: sell_no_quantity, sell_no_total: sell_no_total, sell_no_average: sell_no_average }
+                  sell_no_quantity: sell_no_quantity, sell_no_total: sell_no_total, sell_no_average: sell_no_average 
+                 }
+
   end
 
   def update_contract_details
