@@ -186,10 +186,10 @@ class ContractController < ApplicationController
       end
 
         #add instance variables needed for partials that are refreshed
-        @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
+        @contracts = @contract_row.market.contracts.order({ :created_at => :asc })
         @membership_id = @membership_row.id
         @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
-        @market_row = @contract_row.market
+        @market = @contract_row.market
 
         
 
@@ -343,10 +343,10 @@ class ContractController < ApplicationController
       end
 
       #add instance variables needed for partials that are refreshed
-      @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
+      @contracts = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
       @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
-      @market_row = @contract_row.market
+      @market = @contract_row.market
 
       respond_to do |format|
         format.js { render 'contract_templates/render_contracts.js.erb' }
@@ -514,10 +514,10 @@ class ContractController < ApplicationController
       end
       
       #add instance variables needed for partials that are refreshed
-      @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
+      @contracts = @contract_row.market.contracts.order({ :created_at => :asc })
       @membership_id = @membership_row.id
       @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
-      @market_row = @contract_row.market
+      @market = @contract_row.market
 
       respond_to do |format|
         format.js { render 'contract_templates/render_contracts.js.erb' }
@@ -620,10 +620,10 @@ class ContractController < ApplicationController
         end
       end
         #add instance variables needed for partials that are refreshed
-        @contract_rows = @contract_row.market.contracts.order({ :created_at => :asc })
+        @contracts = @contract_row.market.contracts.order({ :created_at => :asc })
         @membership_id = @membership_row.id
         @season_memberships = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
-        @market_row = @contract_row.market
+        @market = @contract_row.market
 
         respond_to do |format|
           format.js { render 'contract_templates/render_contracts.js.erb' }
