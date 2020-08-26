@@ -15,9 +15,18 @@
             </div>
           </div>
 
-          <div class="mb-0 col-3 text-small">
-              <%= number_to_currency(contract.price_check(contract.id, 50, 1, "yes")) %>
+          <script>
+            setInterval(function(){
+              const qty = $('#quantity_sell_yes_contract').val() || 1
+              $.get(`/contracts/<%= contract.id %>?qty=${qty}`).then(response => {
+                $('#no-price').text(`$${parseFloat(response.no_price).toFixed(2)}`)
+                $('#yes-price').text(`$${parseFloat(response.yes_price).toFixed(2)}`)
+              })
+            }, 5000)
+          </script>
 
+          <div class="mb-0 col-3 text-small">
+              <span id='yes-price'><%= number_to_currency(contract.price_check(contract.id, 50, 1, "yes")) %></span>
               <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_a"}).at(0) == nil %>
                 (0)
               <% else %>
@@ -25,8 +34,7 @@
               <% end %>
           </div>
           <div class="mb-0 col-3 text-small">
-              <%= number_to_currency(contract.price_check(contract.id, 50, 1, "no")) %>
-
+              <span id='no-price'><%= number_to_currency(contract.price_check(contract.id, 50, 1, "no")) %></span>
               <% if Asset.where({ :membership_id => @membership_id, :contract_id => contract, :category => "contract_quantity_b"}).at(0) == nil %>
                 (0)
               <% else %>

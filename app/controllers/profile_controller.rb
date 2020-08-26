@@ -18,7 +18,7 @@ class ProfileController < ApplicationController
         updated_profile.save
         redirect_to("/profile/manage/" + @user_id, { :notice => "Your profile was successfully updated!"})
       else
-        redirect_to("/profile/manage/" + @user_id, { :alert => "Your profile was not updated."}) #Will need to update to make more clear and be dynamic for issue once other options to change/other failure points.
+        redirect_to("/profile/manage/" + @user_id, { :alert => "Your profile was not updated."})
       end
 
     end

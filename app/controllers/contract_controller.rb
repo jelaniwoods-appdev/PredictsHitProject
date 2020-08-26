@@ -64,6 +64,13 @@ class ContractController < ApplicationController
 
   end
 
+  def show
+    contract = Contract.find(params[:contract_id])
+    yes_price = contract.price_check(contract.id, 50, params[:qty] || 1, "yes")
+    no_price = contract.price_check(contract.id, 50, params[:qty] || 1, "no")
+    render json: { contract_id: contract.id, yes_price: yes_price, no_price: no_price }
+  end
+
   def update_contract_details
     @club_id = params.fetch("club_id")
     @season_id = params.fetch("season_id")

@@ -63,6 +63,8 @@ Rails.application.routes.draw do
   get("/contracts/manage/:club_id/:season_id/:market_id/:contract_id", { :controller => "contract", :action => "manage_contract" })
   patch("/update_contract_details/:club_id/:season_id/:market_id/:contract_id", { :controller => "contract", :action => "update_contract_details"})
 
+  get("/contracts/:contract_id", { controller: "contract", action: "show" })
+
     #Trade contracts
     post("/buy_yes_contract/:contract_id", { :controller => "contract", :action => "buy_yes_contracts"})
     post("/sell_yes_contract/:contract_id", { :controller => "contract", :action => "sell_yes_contracts"})

@@ -24,7 +24,6 @@ Rails.application.configure do
     domain: ENV.fetch("MAILGUN_DOMAIN", nil)
   }
 
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
