@@ -19,7 +19,7 @@
                 <div class="card-body">
                   <h5 class="card-title text-truncate"><%= market.title %></h5>
                   <% if market.description == "" %>
-                    <p class="card-text text-truncate">[No Description]</p>
+                    <p class="card-text text-truncate">&nbsp</p>
                   <% else %>
                     <p class="card-text text-truncate"><%= market.description %> </p>
                   <% end %>
@@ -82,7 +82,7 @@
               <div class="card-body">
                 <h5 class="card-title text-truncate"><%= market.title %></h5>
                 <% if market.description == "" %>
-                  <p class="card-text text-truncate">[No Description]</p>
+                  <p class="card-text text-truncate">&nbsp</p>
                 <% else %>
                   <p class="card-text text-truncate"><%= market.description %> </p>
                 <% end %>

@@ -8,8 +8,9 @@
         <div class="card h-100">
           <img src="<%= asset_path('plus_image.svg') %>" class="card-img-top custom_image" alt="Create Club">
           <div class="card-body">
-            <h3 class="card-title custom_image_middle">Create New Club</h3>
-            <div class="text-center"><a type="button" class="nav-link stretched-link" data-toggle="modal" data-target="#create_club"></a></div>
+            <h5 class="card-title text-truncate">&nbsp</h5>
+            <p class="card-text text-truncate">&nbsp</p>
+            <div style="color: #F76C6C"><div class="text-center"><a type="button" class="nav-link stretched-link" data-toggle="modal" data-target="#create_club"></a>Create New Club</div></div>
           </div>
         </div>
       </div>
@@ -21,7 +22,7 @@
               <div class="card-body">
                 <h5 class="card-title text-truncate"><%= member.club.title %></h5>
                 <% if member.club.description == "" %>
-                  <p class="card-text text-truncate">[No Description]</p>
+                  <p class="card-text text-truncate">&nbsp</p>
                 <% else %>
                   <p class="card-text text-truncate"><%= member.club.description %> </p>
                 <% end %>
