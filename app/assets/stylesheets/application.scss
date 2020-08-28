@@ -188,6 +188,17 @@
     font-size: 80%;
   }
 }
+
+@media all and (min-width: 992px) {
+  .contract_image_padding {
+    padding-left: 5px;
+  }
+  .contract_header_offset {
+    padding-left: 90px;
+  }
+}
+
+
 /* Custom Bootstrap css end */
 
 /* sidebar popout css start */

@@ -5,11 +5,11 @@
       <div class="center_title"><%= @market.description %></div>
       <br>
       <% if @market.status == "active" %>
-        <div class="center_title">Market Status: <span style="color: #82C09A"><%= @market.status %></span></div>
+        <div class="center_title"><span style="color: #82C09A">Active Market</span></div>
       <% elsif @market.status == "paused" %>
-        <div class="center_title">Market Status: <span class="text-warning"><%= @market.status %></span></div>
+        <div class="center_title"><span class="text-warning">Paused Market</span></div>
       <% elsif @market.status == "closed" %>
-        <div class="center_title">Market Status: <span class="text-danger"><%= @market.status %></span></div>
+        <div class="center_title"><span class="text-danger">Closed Market</span></div>
       <% end %>
       <br>
       <div class="center_title">
@@ -28,7 +28,7 @@
             <div class="card custom-color-8">
               <div class="card-header" id="header">
                 <div class="row">
-                  <h6 class="mb-0 col-5">
+                  <h6 class="mb-0 col-5 contract_header_offset">
                     Contract
                   </h6>
                   <h6 class="mb-0 col-3" data-toggle="tooltip" data-html="true" title="'Yes' for this contract will pay out $1.00 if this <em>does</em> occur and $0 if this <em>does not</em> occur. The current price for 1 additional 'Yes' of this contract is shown below alongside the quantity you currently own.">
