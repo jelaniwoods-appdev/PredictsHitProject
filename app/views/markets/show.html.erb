@@ -5,7 +5,7 @@
       <div class="center_title"><%= @market.description %></div>
       <br>
       <% if @market.status == "active" %>
-        <div class="center_title">Market Status: <span class="text-success"><%= @market.status %></span></div>
+        <div class="center_title">Market Status: <span style="color: #82C09A"><%= @market.status %></span></div>
       <% elsif @market.status == "paused" %>
         <div class="center_title">Market Status: <span class="text-warning"><%= @market.status %></span></div>
       <% elsif @market.status == "closed" %>
