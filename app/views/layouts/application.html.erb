@@ -44,10 +44,6 @@
         <%= render 'markets/market_details_navbar' %>
       <% end %>
 
-      <% if (params[:action] == 'index' && params[:controller] == 'clubs') || (params[:action] == 'index' && params[:controller] == 'seasons') || (params[:action] == 'index' && params[:controller] == 'markets')%>
-        <%= render 'home_templates/membership_navbar' %>
-      <% end %>
-
 
     <div class="container-fluid">
       <%= render 'home_templates/flash' %>
