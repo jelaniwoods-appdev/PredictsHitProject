@@ -25,9 +25,8 @@
           <form action="/messages/club/create/<%= @club.id %>/<%= current_user.id %>" method="post" data-remote="true" id="chat_form">
             <div class="form-group">
               <label for="comment_body"></label>
-              <textarea class="form-control" id="comment_body" name="body" placeholder="Have something on your mind?" rows="1" maxlength="300" required></textarea>
-              <br>
-              <button class="btn btn-secondary" data-disable-with="Sending..." id="submit_button">Send Message</button>
+              <textarea class="form-control resize_textarea scrolly" id="comment_body" name="body" placeholder="Have something on your mind?" rows="1" maxlength="300" required></textarea>
+              <button class="btn custom-color-5 float-right mt-1" data-disable-with="Sending..." id="submit_button"><i class="fas fa-paper-plane fa-lg"></i></button>
             </div>
           </form>
         </div>
@@ -36,8 +35,17 @@
   </div>
 </nav>
 
-<script>
 
+<script>
+  
+  textarea = document.querySelector("#comment_body"); 
+  textarea.addEventListener('input', autoResize, false); 
+
+  function autoResize() { 
+      this.style.height = 'auto'; 
+      this.style.height = this.scrollHeight + 'px'; 
+  }
+  
   {
     let form = document.getElementById("chat_form");
 

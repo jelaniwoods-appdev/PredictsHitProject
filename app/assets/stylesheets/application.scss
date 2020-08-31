@@ -201,6 +201,40 @@
 
 /* Custom Bootstrap css end */
 
+/* Custom fontawesome css start */
+
+  .fa-paper-plane {
+    color: #374785
+  }
+  
+  .fa-plus {
+    color: #F76C6C
+  }
+
+  .fa-coins {
+    color: #374785
+  }
+
+  .fa-user-friends {
+    color: #374785
+  }
+
+  .fa-comments {
+    color: #374785
+  }
+/* Custom fontawesome css end */
+
+
+/* textbox resizing start */
+  .resize_textarea { 
+        display: block; 
+        overflow: hidden; 
+        resize: none; 
+        max-height: 8vh;
+    } 
+
+/* textbox resizing end */
+
 /* sidebar popout css start */
 // .cw-table-list{
 //     margin:0px !important;
