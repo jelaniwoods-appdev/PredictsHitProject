@@ -233,6 +233,12 @@
         max-height: 8vh;
     } 
 
+  .resize_textarea:focus {
+    outline: none;
+    border: 1px solid #374785;
+    box-shadow: 0 0 0px #A8D0E6;
+  }
+
 /* textbox resizing end */
 
 /* sidebar popout css start */
