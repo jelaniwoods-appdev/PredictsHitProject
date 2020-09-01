@@ -75,7 +75,7 @@
         <% if @market.status == "paused" %>
           <h5>This Market is already paused!</h5>
         <% else %>
-          <form action="/pause_market/<%= @market.season.club.id %>/<%= @market.season.id %>/<%= @market.id %>" method="post">
+          <form action="/pause_market/<%= @market.id %>" method="post">
             <div class="modal-body">
               <div class="form-group">
                 <label for="select_member_category">Are you sure you want to pause this market?</label>
@@ -106,7 +106,7 @@
         <% if @market.status == "active" %>
           <h5>This Market is already active!</h5>
         <% elsif @market.status == "paused" %>
-          <form action="/unpause_market/<%= @market.season.club.id %>/<%= @market.season.id %>/<%= @market.id %>" method="post">
+          <form action="/unpause_market/<%= @market.id %>" method="post">
             <div class="modal-body">
               <div class="form-group">
                 <label for="select_member_category">Are you sure you want to unpause this market?<br><br>Note: If you want to close the market, that is a different action from unpausing. Unpausing the market will allow trading again.</label>
@@ -137,7 +137,7 @@
         <% if @market.status == "closed" %>
           <h5>This Market is already closed!</h5>
         <% else %>
-          <form action="/close_market/<%= @market.season.club.id %>/<%= @market.season.id %>/<%= @market.id %>" method="post">
+          <form action="/close_market/<%= @market.id %>" method="post">
             <div class="modal-body">
               <div class="form-group">
               <% if @contracts.present? %>

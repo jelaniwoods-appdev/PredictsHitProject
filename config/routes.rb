@@ -37,9 +37,9 @@ Rails.application.routes.draw do
   resources :seasons, except: [:destroy, :edit]
 
   #market routes
-  post("/close_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "close_market" })
-  post("/pause_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "pause_market" })
-  post("/unpause_market/:club_id/:season_id/:market_id", { :controller => "markets", :action => "unpause_market" })
+  post("/close_market/:market_id", { :controller => "markets", :action => "close_market" })
+  post("/pause_market/:market_id", { :controller => "markets", :action => "pause_market" })
+  post("/unpause_market/:market_id", { :controller => "markets", :action => "unpause_market" })
   resources :markets, except: [:destroy, :edit]
   
   #contract routes

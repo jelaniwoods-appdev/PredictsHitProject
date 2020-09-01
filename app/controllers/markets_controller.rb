@@ -85,12 +85,10 @@ class MarketsController < ApplicationController
 
 
   def close_market
-    club_id = params.fetch("club_id")
-    season_id = params.fetch("season_id")
     market_id = params.fetch("market_id")
     @market = Market.where({ :id => market_id }).at(0)
     @contracts = @market.contracts
-    @memberships = Membership.where({ :season_id => season_id, :goes_to => "seasons_table"})
+    @memberships = Membership.where({ :season_id => @market.season.id, :goes_to => "seasons_table"})
 
     #Confirm user submitting form is the Season owner of the Market and that the Market is not already closed
     @owner_user_id = Membership.where({ :season_id => @market.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
@@ -165,8 +163,6 @@ class MarketsController < ApplicationController
   end
 
   def pause_market
-    @club_id = params.fetch("club_id")
-    @season_id = params.fetch("season_id")
     @market_id = params.fetch("market_id")
     @market = Market.where({ :id => @market_id }).at(0)
   
@@ -200,8 +196,6 @@ class MarketsController < ApplicationController
   end
 
   def unpause_market
-    @club_id = params.fetch("club_id")
-    @season_id = params.fetch("season_id")
     @market_id = params.fetch("market_id")
     @market = Market.where({ :id => @market_id }).at(0)
   
