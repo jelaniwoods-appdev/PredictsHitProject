@@ -44,6 +44,10 @@
         <%= render 'markets/market_details_navbar' %>
       <% end %>
 
+      <% if params[:action] == 'view_contract' && params[:controller] == 'contract' %>
+        <%= render 'contract_templates/contract_details_navbar' %>
+      <% end %>
+
 
     <div class="container-fluid">
       <%= render 'home_templates/flash' %>
