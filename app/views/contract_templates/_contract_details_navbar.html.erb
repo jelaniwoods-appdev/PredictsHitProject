@@ -6,9 +6,9 @@
   <div class="collapse navbar-collapse" id="market_dropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a type="button" class="nav-link" id="return" href="/markets/<%= @contract_row.market.id %>">Return to Market</a>
+        <a type="button" class="nav-link" id="return" href="/markets/<%= @contract.market.id %>">Return to Market</a>
       </li>
-      <% if @owner_user_id == current_user.id && @contract_row.market.status != "closed" %>
+      <% if @owner_user_id == current_user.id && @contract.market.status != "closed" %>
         <li class="nav-item">
           <a type="button" class="nav-link" data-toggle="modal" data-target="#manage_contract_details">Edit Details</a>
         </li>

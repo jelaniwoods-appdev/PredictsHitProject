@@ -8,15 +8,15 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/update_contract_details/<%= @club_row.id %>/<%= @season_row.id %>/<%= @market_row.id %>/<%= @contract_row.id %>" method="post" enctype="multipart/form-data">
+      <form action="/update_contract_details/<%= @contract.id %>" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="form-group">
             <input type="hidden" name="_method" value="patch">
             <label for="update_contract_title">What is the new title of this contract?</label>
-            <input class="form-control" id="update_contract_title" type="text" name="updated_contract_title" placeholder="Enter a title..." value="<%= @contract_row.title %>" required>
+            <input class="form-control" id="update_contract_title" type="text" name="updated_contract_title" placeholder="Enter a title..." value="<%= @contract.title %>" required>
             <br>
             <label for="update_contract_description">What is the new description of this contract?</label>
-            <input class="form-control" id="update_contract_description" type="text" name="updated_contract_description" placeholder="Enter a description..." value="<%= @contract_row.description %>">
+            <input class="form-control" id="update_contract_description" type="text" name="updated_contract_description" placeholder="Enter a description..." value="<%= @contract.description %>">
             <br>
             <label for="update_contract_picture">What is new picture of this contract?</label>
             <input type="file" id="update_contract_picture" name="updated_contract_picture" class="form-control">

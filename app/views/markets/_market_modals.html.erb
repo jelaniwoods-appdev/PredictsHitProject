@@ -40,7 +40,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="/add_market_contract/<%= @market.season.club.id %>/<%= @market.season.id %>/<%= @market.id %>" method="post" enctype="multipart/form-data">
+      <form action="/add_market_contract/<%= @market.id %>" method="post" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="form-group">
             <!-- Include some form of permission functionality where only members of each season who are designated owner or admin under category column can create contract -->

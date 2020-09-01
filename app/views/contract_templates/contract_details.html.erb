@@ -1,13 +1,13 @@
 <div class="row">   
   <div class="col-6 offset-3">
-    <h1 class="center_title"><%= @contract_row.title %></h1>
+    <h1 class="center_title"><%= @contract.title %></h1>
     <br>
     <div class="center_title">
-      <%= @contract_row.description %>
+      <%= @contract.description %>
     </div>
     <br>
     <div class="center_title">
-      <img src="<%= @contract_row.contractpic %>" height = 200 class="img-responsive">
+      <img src="<%= @contract.contractpic %>" height = 200 class="img-responsive">
     </div>
   </div>
 </div>
@@ -17,7 +17,7 @@
   <div class="col-6 offset-3">
     <h2 class="center_title">Total Contracts Outstanding</h2>
     <div class="center_title">
-      Yes contracts: <%= @contract_row.quantity_a %><br>No contracts: <%= @contract_row.quantity_b %>
+      Yes contracts: <%= @contract.quantity_a %><br>No contracts: <%= @contract.quantity_b %>
     </div>
   </div>
 </div>
@@ -43,23 +43,23 @@
           </tr>
         </thead>
 
-        <% @membership_rows.each do |member| %>
+        <% @memberships.each do |member| %>
         <tr class="d-flex">
           <td class="col-4 text-center pr-5">
             <a href="/profile/<%= member.user_id %>"><%= member.user.username %></a> 
           </td>
           <td class="col-4 text-center pr-5">
-            <% if member.assets.where({ :contract_id => @contract_row.id, :category => "contract_quantity_a"}).at(0)  == nil %>
+            <% if member.assets.where({ :contract_id => @contract.id, :category => "contract_quantity_a"}).at(0)  == nil %>
               <%= 0 %>
             <% else %>
-              <%= member.assets.where({ :contract_id => @contract_row.id, :category => "contract_quantity_a"}).at(0).quantity.to_i %>
+              <%= member.assets.where({ :contract_id => @contract.id, :category => "contract_quantity_a"}).at(0).quantity.to_i %>
             <% end %>
           </td>
           <td class="col-4 text-center pr-5">
-            <% if member.assets.where({ :contract_id => @contract_row.id, :category => "contract_quantity_b"}).at(0)  == nil %>
+            <% if member.assets.where({ :contract_id => @contract.id, :category => "contract_quantity_b"}).at(0)  == nil %>
               <%= 0 %>
             <% else %>
-              <%= member.assets.where({ :contract_id => @contract_row.id, :category => "contract_quantity_b"}).at(0).quantity.to_i %>
+              <%= member.assets.where({ :contract_id => @contract.id, :category => "contract_quantity_b"}).at(0).quantity.to_i %>
             <% end %>
           </td>
         </tr>

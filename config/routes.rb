@@ -43,18 +43,17 @@ Rails.application.routes.draw do
   resources :markets, except: [:destroy, :edit]
   
   #contract routes
-  post("/add_market_contract/:club_id/:season_id/:market_id", { :controller => "contract", :action => "add_contract" })
-  get("/contracts/:club_id/:season_id/:market_id/:contract_id", { :controller => "contract", :action => "view_contract" })
-  get("/contracts/manage/:club_id/:season_id/:market_id/:contract_id", { :controller => "contract", :action => "manage_contract" })
-  patch("/update_contract_details/:club_id/:season_id/:market_id/:contract_id", { :controller => "contract", :action => "update_contract_details"})
+  post("/add_market_contract/:market_id", { :controller => "contracts", :action => "add_contract" })
+  get("/contracts/details/:contract_id", { :controller => "contracts", :action => "view_contract" })
+  patch("/update_contract_details/:contract_id", { :controller => "contracts", :action => "update_contract_details"})
 
-  get("/contracts/:contract_id", { controller: "contract", action: "show" })
+  get("/contracts/:contract_id", { controller: "contracts", action: "show" })
 
     #Trade contracts
-    post("/buy_yes_contract/:contract_id", { :controller => "contract", :action => "buy_yes_contracts"})
-    post("/sell_yes_contract/:contract_id", { :controller => "contract", :action => "sell_yes_contracts"})
-    post("/buy_no_contract/:contract_id", { :controller => "contract", :action => "buy_no_contracts"})
-    post("/sell_no_contract/:contract_id", { :controller => "contract", :action => "sell_no_contracts"})
+    post("/buy_yes_contract/:contract_id", { :controller => "contracts", :action => "buy_yes_contracts"})
+    post("/sell_yes_contract/:contract_id", { :controller => "contracts", :action => "sell_yes_contracts"})
+    post("/buy_no_contract/:contract_id", { :controller => "contracts", :action => "buy_no_contracts"})
+    post("/sell_no_contract/:contract_id", { :controller => "contracts", :action => "sell_no_contracts"})
 
   #asset routes
   patch("/update_season_funds/:club_id/:season_id", { :controller => "asset", :action => "update_season_funds"})

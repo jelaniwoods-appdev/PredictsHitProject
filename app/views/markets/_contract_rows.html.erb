@@ -7,7 +7,7 @@
         <div class="row">
           <div class="mb-0 col-5 contract_image_padding">
             <div class="media text-truncate">
-              <a style="color: black" class="stretched-link" href="/contracts/<%= contract.market.season.club.id.to_s + '/' + contract.market.season.id.to_s + '/' + contract.market.id.to_s + '/' + contract.id.to_s %>"><img class="mr-3  d-none d-lg-block" src="<%= contract.contractpic %>" alt="Generic placeholder image" height="50" width="75"></a>
+              <a style="color: black" class="stretched-link" href="/contracts/details/<%= contract.id.to_s %>"><img class="mr-3  d-none d-lg-block" src="<%= contract.contractpic %>" alt="Generic placeholder image" height="50" width="75"></a>
               <div class="media-body">
                 <h6 class="mt-0 text-small"><%= contract.title %></h6>
                 <div class="text-small"><%= contract.description %></div>

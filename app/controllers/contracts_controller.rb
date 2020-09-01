@@ -1,13 +1,12 @@
-class ContractController < ApplicationController
+class ContractsController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
   def add_contract
-    @club_id = params.fetch("club_id")
-    @season_id = params.fetch("season_id")
     @market_id = params.fetch("market_id")
+    @market = Market.find(@market_id)
 
     #confirm season owner is the one submitting this form
-    @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+    @owner_user_id = Membership.where({ :season_id => @market.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
@@ -39,25 +38,18 @@ class ContractController < ApplicationController
   end
 
   def view_contract
-    @club_id = params.fetch("club_id")
-    @season_id = params.fetch("season_id")
-    @market_id = params.fetch("market_id")
+
     @contract_id = params.fetch("contract_id")
 
-    @club_row = Club.where({ :id => @club_id }).at(0)
-    @season_row = Season.where({ :id => @season_id}).at(0)
-    @market_row = Market.where({ :id => @market_id}).at(0)
-    @contract_row = Contract.where({ :id => @contract_id}).at(0)
-    @membership_rows = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table"})
+    @contract = Contract.where({ :id => @contract_id}).at(0)
+    @memberships = Membership.where({ :season_id => @contract.market.season.id, :goes_to => "seasons_table"})
 
-    
-
-    if @membership_rows.where({ :user_id => current_user.id}).empty?
+    if @memberships.where({ :user_id => current_user.id}).empty?
       flash[:alert] = "You are not authorized to view this page."
       redirect_to("/")
     else
       #determine owner and/or admins. Do single owner for now but later add admin info and potentially allow for multiple owners. Note: this is based on season ownership as there is no special ownership of markets/contracts.
-      @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+      @owner_user_id = Membership.where({ :season_id => @contract.market.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
       render({ :template => "contract_templates/contract_details.html.erb" })
     end
@@ -98,21 +90,19 @@ class ContractController < ApplicationController
   end
 
   def update_contract_details
-    @club_id = params.fetch("club_id")
-    @season_id = params.fetch("season_id")
-    @market_id = params.fetch("market_id")
     @contract_id = params.fetch("contract_id")
+    @contract = Contract.where({ :id => @contract_id}).at(0)
     @updated_title = params.fetch("updated_contract_title")
     @updated_description = params.fetch("updated_contract_description")
   
     #confirm season owner is the one submitting this form
-    @owner_user_id = Membership.where({ :season_id => @season_id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
+    @owner_user_id = Membership.where({ :season_id => @contract.market.season.id, :goes_to => "seasons_table", :category => "owner"}).at(0).user_id
 
     if @owner_user_id != current_user.id
       flash[:alert] = "You are not authorized to perform this action."
-      redirect_to("/contracts/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
+      redirect_to("/contracts/details/" + @contract_id.to_s)
     else
-      updated_contract_details = Contract.where({ :id => @contract_id }).at(0)
+      updated_contract_details = @contract
       updated_contract_details.title = @updated_title
       updated_contract_details.description = @updated_description
       if params[:updated_contract_picture].present?
@@ -124,10 +114,10 @@ class ContractController < ApplicationController
         updated_contract_details.save
 
         flash[:notice] = "Contract details were successfully updated!"
-        redirect_to("/contracts/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
+        redirect_to("/contracts/details/" + @contract_id.to_s)
       else
         flash[:alert] = "Contract details were not updated. Please include a title."
-        redirect_to("/contracts/" + @club_id.to_s + "/" + @season_id.to_s + "/" + @market_id.to_s + "/" + @contract_id.to_s)
+        redirect_to("/contracts/details/" + @contract_id.to_s)
       end
     end
 
