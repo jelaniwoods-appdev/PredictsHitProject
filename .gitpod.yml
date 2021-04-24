@@ -1,4 +1,4 @@
-image: jelaniwoods/appdev2020-base-rails
+image: jelaniwoods/appdev2021-vanilla-rails@sha256:f07c989d95b38fce62b621ce08de72173589158c743a58bf05f4ef1d696fc525
 
 tasks:
   - init: yarn install --check-files && bin/setup 
